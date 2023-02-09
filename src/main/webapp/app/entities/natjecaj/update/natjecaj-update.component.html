@@ -1,0 +1,115 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-natjecaj-heading" data-cy="NatjecajCreateUpdateHeading">Napravi ili uredi Natjecaj</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_name">Ime</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-4" style="height: 160px">
+          <label class="form-label" for="field_description">Opis</label>
+          <textarea
+            class="form-control"
+            rows="4"
+            cols="50"
+            style="word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3" style="display: none">
+          <label class="form-label" for="field_createDate">Napravljen</label>
+          <div class="d-flex">
+            <input
+              id="field_createDate"
+              data-cy="createDate"
+              type="datetime-local"
+              class="form-control"
+              name="createDate"
+              formControlName="createDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_datumOd">Datum od</label>
+          <div class="input-group">
+            <input
+              id="field_datumOd"
+              data-cy="datumOd"
+              type="text"
+              class="form-control"
+              name="datumOd"
+              ngbDatepicker
+              #datumOdDp="ngbDatepicker"
+              formControlName="datumOd"
+            />
+            <button type="button" class="btn btn-secondary" (click)="datumOdDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_datumDo">Datum do</label>
+          <div class="input-group">
+            <input
+              id="field_datumDo"
+              data-cy="datumDo"
+              type="text"
+              class="form-control"
+              name="datumDo"
+              ngbDatepicker
+              #datumDoDp="ngbDatepicker"
+              formControlName="datumDo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="datumDoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let status of statusValues" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkaži promjene</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Spremi</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

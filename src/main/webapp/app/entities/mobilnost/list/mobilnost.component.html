@@ -1,0 +1,147 @@
+<div>
+  <h2 id="page-heading" data-cy="MobilnostHeading">
+    <span>Mobilnosti</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Osvježi</span>
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-mobilnost"
+        [routerLink]="['/mobilnost/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Nova Mobilnost </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="mobilnosts?.length === 0">
+    <span>No Mobilnosts found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="mobilnosts && mobilnosts.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="mobilnostName">
+            <div class="d-flex">
+              <span>Ime</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Opis</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <div class="d-flex">
+              <span>Napravljen</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="data">
+            <div class="d-flex">
+              <span>Dokumenti</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="natjecaj.name">
+            <div class="d-flex">
+              <span>Natječaj</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="prijava.prijavaName">
+            <div class="d-flex">
+              <span>Prijava</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let mobilnost of mobilnosts; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/mobilnost', mobilnost.id, 'view']">{{ mobilnost.id }}</a>
+          </td>
+          <td>{{ mobilnost.mobilnostName }}</td>
+          <td>{{ mobilnost.description }}</td>
+          <td>{{ mobilnost.createdDate | formatMediumDatetime }}</td>
+          <td>
+            <a *ngIf="mobilnost.data" (click)="openFile(mobilnost.data, mobilnost.dataContentType)">Open</a>
+            <span *ngIf="mobilnost.data">{{ mobilnost.dataContentType }}, {{ byteSize(mobilnost.data) }}</span>
+          </td>
+          <td>
+            <div *ngIf="mobilnost.natjecaj">
+              <a [routerLink]="['/natjecaj', mobilnost.natjecaj.id, 'view']">{{ mobilnost.natjecaj.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="mobilnost.prijava">
+              <a [routerLink]="['/prijava', mobilnost.prijava.id, 'view']">{{ mobilnost.prijava.prijavaName }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/mobilnost', mobilnost.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Pogledaj</span>
+              </button>
+
+              <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                [routerLink]="['/mobilnost', mobilnost.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Uredi</span>
+              </button>
+
+              <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                (click)="delete(mobilnost)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Obriši</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

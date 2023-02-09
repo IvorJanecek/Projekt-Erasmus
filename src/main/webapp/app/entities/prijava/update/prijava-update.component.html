@@ -1,0 +1,189 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-prijava-heading" data-cy="PrijavaCreateUpdateHeading">Napravi ili uredi Prijavu</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_prijavaName">Ime prijave</label>
+          <input
+            type="text"
+            class="form-control"
+            name="prijavaName"
+            id="field_prijavaName"
+            data-cy="prijavaName"
+            formControlName="prijavaName"
+          />
+          <div *ngIf="editForm.get('prijavaName')!.invalid && (editForm.get('prijavaName')!.dirty || editForm.get('prijavaName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('prijavaName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_opis">Opis</label>
+          <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
+          <div *ngIf="editForm.get('opis')!.invalid && (editForm.get('opis')!.dirty || editForm.get('opis')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('opis')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdDate">Napravljen</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="row mb-3">
+          <label class="form-label" for="field_prihvacen">Prihvaćen</label>
+          <input type="checkbox" class="form-check" name="prihvacen" id="field_prihvacen" data-cy="prihvacen" formControlName="prihvacen" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trajanjeOd">Trajanje od</label>
+          <div class="input-group">
+            <input
+              id="field_trajanjeOd"
+              data-cy="trajanjeOd"
+              type="text"
+              class="form-control"
+              name="trajanjeOd"
+              ngbDatepicker
+              #trajanjeOdDp="ngbDatepicker"
+              formControlName="trajanjeOd"
+            />
+            <button type="button" class="btn btn-secondary" (click)="trajanjeOdDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('trajanjeOd')!.invalid && (editForm.get('trajanjeOd')!.dirty || editForm.get('trajanjeOd')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trajanjeDo">Trajanje do</label>
+          <div class="input-group">
+            <input
+              id="field_trajanjeDo"
+              data-cy="trajanjeDo"
+              type="text"
+              class="form-control"
+              name="trajanjeDo"
+              ngbDatepicker
+              #trajanjeDoDp="ngbDatepicker"
+              formControlName="trajanjeDo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="trajanjeDoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('trajanjeDo')!.invalid && (editForm.get('trajanjeDo')!.dirty || editForm.get('trajanjeDo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeDo')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_data">Dokumenti</label>
+          <div>
+            <div *ngIf="editForm.get('data')!.value" class="form-text text-danger clearfix">
+              <a class="pull-start" (click)="openFile(editForm.get('data')!.value!, editForm.get('dataContentType')!.value!)">Open</a><br />
+              <span class="pull-start">{{ editForm.get('dataContentType')!.value }}, {{ byteSize(editForm.get('data')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ data: undefined, dataContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_data" data-cy="data" (change)="setFileData($event, 'data', false)" />
+          </div>
+          <input type="hidden" class="form-control" name="data" id="field_data" data-cy="data" formControlName="data" />
+          <input type="hidden" class="form-control" name="dataContentType" id="field_dataContentType" formControlName="dataContentType" />
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_USER'">
+          <label class="form-label" for="field_kategorija">Kategorija</label>
+          <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let kategorija of kategorijaValues.slice(0, 2)" [value]="kategorija">{{ kategorija }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_PROFESOR'">
+          <label class="form-label" for="field_kategorija">Kategorija</label>
+          <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let kategorija of kategorijaValues.slice(2)" [value]="kategorija">{{ kategorija }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_user">Korisnik</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fakultet">Fakultet</label>
+          <select
+            class="form-control"
+            id="field_fakultet"
+            data-cy="fakultet"
+            name="fakultet"
+            formControlName="fakultet"
+            [compareWith]="compareFakultet"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="fakultetOption" *ngFor="let fakultetOption of fakultetsSharedCollection">{{ fakultetOption.name }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_natjecaj">Natječaj</label>
+          <select
+            class="form-control"
+            id="field_natjecaj"
+            data-cy="natjecaj"
+            name="natjecaj"
+            formControlName="natjecaj"
+            [compareWith]="compareNatjecaj"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="natjecajOption" *ngFor="let natjecajOption of natjecajsSharedCollection">{{ natjecajOption.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkaži promjene</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Spremi</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

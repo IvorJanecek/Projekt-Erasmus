@@ -1,0 +1,61 @@
+{
+  "applications": "*",
+  "changelogDate": "20221218142045",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "natjecaj",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "datumOd",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "datumDo",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "OTVOREN,ZATVOREN"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Natjecaj",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "prijava",
+      "otherEntityRelationshipName": "natjecaj",
+      "relationshipName": "prijava",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "mobilnost",
+      "otherEntityRelationshipName": "natjecaj",
+      "ownerSide": false,
+      "relationshipName": "mobilnost",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

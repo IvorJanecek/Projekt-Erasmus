@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20221218142048",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "fakultet",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Fakultet",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "prijava",
+      "otherEntityRelationshipName": "fakultet",
+      "relationshipName": "prijava",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

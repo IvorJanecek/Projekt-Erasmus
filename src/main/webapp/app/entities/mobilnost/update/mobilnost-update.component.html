@@ -1,0 +1,131 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-mobilnost-heading" data-cy="MobilnostCreateUpdateHeading">Napravi ili uredi Mobilnost</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_mobilnostName">Mobilnost</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mobilnostName"
+            id="field_mobilnostName"
+            data-cy="mobilnostName"
+            formControlName="mobilnostName"
+          />
+          <div
+            *ngIf="
+              editForm.get('mobilnostName')!.invalid && (editForm.get('mobilnostName')!.dirty || editForm.get('mobilnostName')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('mobilnostName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Opis</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3" style="display: none">
+          <label class="form-label" for="field_createdDate">Created Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_data">Dokumenti</label>
+          <div>
+            <div *ngIf="editForm.get('data')!.value" class="form-text text-danger clearfix">
+              <a class="pull-start" (click)="openFile(editForm.get('data')!.value!, editForm.get('dataContentType')!.value!)">Open</a><br />
+              <span class="pull-start">{{ editForm.get('dataContentType')!.value }}, {{ byteSize(editForm.get('data')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ data: undefined, dataContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_data" data-cy="data" (change)="setFileData($event, 'data', false)" />
+          </div>
+          <input type="hidden" class="form-control" name="data" id="field_data" data-cy="data" formControlName="data" />
+          <input type="hidden" class="form-control" name="dataContentType" id="field_dataContentType" formControlName="dataContentType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_natjecaj">Natječaj</label>
+          <select
+            class="form-control"
+            id="field_natjecaj"
+            data-cy="natjecaj"
+            name="natjecaj"
+            formControlName="natjecaj"
+            [compareWith]="compareNatjecaj"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="natjecajOption" *ngFor="let natjecajOption of natjecajsCollection">{{ natjecajOption.name }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_prijava">Prijava</label>
+          <select
+            class="form-control"
+            id="field_prijava"
+            data-cy="prijava"
+            name="prijava"
+            formControlName="prijava"
+            [compareWith]="comparePrijava"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="prijavaOption" *ngFor="let prijavaOption of prijavasCollection">{{ prijavaOption.prijavaName }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Poništi promjene</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Spremi</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

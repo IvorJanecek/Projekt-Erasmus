@@ -1,0 +1,70 @@
+
+entity Natjecaj {
+	id Long,
+    name String required,
+    description String required,
+    createDate Instant,
+    datumOd LocalDate,
+    datumDo LocalDate,
+    status Status
+}
+
+entity Mobilnost {
+	id Long,
+    mobilnostName String required,
+    description String required,
+    createdDate Instant,
+    data AnyBlob
+}
+
+
+entity Prijava {
+	prijavaName String required,
+	opis String required,
+	createdDate Instant,
+    prihvacen Boolean,
+    trajanjeOd LocalDate required,
+    trajanjeDo LocalDate required,
+    data AnyBlob,
+    kategorija Kategorija
+}
+entity Fakultet {
+	name String required
+}
+
+enum Status {
+	OTVOREN, ZATVOREN
+}
+enum Kategorija {
+	NASTAVA, STRUCNA_PRAKSA, STRUCNO_USAVRSAVANJE, STRUCNO_PREDAVANJE
+}
+
+
+relationship OneToOne{
+Mobilnost{natjecaj(name)} to Natjecaj{mobilnost},
+Mobilnost{prijava(prijavaName)} to Prijava{mobilnost}
+}
+
+
+
+relationship OneToMany {
+	Natjecaj{prijava} to Prijava{natjecaj(name)},
+}
+
+relationship ManyToOne{
+    Prijava{user} to User{prijava},
+    Prijava{fakultet(name)} to Fakultet{prijava}
+}
+
+
+paginate Mobilnost, Natjecaj with infinite-scroll
+paginate Prijava with pagination
+
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

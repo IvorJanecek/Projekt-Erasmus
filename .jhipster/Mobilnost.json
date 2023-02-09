@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20221218142046",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "mobilnost",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "mobilnostName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Mobilnost",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "natjecaj",
+      "otherEntityRelationshipName": "mobilnost",
+      "ownerSide": true,
+      "relationshipName": "natjecaj",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "prijavaName",
+      "otherEntityName": "prijava",
+      "otherEntityRelationshipName": "mobilnost",
+      "ownerSide": true,
+      "relationshipName": "prijava",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

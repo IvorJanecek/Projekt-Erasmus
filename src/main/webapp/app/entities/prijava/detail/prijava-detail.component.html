@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prijava">
+      <h2 data-cy="prijavaDetailsHeading"><span>Prijava</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ prijava.id }}</span>
+        </dd>
+        <dt><span>Ime prijave</span></dt>
+        <dd>
+          <span>{{ prijava.prijavaName }}</span>
+        </dd>
+        <dt><span>Opis</span></dt>
+        <dd>
+          <span>{{ prijava.opis }}</span>
+        </dd>
+        <dt><span>Napravljen</span></dt>
+        <dd>
+          <span>{{ prijava.createdDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Prihvaćen</span></dt>
+        <dd>
+          <span>{{ prijava.prihvacen }}</span>
+        </dd>
+        <dt><span>Trajanje od</span></dt>
+        <dd>
+          <span>{{ prijava.trajanjeOd | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Trajanje do</span></dt>
+        <dd>
+          <span>{{ prijava.trajanjeDo | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Dokumenti</span></dt>
+        <dd>
+          <div *ngIf="prijava.data">
+            <a (click)="openFile(prijava.data, prijava.dataContentType)">Otvori</a>
+            {{ prijava.dataContentType }}, {{ byteSize(prijava.data) }}
+          </div>
+        </dd>
+        <dt><span>Kategorija</span></dt>
+        <dd>
+          <span>{{ prijava.kategorija }}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span>{{ prijava.user?.id }}</span>
+        </dd>
+        <dt><span>Fakultet</span></dt>
+        <dd>
+          <div *ngIf="prijava.fakultet">
+            <a [routerLink]="['/fakultet', prijava.fakultet.id, 'view']">{{ prijava.fakultet.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Natječaj</span></dt>
+        <dd>
+          <div *ngIf="prijava.natjecaj">
+            <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button *ngIf="!prijava.prihvacen" (click)="createMobilnost(prijava)">Prihvati Prijavu</button>
+      </div>
+
+      <button *ngIf="!prijava.prihvacen" type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

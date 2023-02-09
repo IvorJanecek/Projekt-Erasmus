@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Mobilnost.
+    -->
+    <changeSet id="20221218142046-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="natjecaj_id"
+                                 baseTableName="mobilnost"
+                                 constraintName="fk_mobilnost__natjecaj_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="natjecaj"/>
+
+        <addForeignKeyConstraint baseColumnNames="prijava_id"
+                                 baseTableName="mobilnost"
+                                 constraintName="fk_mobilnost__prijava_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prijava"/>
+    </changeSet>
+</databaseChangeLog>

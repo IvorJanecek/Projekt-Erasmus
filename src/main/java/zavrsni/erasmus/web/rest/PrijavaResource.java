@@ -1,0 +1,199 @@
+package zavrsni.erasmus.web.rest;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
+import tech.jhipster.web.util.ResponseUtil;
+import zavrsni.erasmus.repository.PrijavaRepository;
+import zavrsni.erasmus.service.PrijavaService;
+import zavrsni.erasmus.service.dto.PrijavaDTO;
+import zavrsni.erasmus.web.rest.errors.BadRequestAlertException;
+
+/**
+ * REST controller for managing {@link zavrsni.erasmus.domain.Prijava}.
+ */
+@RestController
+@RequestMapping("/api")
+public class PrijavaResource {
+
+    private final Logger log = LoggerFactory.getLogger(PrijavaResource.class);
+
+    private static final String ENTITY_NAME = "prijava";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
+    private final PrijavaService prijavaService;
+
+    private final PrijavaRepository prijavaRepository;
+
+    public PrijavaResource(PrijavaService prijavaService, PrijavaRepository prijavaRepository) {
+        this.prijavaService = prijavaService;
+        this.prijavaRepository = prijavaRepository;
+    }
+
+    /**
+     * {@code POST  /prijavas} : Create a new prijava.
+     *
+     * @param prijavaDTO the prijavaDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new prijavaDTO, or with status {@code 400 (Bad Request)} if the prijava has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/prijavas")
+    public ResponseEntity<PrijavaDTO> createPrijava(@Valid @RequestBody PrijavaDTO prijavaDTO) throws URISyntaxException {
+        log.debug("REST request to save Prijava : {}", prijavaDTO);
+        if (prijavaDTO.getId() != null) {
+            throw new BadRequestAlertException("A new prijava cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        PrijavaDTO result = prijavaService.save(prijavaDTO);
+        return ResponseEntity
+            .created(new URI("/api/prijavas/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PUT  /prijavas/:id} : Updates an existing prijava.
+     *
+     * @param id the id of the prijavaDTO to save.
+     * @param prijavaDTO the prijavaDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prijavaDTO,
+     * or with status {@code 400 (Bad Request)} if the prijavaDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the prijavaDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/prijavas/{id}")
+    public ResponseEntity<PrijavaDTO> updatePrijava(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody PrijavaDTO prijavaDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to update Prijava : {}, {}", id, prijavaDTO);
+        if (prijavaDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, prijavaDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!prijavaRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        PrijavaDTO result = prijavaService.update(prijavaDTO);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PATCH  /prijavas/:id} : Partial updates given fields of an existing prijava, field will ignore if it is null
+     *
+     * @param id the id of the prijavaDTO to save.
+     * @param prijavaDTO the prijavaDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prijavaDTO,
+     * or with status {@code 400 (Bad Request)} if the prijavaDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the prijavaDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the prijavaDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PatchMapping(value = "/prijavas/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<PrijavaDTO> partialUpdatePrijava(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody PrijavaDTO prijavaDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to partial update Prijava partially : {}, {}", id, prijavaDTO);
+        if (prijavaDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, prijavaDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!prijavaRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<PrijavaDTO> result = prijavaService.partialUpdate(prijavaDTO);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString())
+        );
+    }
+
+    /**
+     * {@code GET  /prijavas} : get all the prijavas.
+     *
+     * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param filter the filter of the request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of prijavas in body.
+     */
+    @GetMapping("/prijavas")
+    public ResponseEntity<List<PrijavaDTO>> getAllPrijavas(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        if ("mobilnost-is-null".equals(filter)) {
+            log.debug("REST request to get all Prijavas where mobilnost is null");
+            return new ResponseEntity<>(prijavaService.findAllWhereMobilnostIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Prijavas");
+        Page<PrijavaDTO> page;
+        if (eagerload) {
+            page = prijavaService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = prijavaService.findAll(pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /prijavas/:id} : get the "id" prijava.
+     *
+     * @param id the id of the prijavaDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the prijavaDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/prijavas/{id}")
+    public ResponseEntity<PrijavaDTO> getPrijava(@PathVariable Long id) {
+        log.debug("REST request to get Prijava : {}", id);
+        Optional<PrijavaDTO> prijavaDTO = prijavaService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(prijavaDTO);
+    }
+
+    /**
+     * {@code DELETE  /prijavas/:id} : delete the "id" prijava.
+     *
+     * @param id the id of the prijavaDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/prijavas/{id}")
+    public ResponseEntity<Void> deletePrijava(@PathVariable Long id) {
+        log.debug("REST request to delete Prijava : {}", id);
+        prijavaService.delete(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
+    }
+}

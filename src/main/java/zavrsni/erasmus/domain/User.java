@@ -21,7 +21,7 @@ import zavrsni.erasmus.config.Constants;
  * A user.
  */
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
@@ -54,6 +54,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Email
     @Size(min = 5, max = 254)
     @Column(length = 254, unique = true)
+    @Pattern(regexp = "[A-Za-z].+[A-Za-z]+[@]+[student].+[mev].+[hr]|[A-Za-z].+[A-Za-z]+[@]+[mev].+[hr]|[A-Za-z]+[@]+[mev].+[hr]")
     private String email;
 
     @NotNull
@@ -84,7 +85,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "jhi_user_authority",
+        name = "user_authority",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
         inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
     )

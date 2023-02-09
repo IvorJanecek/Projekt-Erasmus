@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="mobilnost">
+      <h2 data-cy="mobilnostDetailsHeading"><span>Mobilnost</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+          <span>{{ mobilnost.id }}</span>
+        </dd>
+        <dt><span>Mobilnost</span></dt>
+        <dd>
+          <span>{{ mobilnost.mobilnostName }}</span>
+        </dd>
+        <dt><span>Opis</span></dt>
+        <dd>
+          <span>{{ mobilnost.description }}</span>
+        </dd>
+        <dt><span>Napravljen</span></dt>
+        <dd>
+          <span>{{ mobilnost.createdDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Dokumenti</span></dt>
+        <dd>
+          <div *ngIf="mobilnost.data">
+            <a (click)="openFile(mobilnost.data, mobilnost.dataContentType)">Open</a>
+            {{ mobilnost.dataContentType }}, {{ byteSize(mobilnost.data) }}
+          </div>
+        </dd>
+        <dt><span>Natječaj</span></dt>
+        <dd>
+          <div *ngIf="mobilnost.natjecaj">
+            <a [routerLink]="['/natjecaj', mobilnost.natjecaj.id, 'view']">{{ mobilnost.natjecaj.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Prijava</span></dt>
+        <dd>
+          <div *ngIf="mobilnost.prijava">
+            <a [routerLink]="['/prijava', mobilnost.prijava.id, 'view']">{{ mobilnost.prijava.prijavaName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
+      </button>
+
+      <button type="button" [routerLink]="['/mobilnost', mobilnost.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
+      </button>
+    </div>
+  </div>
+</div>

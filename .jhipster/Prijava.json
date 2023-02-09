@@ -1,0 +1,82 @@
+{
+  "applications": "*",
+  "changelogDate": "20221218142047",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "prijava",
+  "fields": [
+    {
+      "fieldName": "prijavaName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "opis",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "prihvacen",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "trajanjeOd",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "trajanjeDo",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "kategorija",
+      "fieldType": "Kategorija",
+      "fieldValues": "NASTAVA,STRUCNA_PRAKSA,STRUCNO_USAVRSAVANJE,STRUCNO_PREDAVANJE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Prijava",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "prijava",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "fakultet",
+      "otherEntityRelationshipName": "prijava",
+      "relationshipName": "fakultet",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "mobilnost",
+      "otherEntityRelationshipName": "prijava",
+      "ownerSide": false,
+      "relationshipName": "mobilnost",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "natjecaj",
+      "otherEntityRelationshipName": "prijava",
+      "relationshipName": "natjecaj",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

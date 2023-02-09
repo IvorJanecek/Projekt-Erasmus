@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fakultet">
+      <h2 data-cy="fakultetDetailsHeading"><span>Fakultet</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ fakultet.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ fakultet.name }}</span>
+        </dd>
+        <dt><span>Zemlja</span></dt>
+        <dd>
+          <span>{{ fakultet.zemlja }}</span>
+        </dd>
+        <dt><span>Grad</span></dt>
+        <dd>
+          <span>{{ fakultet.grad }}</span>
+        </dd>
+        <dt><span>Adresa</span></dt>
+        <dd>
+          <span>{{ fakultet.adresa }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/fakultet', fakultet.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

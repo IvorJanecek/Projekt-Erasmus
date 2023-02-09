@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="natjecaj">
+      <h2 data-cy="natjecajDetailsHeading"><span>Natjecaj</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+          <span>{{ natjecaj.id }}</span>
+        </dd>
+        <dt><span>Ime</span></dt>
+        <dd>
+          <span>{{ natjecaj.name }}</span>
+        </dd>
+        <dt><span>Opis</span></dt>
+        <dd>
+          <span>{{ natjecaj.description }}</span>
+        </dd>
+        <dt><span>Napravljen</span></dt>
+        <dd>
+          <span>{{ natjecaj.createDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Datum od</span></dt>
+        <dd>
+          <span>{{ natjecaj.datumOd | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Datum do</span></dt>
+        <dd>
+          <span>{{ natjecaj.datumDo | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ natjecaj.status }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
+      </button>
+
+      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/natjecaj', natjecaj.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-prijava"
+        [routerLink]="['/prijava/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Prijavi se </span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div>
+  <h2 id="page-heading" data-cy="NatjecajHeading">
+    <span>Natječaj</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Osvježi</span>
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-natjecaj"
+        [routerLink]="['/natjecaj/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Novi Natječaj </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="natjecajs?.length === 0">
+    <span>No Natjecajs found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="natjecajs && natjecajs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Ime</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span>Opis</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createDate">
+            <div class="d-flex">
+              <span>Napravljen</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="datumOd">
+            <div class="d-flex">
+              <span>Datum od</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="datumDo">
+            <div class="d-flex">
+              <span>Datum do</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span>Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let natjecaj of natjecajs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/natjecaj', natjecaj.id, 'view']">{{ natjecaj.id }}</a>
+          </td>
+          <td>{{ natjecaj.name }}</td>
+          <td
+            class="form-control"
+            style="word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; width: 600px; height: 133px"
+          >
+            {{ natjecaj.description }}
+          </td>
+
+          <td>{{ natjecaj.createDate | formatMediumDatetime }}</td>
+          <td>{{ natjecaj.datumOd | formatMediumDate }}</td>
+          <td>{{ natjecaj.datumDo | formatMediumDate }}</td>
+          <td>{{ natjecaj.status }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/natjecaj', natjecaj.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Pogledaj</span>
+              </button>
+
+              <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                [routerLink]="['/natjecaj', natjecaj.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Uredi</span>
+              </button>
+
+              <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                (click)="delete(natjecaj)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Obriši</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
