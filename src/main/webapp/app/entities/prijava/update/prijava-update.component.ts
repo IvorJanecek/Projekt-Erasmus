@@ -17,6 +17,8 @@ import { FakultetService } from 'app/entities/fakultet/service/fakultet.service'
 import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { NatjecajService } from 'app/entities/natjecaj/service/natjecaj.service';
 import { Kategorija } from 'app/entities/enumerations/kategorija.model';
+import { Account } from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-prijava-update',
@@ -32,6 +34,9 @@ export class PrijavaUpdateComponent implements OnInit {
   natjecajsSharedCollection: INatjecaj[] = [];
 
   editForm: PrijavaFormGroup = this.prijavaFormService.createPrijavaFormGroup();
+  natjecaj: any;
+  natjecajId: number | null | undefined;
+  account$?: Observable<Account | null>;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -41,7 +46,8 @@ export class PrijavaUpdateComponent implements OnInit {
     protected userService: UserService,
     protected fakultetService: FakultetService,
     protected natjecajService: NatjecajService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected accountService: AccountService
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
@@ -51,6 +57,7 @@ export class PrijavaUpdateComponent implements OnInit {
   compareNatjecaj = (o1: INatjecaj | null, o2: INatjecaj | null): boolean => this.natjecajService.compareNatjecaj(o1, o2);
 
   ngOnInit(): void {
+    this.account$ = this.accountService.identity();
     this.activatedRoute.data.subscribe(({ prijava }) => {
       this.prijava = prijava;
       if (prijava) {
@@ -59,6 +66,8 @@ export class PrijavaUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+    this.prijava = history.state.prijava;
+    this.prijava!.natjecaj = this.natjecajId;
   }
 
   byteSize(base64String: string): string {
@@ -118,10 +127,6 @@ export class PrijavaUpdateComponent implements OnInit {
       this.fakultetsSharedCollection,
       prijava.fakultet
     );
-    this.natjecajsSharedCollection = this.natjecajService.addNatjecajToCollectionIfMissing<INatjecaj>(
-      this.natjecajsSharedCollection,
-      prijava.natjecaj
-    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -138,13 +143,5 @@ export class PrijavaUpdateComponent implements OnInit {
         map((fakultets: IFakultet[]) => this.fakultetService.addFakultetToCollectionIfMissing<IFakultet>(fakultets, this.prijava?.fakultet))
       )
       .subscribe((fakultets: IFakultet[]) => (this.fakultetsSharedCollection = fakultets));
-
-    this.natjecajService
-      .query()
-      .pipe(map((res: HttpResponse<INatjecaj[]>) => res.body ?? []))
-      .pipe(
-        map((natjecajs: INatjecaj[]) => this.natjecajService.addNatjecajToCollectionIfMissing<INatjecaj>(natjecajs, this.prijava?.natjecaj))
-      )
-      .subscribe((natjecajs: INatjecaj[]) => (this.natjecajsSharedCollection = natjecajs));
   }
 }

@@ -62,7 +62,7 @@
         <dt><span>Natječaj</span></dt>
         <dd>
           <div *ngIf="prijava.natjecaj">
-            <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.name }}</a>
+            <a [routerLink]="['/natjecaj', prijava.natjecaj, 'view']">{{ prijava.natjecaj }}</a>
           </div>
         </dd>
       </dl>

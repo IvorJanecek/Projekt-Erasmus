@@ -17,7 +17,7 @@ export interface IPrijava {
   kategorija?: Kategorija | null;
   user?: Pick<IUser, 'id'> | null;
   fakultet?: Pick<IFakultet, 'id' | 'name'> | null;
-  natjecaj?: Pick<INatjecaj, 'id' | 'name'> | null;
+  natjecaj?: number | null;
 }
 
 export type NewPrijava = Omit<IPrijava, 'id'> & { id: null };

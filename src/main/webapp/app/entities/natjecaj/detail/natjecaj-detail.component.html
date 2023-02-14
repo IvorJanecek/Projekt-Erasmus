@@ -48,15 +48,7 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-prijava"
-        [routerLink]="['/prijava/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Prijavi se </span>
-      </button>
+      <button (click)="createNewPrijava(natjecaj.id)">Create new Prijava</button>
     </div>
   </div>
 </div>

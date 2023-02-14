@@ -1,11 +1,11 @@
-id;name
-1;mint panel
-2;grey
-3;Unbranded
-4;monitor Somalia
-5;Wisconsin
-6;motivating Bridge Switchable
-7;navigating
-8;Pants
-9;Practical Islands
-10;Granite complexity Movies
+id;name;zemlja;adresa;grad
+1;mint panel;zemlja;adresa;grad
+2;grey;zemlja;adresa;grad
+3;Unbranded;zemlja;adresa;grad
+4;monitor Somalia;zemlja;adresa;grad
+5;Wisconsin;zemlja;adresa;grad
+6;motivating Bridge Switchable;zemlja;adresa;grad
+7;navigating;zemlja;adresa;grad
+8;Pants,what;zemlja;adresa;grad
+9;Practical Islands;zemlja;adresa;grad
+10;Granite complexity Movies;zemlja;adresa;grad
