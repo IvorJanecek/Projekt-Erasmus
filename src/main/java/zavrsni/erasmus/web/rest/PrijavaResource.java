@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -21,7 +22,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+import zavrsni.erasmus.domain.Natjecaj;
+import zavrsni.erasmus.domain.User;
+import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.repository.PrijavaRepository;
+import zavrsni.erasmus.repository.UserRepository;
+import zavrsni.erasmus.security.SecurityUtils;
 import zavrsni.erasmus.service.PrijavaService;
 import zavrsni.erasmus.service.dto.PrijavaDTO;
 import zavrsni.erasmus.web.rest.errors.BadRequestAlertException;
@@ -43,10 +49,19 @@ public class PrijavaResource {
     private final PrijavaService prijavaService;
 
     private final PrijavaRepository prijavaRepository;
+    private final NatjecajRepository natjecajRepository;
+    private final UserRepository userRepository;
 
-    public PrijavaResource(PrijavaService prijavaService, PrijavaRepository prijavaRepository) {
+    public PrijavaResource(
+        NatjecajRepository natjecajRepository,
+        PrijavaService prijavaService,
+        PrijavaRepository prijavaRepository,
+        UserRepository userRepository
+    ) {
         this.prijavaService = prijavaService;
         this.prijavaRepository = prijavaRepository;
+        this.userRepository = userRepository;
+        this.natjecajRepository = natjecajRepository;
     }
 
     /**
@@ -62,6 +77,23 @@ public class PrijavaResource {
         if (prijavaDTO.getId() != null) {
             throw new BadRequestAlertException("A new prijava cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        // Get the Natjecaj entity associated with the Prijava entity
+        Natjecaj natjecaj = natjecajRepository
+            .findById(prijavaDTO.getNatjecaj().getId())
+            .orElseThrow(() -> new EntityNotFoundException("Natjecaj not found"));
+
+        // Get the user creating the Prijava entity
+        User user = userRepository
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse(null))
+            .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        // Check if user has already created a Prijava entity for this Natjecaj
+        if (prijavaService.hasUserApplied(natjecaj, user)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Create and save new Prijava entity
         PrijavaDTO result = prijavaService.save(prijavaDTO);
         return ResponseEntity
             .created(new URI("/api/prijavas/" + result.getId()))

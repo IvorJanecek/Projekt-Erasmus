@@ -7,16 +7,6 @@
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Osvježi</span>
       </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-prijava"
-        [routerLink]="['/prijava/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Nova Prijava</span>
-      </button>
     </div>
   </h2>
 
@@ -133,7 +123,7 @@
           </td>
           <td>
             <div *ngIf="prijava.natjecaj">
-              <a [routerLink]="['/natjecaj', prijava.natjecaj, 'view']">{{ prijava.natjecaj }}</a>
+              <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
             </div>
           </td>
           <td class="text-end">
@@ -150,6 +140,7 @@
 
               <button
                 *ngIf="!prijava.prihvacen"
+                jhiHasAnyAuthority="Role_ADMIN"
                 type="submit"
                 [routerLink]="['/prijava', prijava.id, 'edit']"
                 class="btn btn-primary btn-sm"

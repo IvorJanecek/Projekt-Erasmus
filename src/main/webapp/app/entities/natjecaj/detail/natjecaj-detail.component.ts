@@ -20,10 +20,10 @@ export class NatjecajDetailComponent implements OnInit {
     });
   }
 
-  createNewPrijava(natjecaj: number): void {
+  createNewPrijava(natjecaj: Pick<INatjecaj, 'id'>): void {
     const newPrijava: IPrijava = {
-      natjecaj,
-      id: 0,
+      natjecaj: natjecaj,
+      id: natjecaj.id,
     };
     this.router.navigate(['/prijava/new'], { state: { prijava: newPrijava } });
   }

@@ -39,7 +39,14 @@ export class PrijavaDetailComponent implements OnInit {
   createMobilnost(prijava: IPrijava): void {
     // set the prihvacen field to true for the Prijava entity
     prijava.prihvacen = true;
-    this.prijavaService.update(prijava).subscribe(() => {
+
+    const PartialUpdatePrijava = {
+      id: prijava.id,
+      prihvacen: prijava.prihvacen,
+    };
+
+    this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
+      console.log(prijava.prihvacen);
       this.save();
     });
   }

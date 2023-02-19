@@ -34,8 +34,6 @@ export class PrijavaUpdateComponent implements OnInit {
   natjecajsSharedCollection: INatjecaj[] = [];
 
   editForm: PrijavaFormGroup = this.prijavaFormService.createPrijavaFormGroup();
-  natjecaj: any;
-  natjecajId: number | null | undefined;
   account$?: Observable<Account | null>;
 
   constructor(
@@ -67,7 +65,6 @@ export class PrijavaUpdateComponent implements OnInit {
       this.loadRelationshipsOptions();
     });
     this.prijava = history.state.prijava;
-    this.prijava!.natjecaj = this.natjecajId;
   }
 
   byteSize(base64String: string): string {

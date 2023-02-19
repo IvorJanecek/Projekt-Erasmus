@@ -151,6 +151,20 @@
             <option [ngValue]="fakultetOption" *ngFor="let fakultetOption of fakultetsSharedCollection">{{ fakultetOption.name }}</option>
           </select>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_natjecaj">natjecaj</label>
+          <select
+            class="form-control"
+            id="field_natjecaj"
+            data-cy="natjecaj"
+            name="natjecaj"
+            formControlName="natjecaj"
+            [compareWith]="compareNatjecaj"
+          >
+            <option [ngValue]="prijava">{{ prijava!.natjecaj?.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

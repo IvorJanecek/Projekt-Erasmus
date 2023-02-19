@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh list</span>
+        <span>Osvježi</span>
       </button>
 
       <button
@@ -16,7 +16,7 @@
         [routerLink]="['/fakultet/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Fakultet </span>
+        <span> Dodaj Fakultet</span>
       </button>
     </div>
   </h2>
@@ -85,7 +85,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
+                <span class="d-none d-md-inline">Pogledaj</span>
               </button>
 
               <button
@@ -96,7 +96,7 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Uredi</span>
               </button>
 
               <button
@@ -107,7 +107,7 @@
                 data-cy="entityDeleteButton"
               >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline">Obriši</span>
               </button>
             </div>
           </td>

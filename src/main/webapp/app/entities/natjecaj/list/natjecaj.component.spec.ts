@@ -31,7 +31,7 @@ describe('Natjecaj Management Component', () => {
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'id,desc',
+                sort: 'createDate,desc',
               })
             ),
             snapshot: { queryParams: {} },

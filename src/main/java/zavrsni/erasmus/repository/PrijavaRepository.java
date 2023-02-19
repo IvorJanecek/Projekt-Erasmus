@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import zavrsni.erasmus.domain.Natjecaj;
 import zavrsni.erasmus.domain.Prijava;
+import zavrsni.erasmus.domain.User;
 
 /**
  * Spring Data JPA repository for the Prijava entity.
@@ -28,6 +30,8 @@ public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     default Page<Prijava> findAllWithEagerRelationships(Pageable pageable) {
         return this.findAllWithToOneRelationships(pageable);
     }
+
+    Optional<Prijava> findByNatjecajAndUser(Natjecaj natjecaj, User user);
 
     @Query(
         value = "select distinct prijava from Prijava prijava left join fetch prijava.fakultet left join fetch prijava.natjecaj",

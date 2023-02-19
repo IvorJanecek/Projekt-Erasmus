@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import zavrsni.erasmus.domain.Natjecaj;
+import zavrsni.erasmus.domain.Prijava;
+import zavrsni.erasmus.domain.User;
+import zavrsni.erasmus.repository.PrijavaRepository;
 import zavrsni.erasmus.service.dto.PrijavaDTO;
 
 /**
@@ -40,6 +44,12 @@ public interface PrijavaService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
+    public default boolean hasUserApplied(Natjecaj natjecaj, User user) {
+        PrijavaRepository prijavaRepository = null;
+        Optional<Prijava> prijavaOptional = prijavaRepository.findByNatjecajAndUser(natjecaj, user);
+        return prijavaOptional.isPresent();
+    }
+
     Page<PrijavaDTO> findAll(Pageable pageable);
     /**
      * Get all the PrijavaDTO where Mobilnost is {@code null}.
