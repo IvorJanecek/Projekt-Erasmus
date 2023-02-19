@@ -23,6 +23,7 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     @Named("userId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "login", source = "login")
     UserDTO toDtoUserId(User user);
 
     @Named("fakultetName")

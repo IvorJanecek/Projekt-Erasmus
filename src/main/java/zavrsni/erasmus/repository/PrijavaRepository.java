@@ -16,8 +16,11 @@ import zavrsni.erasmus.domain.User;
  */
 @Repository
 public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
-    @Query("select prijava from Prijava prijava where prijava.user.login = ?#{principal.username}")
-    List<Prijava> findByUserIsCurrentUser();
+    @Query(
+        value = "select prijava from Prijava prijava where prijava.user.login = ?#{principal.username}",
+        countQuery = "select count(distinct prijava) from Prijava prijava"
+    )
+    Page<Prijava> findByUserIsCurrentUser(Pageable pageable);
 
     default Optional<Prijava> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
@@ -31,6 +34,10 @@ public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
         return this.findAllWithToOneRelationships(pageable);
     }
 
+    default Page<Prijava> findAllWithEagerRelationshipsForCurrentUser(Pageable pageable) {
+        return this.findAllWithToOneRelationshipsForCurrentUser(pageable);
+    }
+
     Optional<Prijava> findByNatjecajAndUser(Natjecaj natjecaj, User user);
 
     @Query(
@@ -38,6 +45,12 @@ public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
         countQuery = "select count(distinct prijava) from Prijava prijava"
     )
     Page<Prijava> findAllWithToOneRelationships(Pageable pageable);
+
+    @Query(
+        value = "select distinct prijava from Prijava prijava left join fetch prijava.fakultet left join fetch prijava.natjecaj where prijava.user.login = ?#{principal.username}",
+        countQuery = "select count(distinct prijava) from Prijava prijava"
+    )
+    Page<Prijava> findAllWithToOneRelationshipsForCurrentUser(Pageable pageable);
 
     @Query("select distinct prijava from Prijava prijava left join fetch prijava.fakultet left join fetch prijava.natjecaj")
     List<Prijava> findAllWithToOneRelationships();

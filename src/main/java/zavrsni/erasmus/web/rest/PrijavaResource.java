@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -192,9 +191,9 @@ public class PrijavaResource {
         log.debug("REST request to get a page of Prijavas");
         Page<PrijavaDTO> page;
         if (eagerload) {
-            page = prijavaService.findAllWithEagerRelationships(pageable);
+            page = prijavaService.findByUserIsCurrentUserWithEagerRelationships(pageable);
         } else {
-            page = prijavaService.findAll(pageable);
+            page = prijavaService.findByUserIsCurrentUser(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -209,8 +208,18 @@ public class PrijavaResource {
     @GetMapping("/prijavas/{id}")
     public ResponseEntity<PrijavaDTO> getPrijava(@PathVariable Long id) {
         log.debug("REST request to get Prijava : {}", id);
+
+        // Get the ID of the currently logged-in user
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElse(null);
+        // Retrieve the Prijava entity by ID
         Optional<PrijavaDTO> prijavaDTO = prijavaService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(prijavaDTO);
+
+        // Check if the Prijava entity exists and was created by the current user
+        if (prijavaDTO.isPresent() && prijavaDTO.get().getUser().getLogin().equals(currentUserLogin)) {
+            return ResponseUtil.wrapOrNotFound(prijavaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**

@@ -52,6 +52,9 @@ public interface PrijavaService {
      *
      * @return the {@link List} of entities.
      */
+
+    Page<PrijavaDTO> findByUserIsCurrentUser(Pageable pageable);
+
     List<PrijavaDTO> findAllWhereMobilnostIsNull();
 
     /**
@@ -61,6 +64,8 @@ public interface PrijavaService {
      * @return the list of entities.
      */
     Page<PrijavaDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    Page<PrijavaDTO> findByUserIsCurrentUserWithEagerRelationships(Pageable pageable);
 
     /**
      * Get the "id" prijava.

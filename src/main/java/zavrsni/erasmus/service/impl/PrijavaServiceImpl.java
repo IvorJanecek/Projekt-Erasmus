@@ -75,8 +75,18 @@ public class PrijavaServiceImpl implements PrijavaService {
         return prijavaRepository.findAll(pageable).map(prijavaMapper::toDto);
     }
 
+    @Override
+    public Page<PrijavaDTO> findByUserIsCurrentUser(Pageable pageable) {
+        return prijavaRepository.findByUserIsCurrentUser(pageable).map(prijavaMapper::toDto);
+    }
+
     public Page<PrijavaDTO> findAllWithEagerRelationships(Pageable pageable) {
         return prijavaRepository.findAllWithEagerRelationships(pageable).map(prijavaMapper::toDto);
+    }
+
+    @Override
+    public Page<PrijavaDTO> findByUserIsCurrentUserWithEagerRelationships(Pageable pageable) {
+        return prijavaRepository.findAllWithEagerRelationshipsForCurrentUser(pageable).map(prijavaMapper::toDto);
     }
 
     /**
