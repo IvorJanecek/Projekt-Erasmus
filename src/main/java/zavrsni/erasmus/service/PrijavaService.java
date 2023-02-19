@@ -44,11 +44,7 @@ public interface PrijavaService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    public default boolean hasUserApplied(Natjecaj natjecaj, User user) {
-        PrijavaRepository prijavaRepository = null;
-        Optional<Prijava> prijavaOptional = prijavaRepository.findByNatjecajAndUser(natjecaj, user);
-        return prijavaOptional.isPresent();
-    }
+    boolean hasUserApplied(Natjecaj natjecaj, User user);
 
     Page<PrijavaDTO> findAll(Pageable pageable);
     /**

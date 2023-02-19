@@ -11,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import zavrsni.erasmus.domain.Natjecaj;
 import zavrsni.erasmus.domain.Prijava;
+import zavrsni.erasmus.domain.User;
 import zavrsni.erasmus.repository.PrijavaRepository;
 import zavrsni.erasmus.service.PrijavaService;
 import zavrsni.erasmus.service.dto.PrijavaDTO;
@@ -102,5 +104,11 @@ public class PrijavaServiceImpl implements PrijavaService {
     public void delete(Long id) {
         log.debug("Request to delete Prijava : {}", id);
         prijavaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean hasUserApplied(Natjecaj natjecaj, User user) {
+        Optional<Prijava> prijavaOptional = prijavaRepository.findByNatjecajAndUser(natjecaj, user);
+        return prijavaOptional.isPresent();
     }
 }

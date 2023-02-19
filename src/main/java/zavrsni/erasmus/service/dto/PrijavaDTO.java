@@ -188,5 +188,7 @@ public class PrijavaDTO implements Serializable {
             "}";
     }
 
-    public Long getNatjecajId() {}
+    public Long getNatjecajId() {
+        return id;
+    }
 }
