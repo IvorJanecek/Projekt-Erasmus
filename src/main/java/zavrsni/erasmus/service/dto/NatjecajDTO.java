@@ -28,6 +28,7 @@ public class NatjecajDTO implements Serializable {
     private LocalDate datumDo;
 
     private Status status;
+    private ZahtjevDTO zahtjev;
 
     public Long getId() {
         return id;
@@ -43,6 +44,14 @@ public class NatjecajDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setZahtjev(ZahtjevDTO zahtjev) {
+        this.zahtjev = zahtjev;
+    }
+
+    public ZahtjevDTO getZahtjev() {
+        return zahtjev;
     }
 
     public String getDescription() {

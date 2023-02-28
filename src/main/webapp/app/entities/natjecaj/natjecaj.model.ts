@@ -1,5 +1,6 @@
 import dayjs from 'dayjs/esm';
 import { Status } from 'app/entities/enumerations/status.model';
+import { IZahtjev } from '../zahtjev/zatjev.model';
 
 export interface INatjecaj {
   id: number;

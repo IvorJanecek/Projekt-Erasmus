@@ -54,11 +54,22 @@ public class Natjecaj implements Serializable {
     @JsonIgnoreProperties(value = { "user", "fakultet", "mobilnost", "natjecaj" }, allowSetters = true)
     private Set<Prijava> prijavas = new HashSet<>();
 
+    @OneToMany(mappedBy = "natjecaj")
+    private Set<Zahtjev> zahtjevs = new HashSet<>();
+
     @JsonIgnoreProperties(value = { "natjecaj", "prijava" }, allowSetters = true)
     @OneToOne(mappedBy = "natjecaj")
     private Mobilnost mobilnost;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Set<Zahtjev> getZahtjevs() {
+        return zahtjevs;
+    }
+
+    public void setZahtjevs(Set<Zahtjev> zahtjevs) {
+        this.zahtjevs = zahtjevs;
+    }
 
     public Long getId() {
         return this.id;

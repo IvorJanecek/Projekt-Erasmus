@@ -14,9 +14,11 @@
     <include file="config/liquibase/changelog/20221218142045_added_entity_Natjecaj.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221218142046_added_entity_Mobilnost.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221218142047_added_entity_Prijava.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230227180551_added_entity_Zahtjev.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221218142048_added_entity_Fakultet.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20221218142046_added_entity_constraints_Mobilnost.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230227180551_added_entity_constraints_Zahtjev.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221218142047_added_entity_constraints_Prijava.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
