@@ -11,6 +11,7 @@ type ZahtjevFormDefaults = Pick<NewZahtjev, 'id'>;
 type ZahtjevFormGroupContent = {
   id: FormControl<IZahtjev['id'] | NewZahtjev['id']>;
   name: FormControl<IZahtjev['name']>;
+  natjecaj: FormControl<IZahtjev['natjecaj']>;
 };
 
 export type ZahtjevFormGroup = FormGroup<ZahtjevFormGroupContent>;
@@ -35,6 +36,7 @@ export class ZahtjevFormService {
       name: new FormControl(zahtjevRawValue.name, {
         validators: [Validators.required],
       }),
+      natjecaj: new FormControl(zahtjevRawValue.natjecaj),
     });
   }
 

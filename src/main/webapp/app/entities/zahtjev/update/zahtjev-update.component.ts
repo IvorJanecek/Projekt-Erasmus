@@ -33,6 +33,7 @@ export class ZahtjevUpdateComponent implements OnInit {
         this.updateForm(zahtjev);
       }
     });
+    this.zahtjev = history.state.zahtjev;
   }
 
   previousState(): void {
