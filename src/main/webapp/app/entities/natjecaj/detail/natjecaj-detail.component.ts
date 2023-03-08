@@ -14,6 +14,7 @@ import { ZahtjevModalComponent } from './zahtjev-modal/zahtjev-modal.component';
 export class NatjecajDetailComponent implements OnInit {
   natjecaj: INatjecaj | null = null;
   prijavaService: any;
+  numZahtjevsToCreate = 1;
 
   constructor(protected activatedRoute: ActivatedRoute, protected router: Router, private modalService: NgbModal) {}
 
@@ -24,9 +25,18 @@ export class NatjecajDetailComponent implements OnInit {
   }
 
   createNewZahtjev(natjecaj: Pick<INatjecaj, 'id'>): void {
+    this.numZahtjevsToCreate = 1;
     const modalRef = this.modalService.open(ZahtjevModalComponent, { centered: true });
 
     modalRef.componentInstance.natjecaj = natjecaj;
+    modalRef.result.then(
+      yes => {
+        console.log('Ok click');
+      },
+      cancel => {
+        console.log('cancel Click');
+      }
+    );
   }
 
   createNewPrijava(natjecaj: Pick<INatjecaj, 'id'>): void {

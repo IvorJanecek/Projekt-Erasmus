@@ -1,1 +1,24 @@
-<p>zahtjev-modal works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Create Zahtjev</h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onCreateZahtjevsSubmit()">
+    <div class="form-group">
+      <label for="numZahtjevsToCreate">Number of Zahtjevs to create:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="numZahtjevsToCreate"
+        name="numZahtjevsToCreate"
+        [(ngModel)]="numZahtjevsToCreate"
+        min="1"
+        max="10"
+      />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="onCreateZahtjevsSubmit()">Create</button>
+</div>
