@@ -7,6 +7,7 @@ import { ZahtjevFormGroup, ZahtjevFormService } from 'app/entities/zahtjev/updat
 import { IZahtjev } from 'app/entities/zahtjev/zatjev.model';
 import { finalize, Observable } from 'rxjs';
 import { INatjecaj } from '../../natjecaj.model';
+import { NatjecajService } from '../../service/natjecaj.service';
 
 @Component({
   selector: 'jhi-zahtjev-modal',
@@ -19,12 +20,15 @@ export class ZahtjevModalComponent implements OnInit {
   isSaving = false;
   zahtjev: IZahtjev | null = null;
 
+  natjecajsSharedCollection: INatjecaj[] = [];
+
   editForm: ZahtjevFormGroup = this.zahtjevFormService.createZahtjevFormGroup();
 
   constructor(
     private zahtjevService: ZahtjevService,
     protected zahtjevFormService: ZahtjevFormService,
     public modal: NgbActiveModal,
+    protected natjecajService: NatjecajService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
@@ -38,14 +42,28 @@ export class ZahtjevModalComponent implements OnInit {
       const zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
       zahtjev.natjecaj = this.natjecaj; // set the same natjecaj value for all Zahtjevs
       // set any other properties for the Zahtjev entity here
-      //staro   this.zahtjevService.create(zahtjev).subscribe(() => {
+      // staro   this.zahtjevService.create(zahtjev).subscribe(() => {
       // handle successful creation of the Zahtjev entity
-      //staro   });
+      // staro   });
 
       if (zahtjev.id == null) {
         this.subscribeToSaveResponse(this.zahtjevService.create(zahtjev));
       }
     }
+    this.modal.dismiss();
+  }
+
+  compareNatjecaj = (o1: INatjecaj | null, o2: INatjecaj | null): boolean => this.natjecajService.compareNatjecaj(o1, o2);
+
+  save(): void {
+    this.isSaving = true;
+    const zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
+    if (zahtjev.id !== null) {
+      this.subscribeToSaveResponse(this.zahtjevService.update(zahtjev));
+    } else {
+      this.subscribeToSaveResponse(this.zahtjevService.create(zahtjev));
+    }
+
     this.modal.dismiss();
   }
 
