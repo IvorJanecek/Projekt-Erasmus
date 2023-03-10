@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -65,6 +66,10 @@ public class Natjecaj implements Serializable {
 
     public Set<Zahtjev> getZahtjevs() {
         return zahtjevs;
+    }
+
+    public Set<Zahtjev> getZahtjevsByNatjecajId(Long natjecajId) {
+        return zahtjevs.stream().filter(zahtjev -> zahtjev.getNatjecaj().getId().equals(natjecajId)).collect(Collectors.toSet());
     }
 
     public void setZahtjevs(Set<Zahtjev> zahtjevs) {

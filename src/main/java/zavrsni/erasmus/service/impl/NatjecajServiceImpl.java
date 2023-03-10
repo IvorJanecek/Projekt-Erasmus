@@ -3,6 +3,7 @@ package zavrsni.erasmus.service.impl;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zavrsni.erasmus.domain.Natjecaj;
+import zavrsni.erasmus.domain.Zahtjev;
 import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.service.NatjecajService;
 import zavrsni.erasmus.service.dto.NatjecajDTO;
@@ -91,6 +93,11 @@ public class NatjecajServiceImpl implements NatjecajService {
     @Transactional(readOnly = true)
     public Optional<NatjecajDTO> findOne(Long id) {
         log.debug("Request to get Natjecaj : {}", id);
+        Natjecaj natjecaj = natjecajRepository.findById(id).orElse(null);
+        if (natjecaj != null) {
+            Set<Zahtjev> matchingZahtjevs = natjecaj.getZahtjevsByNatjecajId(id);
+            // do something with the matching zahtjev entities
+        }
         return natjecajRepository.findById(id).map(natjecajMapper::toDto);
     }
 
