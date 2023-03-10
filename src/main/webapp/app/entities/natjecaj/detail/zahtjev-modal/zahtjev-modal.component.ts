@@ -57,14 +57,18 @@ export class ZahtjevModalComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
+    let zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
+    zahtjev.natjecaj = this.natjecaj;
     if (zahtjev.id !== null) {
       this.subscribeToSaveResponse(this.zahtjevService.update(zahtjev));
     } else {
       this.subscribeToSaveResponse(this.zahtjevService.create(zahtjev));
     }
-
+    console.log('**Ovdje LOGIRAMO!!! **');
+    console.log(zahtjev);
+    console.log(this.natjecaj);
     this.modal.dismiss();
+    console.log('**PRESTAJE LOGGING**');
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IZahtjev>>): void {

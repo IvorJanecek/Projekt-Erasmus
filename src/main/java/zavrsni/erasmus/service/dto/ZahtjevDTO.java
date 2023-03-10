@@ -11,6 +11,8 @@ public class ZahtjevDTO implements Serializable {
     @NotNull
     private String name;
 
+    private NatjecajDTO natjecaj;
+
     public Long getId() {
         return id;
     }
@@ -27,9 +29,17 @@ public class ZahtjevDTO implements Serializable {
         this.name = name;
     }
 
+    public NatjecajDTO getNatjecaj() {
+        return natjecaj;
+    }
+
+    public void setNatjecaj(NatjecajDTO natjecaj) {
+        this.natjecaj = natjecaj;
+    }
+
     @Override
     public String toString() {
-        return "ZahtjevDTO{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
+        return "ZahtjevDTO{" + "id=" + getId() + ", name='" + getName() + "'" + ", natjecaj=" + getNatjecaj() + "}";
     }
 
     @Override
