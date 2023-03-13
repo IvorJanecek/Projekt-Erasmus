@@ -77,8 +77,7 @@ export class PrijavaDetailComponent implements OnInit {
       id: prijava.id,
       natjecaj: prijava.natjecaj,
     };
-    console.log(prijava.id);
-    console.log(prijava.natjecaj?.id);
+
     this.router.navigate(['/mobilnost/new'], { state: { mobilnost: newMobilnost } });
   }
 
