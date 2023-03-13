@@ -7,7 +7,7 @@
       </div>
       <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="mb-3">
-          <label class="username-label" for="username">Username</label>
+          <label class="username-label" for="username">Email</label>
           <input
             type="text"
             class="form-control"
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="password">Password</label>
+          <label for="password">Lozinka</label>
           <input
             type="password"
             class="form-control"
@@ -36,7 +36,7 @@
         <div class="form-check">
           <label class="form-check-label" for="rememberMe">
             <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe" />
-            <span>Remember me</span>
+            <span>Zapamti me</span>
           </label>
         </div>
 
@@ -47,8 +47,8 @@
       </div>
 
       <div class="alert alert-warning">
-        <span>You don't have an account yet?</span>
-        <a class="alert-link" routerLink="/account/register">Register a new account</a>
+        <span>Nemaš račun?</span>
+        <a class="alert-link" routerLink="/account/register">Retgistriraj se</a>
       </div>
     </div>
   </div>

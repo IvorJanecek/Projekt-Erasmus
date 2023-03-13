@@ -90,8 +90,7 @@
             formControlName="natjecaj"
             [compareWith]="compareNatjecaj"
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="natjecajOption" *ngFor="let natjecajOption of natjecajsCollection">{{ natjecajOption.name }}</option>
+            <option [ngValue]="mobilnost">nesto</option>
           </select>
         </div>
 
@@ -105,8 +104,7 @@
             formControlName="prijava"
             [compareWith]="comparePrijava"
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="prijavaOption" *ngFor="let prijavaOption of prijavasCollection">{{ prijavaOption.prijavaName }}</option>
+            <option [ngValue]="mobilnost">{{ mobilnost!.prijava?.id }}</option>
           </select>
         </div>
       </div>

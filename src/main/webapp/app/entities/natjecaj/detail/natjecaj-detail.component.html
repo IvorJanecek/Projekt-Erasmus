@@ -38,6 +38,14 @@
         <dd>
           <span>{{ natjecaj.status }}</span>
         </dd>
+        <div *ngIf="natjecaj">
+          <h3>Zahtjevi:</h3>
+          <ul>
+            <li *ngFor="let zahtjev of natjecaj.zahtjevs">
+              {{ zahtjev.name }}
+            </li>
+          </ul>
+        </div>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IPrijava } from '../prijava.model';
 import { DataUtils } from 'app/core/util/data-util.service';
@@ -17,7 +17,7 @@ export class PrijavaDetailComponent implements OnInit {
   mobilnostCollection: any;
   prijavaFormService: any;
   prijavaService: any;
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute, protected router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ prijava }) => {
@@ -69,6 +69,17 @@ export class PrijavaDetailComponent implements OnInit {
       next: () => this.onSaveSuccess(),
       error: () => this.onSaveError(),
     });
+  }
+
+  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj'>): void {
+    const newMobilnost: IMobilnost = {
+      prijava: prijava,
+      id: prijava.id,
+      natjecaj: prijava.natjecaj,
+    };
+    console.log(prijava.id);
+    console.log(prijava.natjecaj?.id);
+    this.router.navigate(['/mobilnost/new'], { state: { mobilnost: newMobilnost } });
   }
 
   protected onSaveSuccess(): void {

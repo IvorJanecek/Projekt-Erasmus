@@ -209,7 +209,7 @@ public class PrijavaResource {
     public ResponseEntity<PrijavaDTO> getPrijava(@PathVariable Long id) {
         log.debug("REST request to get Prijava : {}", id);
 
-        // Get the ID of the currently logged-in user
+        // Get the login of the currently logged-in user
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElse(null);
         // Retrieve the Prijava entity by ID
         Optional<PrijavaDTO> prijavaDTO = prijavaService.findOne(id);

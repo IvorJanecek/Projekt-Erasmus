@@ -5,6 +5,7 @@ import { IPrijava } from 'app/entities/prijava/prijava.model';
 import { IZahtjev } from 'app/entities/zahtjev/zatjev.model';
 
 import { INatjecaj } from '../natjecaj.model';
+import { NatjecajService } from '../service/natjecaj.service';
 import { ZahtjevModalComponent } from './zahtjev-modal/zahtjev-modal.component';
 
 @Component({
@@ -15,8 +16,14 @@ export class NatjecajDetailComponent implements OnInit {
   natjecaj: INatjecaj | null = null;
   prijavaService: any;
   numZahtjevsToCreate = 1;
+  zahtjevs?: IZahtjev[];
 
-  constructor(protected activatedRoute: ActivatedRoute, protected router: Router, private modalService: NgbModal) {}
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    private modalService: NgbModal,
+    private natjecajService: NatjecajService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ natjecaj }) => {

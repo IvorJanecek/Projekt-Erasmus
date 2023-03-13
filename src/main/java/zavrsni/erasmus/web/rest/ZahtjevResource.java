@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+import zavrsni.erasmus.domain.Zahtjev;
 import zavrsni.erasmus.repository.ZahtjevRepository;
 import zavrsni.erasmus.service.ZahtjevService;
 import zavrsni.erasmus.service.dto.ZahtjevDTO;

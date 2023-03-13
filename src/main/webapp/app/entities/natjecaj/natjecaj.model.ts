@@ -10,6 +10,7 @@ export interface INatjecaj {
   datumOd?: dayjs.Dayjs | null;
   datumDo?: dayjs.Dayjs | null;
   status?: Status | null;
+  zahtjevs?: IZahtjev[];
 }
 
 export type NewNatjecaj = Omit<INatjecaj, 'id'> & { id: null };

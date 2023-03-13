@@ -78,6 +78,8 @@
       <button *ngIf="!prijava.prihvacen" type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
+
+      <button (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj })">Prijavi mobilnost</button>
     </div>
   </div>
 </div>

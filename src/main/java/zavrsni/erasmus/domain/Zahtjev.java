@@ -23,7 +23,7 @@ public class Zahtjev implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "natjecaj_id")
     private Natjecaj natjecaj;
 

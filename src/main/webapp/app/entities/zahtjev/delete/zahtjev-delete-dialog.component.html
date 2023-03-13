@@ -1,22 +1,22 @@
 <form *ngIf="zahtjev" name="deleteForm" (ngSubmit)="confirmDelete(zahtjev.id!)">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="zahtjevDeleteDialogHeading">Confirm delete operation</h4>
+    <h4 class="modal-title" data-cy="zahtjevDeleteDialogHeading">Potvrdi brisanje</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-zahtjev-heading">Are you sure you want to delete Zahtjev {{ zahtjev.id }}?</p>
+    <p id="jhi-delete-zahtjev-heading">Jeste li sigurni da želite izbrisati Zahtjev {{ zahtjev.id }}?</p>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
-      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>odustani</span>
     </button>
 
     <button id="jhi-confirm-delete-zahtjev" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
-      <fa-icon icon="times"></fa-icon>&nbsp;<span>Delete</span>
+      <fa-icon icon="times"></fa-icon>&nbsp;<span>Obriši</span>
     </button>
   </div>
 </form>

@@ -51,6 +51,7 @@ export class MobilnostUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+    this.mobilnost = history.state.mobilnost;
   }
 
   byteSize(base64String: string): string {
@@ -113,16 +114,6 @@ export class MobilnostUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.natjecajService
-      .query({ filter: 'mobilnost-is-null' })
-      .pipe(map((res: HttpResponse<INatjecaj[]>) => res.body ?? []))
-      .pipe(
-        map((natjecajs: INatjecaj[]) =>
-          this.natjecajService.addNatjecajToCollectionIfMissing<INatjecaj>(natjecajs, this.mobilnost?.natjecaj)
-        )
-      )
-      .subscribe((natjecajs: INatjecaj[]) => (this.natjecajsCollection = natjecajs));
-
     this.prijavaService
       .query({ filter: 'mobilnost-is-null' })
       .pipe(map((res: HttpResponse<IPrijava[]>) => res.body ?? []))

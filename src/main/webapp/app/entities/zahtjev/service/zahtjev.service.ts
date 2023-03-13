@@ -44,6 +44,11 @@ export class ZahtjevService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  getZahtjeviByNatjecaj(natjecajId: number): Observable<IZahtjev[]> {
+    const url = `${this.resourceUrl}/natjecaj/${natjecajId}`;
+    return this.http.get<IZahtjev[]>(url);
+  }
+
   getZahtjevIdentifier(zahtjev: Pick<IZahtjev, 'id'>): number {
     return zahtjev.id;
   }
