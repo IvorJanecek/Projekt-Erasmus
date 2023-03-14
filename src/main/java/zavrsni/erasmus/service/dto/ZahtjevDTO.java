@@ -42,6 +42,13 @@ public class ZahtjevDTO implements Serializable {
         return "ZahtjevDTO{" + "id=" + getId() + ", name='" + getName() + "'" + ", natjecaj=" + getNatjecaj() + "}";
     }
 
+    public ZahtjevDTO() {}
+
+    public ZahtjevDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

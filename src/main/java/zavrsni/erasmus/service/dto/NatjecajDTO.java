@@ -3,6 +3,7 @@ package zavrsni.erasmus.service.dto;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.*;
 import zavrsni.erasmus.domain.enumeration.Status;
@@ -28,7 +29,7 @@ public class NatjecajDTO implements Serializable {
     private LocalDate datumDo;
 
     private Status status;
-    private ZahtjevDTO zahtjev;
+    private List<ZahtjevDTO> zahtjevs;
 
     public Long getId() {
         return id;
@@ -46,12 +47,12 @@ public class NatjecajDTO implements Serializable {
         this.name = name;
     }
 
-    public void setZahtjev(ZahtjevDTO zahtjev) {
-        this.zahtjev = zahtjev;
+    public void setZahtjevs(List<ZahtjevDTO> zahtjevs) {
+        this.zahtjevs = zahtjevs;
     }
 
-    public ZahtjevDTO getZahtjev() {
-        return zahtjev;
+    public List<ZahtjevDTO> getZahtjevs() {
+        return zahtjevs;
     }
 
     public String getDescription() {

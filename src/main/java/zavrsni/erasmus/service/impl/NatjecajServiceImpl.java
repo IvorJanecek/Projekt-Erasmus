@@ -1,9 +1,6 @@
 package zavrsni.erasmus.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -17,6 +14,7 @@ import zavrsni.erasmus.domain.Zahtjev;
 import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.service.NatjecajService;
 import zavrsni.erasmus.service.dto.NatjecajDTO;
+import zavrsni.erasmus.service.dto.ZahtjevDTO;
 import zavrsni.erasmus.service.mapper.NatjecajMapper;
 
 /**
@@ -76,8 +74,9 @@ public class NatjecajServiceImpl implements NatjecajService {
     }
 
     /**
-     *  Get all the natjecajs where Mobilnost is {@code null}.
-     *  @return the list of entities.
+     * Get all the natjecajs where Mobilnost is {@code null}.
+     *
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<NatjecajDTO> findAllWhereMobilnostIsNull() {
@@ -93,12 +92,18 @@ public class NatjecajServiceImpl implements NatjecajService {
     @Transactional(readOnly = true)
     public Optional<NatjecajDTO> findOne(Long id) {
         log.debug("Request to get Natjecaj : {}", id);
-        Natjecaj natjecaj = natjecajRepository.findById(id).orElse(null);
-        if (natjecaj != null) {
-            Set<Zahtjev> matchingZahtjevs = natjecaj.getZahtjevsByNatjecajId(id);
-            // do something with the matching zahtjev entities
+        Optional<Natjecaj> natjecaj = natjecajRepository.findById(id);
+        if (natjecaj.isPresent()) {
+            Optional<NatjecajDTO> mappedDto = natjecaj.map(natjecajMapper::toDto);
+            List<ZahtjevDTO> zahtjevDTOS = new ArrayList<>();
+            for (Zahtjev zahtjev : natjecaj.get().getZahtjevs()) {
+                ZahtjevDTO zahtjevDTO = new ZahtjevDTO(zahtjev.getId(), zahtjev.getName());
+                zahtjevDTOS.add(zahtjevDTO);
+            }
+            mappedDto.ifPresent(natjecajDTO -> natjecajDTO.setZahtjevs(zahtjevDTOS));
+            return mappedDto;
         }
-        return natjecajRepository.findById(id).map(natjecajMapper::toDto);
+        return Optional.empty();
     }
 
     @Override
