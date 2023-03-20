@@ -110,13 +110,6 @@
           </select>
         </div>
 
-        <div class="row mb-3" *ngIf="account$ | async as account">
-          <label class="form-label" for="field_user">Korisnik</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
-            <option [ngValue]="account">{{ account.login }}</option>
-          </select>
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" for="field_fakultet">Fakultet</label>
           <select
@@ -129,20 +122,6 @@
           >
             <option [ngValue]="null"></option>
             <option [ngValue]="fakultetOption" *ngFor="let fakultetOption of fakultetsSharedCollection">{{ fakultetOption.name }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_natjecaj">natjecaj</label>
-          <select
-            class="form-control"
-            id="field_natjecaj"
-            data-cy="natjecaj"
-            name="natjecaj"
-            formControlName="natjecaj"
-            [compareWith]="compareNatjecaj"
-          >
-            <option [ngValue]="prijava">{{ prijava!.natjecaj?.id }}</option>
           </select>
         </div>
       </div>

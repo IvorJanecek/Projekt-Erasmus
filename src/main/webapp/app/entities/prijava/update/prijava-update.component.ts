@@ -35,6 +35,8 @@ export class PrijavaUpdateComponent implements OnInit {
 
   editForm: PrijavaFormGroup = this.prijavaFormService.createPrijavaFormGroup();
   account$?: Observable<Account | null>;
+  currentAccount: Account | null = null;
+  currentUser: IUser | null = null;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -56,6 +58,10 @@ export class PrijavaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.account$ = this.accountService.identity();
+    this.account$?.subscribe(result => {
+      this.currentAccount = result;
+    });
+
     this.activatedRoute.data.subscribe(({ prijava }) => {
       this.prijava = prijava;
       if (prijava) {
@@ -64,6 +70,7 @@ export class PrijavaUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+
     this.prijava = history.state.prijava;
   }
 
@@ -88,7 +95,17 @@ export class PrijavaUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const prijava = this.prijavaFormService.getPrijava(this.editForm);
+    let prijava = this.prijavaFormService.getPrijava(this.editForm);
+    prijava.natjecaj = this.prijava?.natjecaj;
+
+    for (let i = 0; i < this.usersSharedCollection.length; i++) {
+      if (this.usersSharedCollection[i].login === this.currentAccount?.login) {
+        this.currentUser = this.usersSharedCollection[i];
+      }
+    }
+
+    prijava.user = this.currentUser;
+
     if (prijava.id !== null) {
       this.subscribeToSaveResponse(this.prijavaService.update(prijava));
     } else {
