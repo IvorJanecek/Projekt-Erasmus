@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ITEM_DELETED_EVENT } from 'app/config/navigation.constants';
 import { IPrijava } from 'app/entities/prijava/prijava.model';
+import { ZahtjevDeleteDialogComponent } from 'app/entities/zahtjev/delete/zahtjev-delete-dialog.component';
+import { EntityArrayResponseType, ZahtjevService } from 'app/entities/zahtjev/service/zahtjev.service';
 import { IZahtjev } from 'app/entities/zahtjev/zatjev.model';
+import { SortService } from 'app/shared/sort/sort.service';
+import { filter, switchMap } from 'rxjs';
 
 import { INatjecaj } from '../natjecaj.model';
 import { NatjecajService } from '../service/natjecaj.service';
@@ -22,13 +27,27 @@ export class NatjecajDetailComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     private modalService: NgbModal,
-    private natjecajService: NatjecajService
+    private natjecajService: NatjecajService,
+    protected sortService: SortService,
+    private zahtjevService: ZahtjevService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ natjecaj }) => {
       this.natjecaj = natjecaj;
     });
+  }
+
+  deleteZahtjev(id: number) {
+    this.zahtjevService.delete(id).subscribe(
+      () => {
+        // success: remove the deleted zahtjev from the natjecaj.zahtjevs list
+        this.natjecaj!.zahtjevs = this.natjecaj!.zahtjevs?.filter(z => z.id !== id);
+      },
+      error => {
+        // handle error
+      }
+    );
   }
 
   createNewZahtjev(natjecaj: Pick<INatjecaj, 'id'>): void {

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -74,7 +76,15 @@ public class Prijava implements Serializable {
     @JsonIgnoreProperties(value = { "prijavas", "mobilnost" }, allowSetters = true)
     private Natjecaj natjecaj;
 
+    @OneToMany(mappedBy = "prijava", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File> files = new ArrayList<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public void addFile(File file) {
+        file.setPrijava(this);
+        this.files.add(file);
+    }
 
     public Long getId() {
         return this.id;
