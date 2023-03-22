@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
-import zavrsni.erasmus.domain.File;
 import zavrsni.erasmus.domain.enumeration.Kategorija;
 
 /**
@@ -46,20 +44,6 @@ public class PrijavaDTO implements Serializable {
     private FakultetDTO fakultet;
 
     private NatjecajDTO natjecaj;
-
-    private List<File> files = new ArrayList<>();
-
-    public void addFile(File file) {
-        this.files.add(file);
-    }
-
-    public List<File> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
-    }
 
     public Long getId() {
         return id;
