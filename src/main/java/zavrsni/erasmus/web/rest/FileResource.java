@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import zavrsni.erasmus.domain.Prijava;
 import zavrsni.erasmus.domain.UploadFile;
 import zavrsni.erasmus.repository.PrijavaRepository;
+import zavrsni.erasmus.repository.UploadFilesRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -15,8 +16,11 @@ public class FileResource {
 
     private final PrijavaRepository prijavaRepository;
 
-    public FileResource(PrijavaRepository prijavaRepository) {
+    private final UploadFilesRepository uploadFilesRepository;
+
+    public FileResource(PrijavaRepository prijavaRepository, UploadFilesRepository uploadFilesRepository) {
         this.prijavaRepository = prijavaRepository;
+        this.uploadFilesRepository = uploadFilesRepository;
     }
 
     @PostMapping("/uploadFiles/{prijavaId}")
@@ -32,7 +36,7 @@ public class FileResource {
                 uploadFile.setFileType(file.getContentType());
                 uploadFile.setData(file.getBytes());
                 uploadFile.setPrijava(prijava);
-                prijava.getFiles().add(uploadFile);
+                uploadFilesRepository.save(uploadFile);
             }
 
             prijavaRepository.save(prijava);
