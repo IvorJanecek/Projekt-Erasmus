@@ -77,13 +77,16 @@ public class Prijava implements Serializable {
     private Natjecaj natjecaj;
 
     @OneToMany(mappedBy = "prijava", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<File> files = new ArrayList<>();
+    private List<UploadFile> files = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public void addFile(File file) {
-        file.setPrijava(this);
-        this.files.add(file);
+    public List<UploadFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<UploadFile> files) {
+        this.files = files;
     }
 
     public Long getId() {

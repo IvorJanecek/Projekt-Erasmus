@@ -7,6 +7,7 @@ import { PrijavaDetailComponent } from '../detail/prijava-detail.component';
 import { PrijavaUpdateComponent } from '../update/prijava-update.component';
 import { PrijavaRoutingResolveService } from './prijava-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { UploadFilesComponent } from '../update/upload-files/upload-files.component';
 
 const prijavaRoute: Routes = [
   {
@@ -24,6 +25,13 @@ const prijavaRoute: Routes = [
       prijava: PrijavaRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'upload-files',
+    component: UploadFilesComponent,
+    resolve: {
+      prijava: PrijavaRoutingResolveService,
+    },
   },
   {
     path: 'new',
