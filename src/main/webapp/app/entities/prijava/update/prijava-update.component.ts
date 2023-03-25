@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 
 import { PrijavaFormService, PrijavaFormGroup } from './prijava-form.service';
 import { IPrijava } from '../prijava.model';
@@ -47,7 +47,8 @@ export class PrijavaUpdateComponent implements OnInit {
     protected fakultetService: FakultetService,
     protected natjecajService: NatjecajService,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    private router: Router
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
@@ -114,15 +115,24 @@ export class PrijavaUpdateComponent implements OnInit {
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPrijava>>): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
-      error: () => this.onSaveError(),
-    });
+    result
+      .pipe(
+        finalize(() => this.onSaveFinalize()),
+        tap(res => {
+          const prijavaId = res.body?.id;
+          if (prijavaId) {
+            const route = `/prijava/upload-files/${prijavaId}`;
+            this.router.navigate([route]);
+          }
+        })
+      )
+      .subscribe({
+        next: () => this.onSaveSuccess(),
+        error: () => this.onSaveError(),
+      });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
+  protected onSaveSuccess(): void {}
 
   protected onSaveError(): void {
     // Api for inheritance.

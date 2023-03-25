@@ -27,7 +27,7 @@ const prijavaRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'upload-files',
+    path: 'upload-files/:prijavaId',
     component: UploadFilesComponent,
     resolve: {
       prijava: PrijavaRoutingResolveService,
