@@ -2,7 +2,6 @@ package zavrsni.erasmus.service;
 
 import java.util.List;
 import java.util.Optional;
-import zavrsni.erasmus.service.dto.FakultetDTO;
 import zavrsni.erasmus.service.dto.ZahtjevDTO;
 
 public interface ZahtjevService {
@@ -17,4 +16,6 @@ public interface ZahtjevService {
     Optional<ZahtjevDTO> findOne(Long id);
 
     void delete(Long id);
+
+    List<ZahtjevDTO> findAllByNatjecajId(Long id);
 }

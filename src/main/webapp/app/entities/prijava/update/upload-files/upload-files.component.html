@@ -1,4 +1,9 @@
-<form [formGroup]="fileForm">
-  <input type="file" name="files" formControlName="files" multiple (change)="uploadFiles($event)" />
+<span>Zahtjevi :</span>
+<div *ngFor="let zahtjev of zahtjevs">
+  <span>{{ zahtjev.name }}</span>
+</div>
+
+<form [formGroup]="fileForm" (ngSubmit)="uploadFiles()">
+  <input type="file" name="files" formControlName="files" multiple (change)="addFiles($event)" />
   <button type="submit">Upload files</button>
 </form>

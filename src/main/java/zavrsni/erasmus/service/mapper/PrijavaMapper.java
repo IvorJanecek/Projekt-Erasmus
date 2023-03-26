@@ -1,14 +1,8 @@
 package zavrsni.erasmus.service.mapper;
 
 import org.mapstruct.*;
-import zavrsni.erasmus.domain.Fakultet;
-import zavrsni.erasmus.domain.Natjecaj;
-import zavrsni.erasmus.domain.Prijava;
-import zavrsni.erasmus.domain.User;
-import zavrsni.erasmus.service.dto.FakultetDTO;
-import zavrsni.erasmus.service.dto.NatjecajDTO;
-import zavrsni.erasmus.service.dto.PrijavaDTO;
-import zavrsni.erasmus.service.dto.UserDTO;
+import zavrsni.erasmus.domain.*;
+import zavrsni.erasmus.service.dto.*;
 
 /**
  * Mapper for the entity {@link Prijava} and its DTO {@link PrijavaDTO}.
@@ -18,6 +12,7 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     @Mapping(target = "fakultet", source = "fakultet", qualifiedByName = "fakultetName")
     @Mapping(target = "natjecaj", source = "natjecaj", qualifiedByName = "natjecajName")
+    //@Mapping(target = "uploadFiles", source = "files", qualifiedByName = "uploadFileName")
     PrijavaDTO toDto(Prijava s);
 
     @Named("userId")
@@ -25,6 +20,14 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")
     UserDTO toDtoUserId(User user);
+
+    /*@Named("uploadFileName")
+    @BeanMapping(ignoreByDefault = false)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "fileName", source = "fileName")
+    @Mapping(target = "fileType", source = "fileType")
+    @Mapping(target = "data", source = "data")
+    UploadFileDTO toUploadFile(UploadFile uploadFile);*/
 
     @Named("fakultetName")
     @BeanMapping(ignoreByDefault = true)

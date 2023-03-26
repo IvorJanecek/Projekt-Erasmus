@@ -8,15 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import zavrsni.erasmus.domain.Fakultet;
 import zavrsni.erasmus.domain.Zahtjev;
-import zavrsni.erasmus.repository.FakultetRepository;
 import zavrsni.erasmus.repository.ZahtjevRepository;
 import zavrsni.erasmus.service.ZahtjevService;
-import zavrsni.erasmus.service.dto.FakultetDTO;
-import zavrsni.erasmus.service.dto.NatjecajDTO;
 import zavrsni.erasmus.service.dto.ZahtjevDTO;
-import zavrsni.erasmus.service.mapper.FakultetMapper;
 import zavrsni.erasmus.service.mapper.ZahtjevMapper;
 
 @Service
@@ -83,5 +78,10 @@ public class ZahtjevServiceImpl implements ZahtjevService {
     public void delete(Long id) {
         log.debug("Request to delete Fakultet : {}", id);
         zahtjevRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ZahtjevDTO> findAllByNatjecajId(Long id) {
+        return zahtjevRepository.findAllByNatjecajId(id).stream().map(zahtjevMapper::toDto).collect(Collectors.toList());
     }
 }

@@ -3,10 +3,10 @@ package zavrsni.erasmus.service.dto;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Lob;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import zavrsni.erasmus.domain.enumeration.Kategorija;
 
 /**
@@ -44,6 +44,8 @@ public class PrijavaDTO implements Serializable {
     private FakultetDTO fakultet;
 
     private NatjecajDTO natjecaj;
+
+    private List<UploadFileDTO> uploadFiles;
 
     public Long getId() {
         return id;
@@ -147,6 +149,14 @@ public class PrijavaDTO implements Serializable {
 
     public void setNatjecaj(NatjecajDTO natjecaj) {
         this.natjecaj = natjecaj;
+    }
+
+    public List<UploadFileDTO> getUploadFiles() {
+        return uploadFiles;
+    }
+
+    public void setUploadFiles(List<UploadFileDTO> uploadFiles) {
+        this.uploadFiles = uploadFiles;
     }
 
     @Override

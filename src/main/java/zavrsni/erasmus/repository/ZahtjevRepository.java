@@ -7,7 +7,5 @@ import zavrsni.erasmus.domain.Zahtjev;
 
 @Repository
 public interface ZahtjevRepository extends JpaRepository<Zahtjev, Long> {
-    List<Zahtjev> findByNatjecajId(Long id);
-
     List<Zahtjev> findAllByNatjecajId(Long id);
 }

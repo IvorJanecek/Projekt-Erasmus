@@ -3,6 +3,7 @@ import { IUser } from 'app/entities/user/user.model';
 import { IFakultet } from 'app/entities/fakultet/fakultet.model';
 import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { Kategorija } from 'app/entities/enumerations/kategorija.model';
+import { IUploadFile } from './upload_files.model';
 
 export interface IPrijava {
   id: number;
@@ -18,6 +19,7 @@ export interface IPrijava {
   user?: Pick<IUser, 'id' | 'login'> | null;
   fakultet?: Pick<IFakultet, 'id' | 'name'> | null;
   natjecaj?: Pick<INatjecaj, 'id'> | null;
+  uploadFiles?: IUploadFile[];
 }
 
 export type NewPrijava = Omit<IPrijava, 'id'> & { id: null };

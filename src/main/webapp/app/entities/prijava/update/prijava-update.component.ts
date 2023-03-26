@@ -122,7 +122,7 @@ export class PrijavaUpdateComponent implements OnInit {
           const prijavaId = res.body?.id;
           if (prijavaId) {
             const route = `/prijava/upload-files/${prijavaId}`;
-            this.router.navigate([route]);
+            this.router.navigate([route], { state: { natjecaj: this.prijava?.natjecaj } });
           }
         })
       )

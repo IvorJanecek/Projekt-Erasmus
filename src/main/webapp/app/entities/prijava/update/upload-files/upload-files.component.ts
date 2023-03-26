@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
+import { ZahtjevService } from '../../../zahtjev/service/zahtjev.service';
+import { IZahtjev } from '../../../zahtjev/zatjev.model';
 
 @Component({
   selector: 'app-upload-files',
@@ -10,17 +13,28 @@ import { ActivatedRoute } from '@angular/router';
 export class UploadFilesComponent implements OnInit {
   fileForm!: FormGroup;
   selectedFiles!: FileList;
+  formData: FormData = new FormData();
+  natjecaj: INatjecaj | any;
+  zahtjevs: IZahtjev[] | null = [];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private zahtjevService: ZahtjevService
+  ) {}
 
   ngOnInit(): void {
     this.fileForm = this.formBuilder.group({
       files: ['', Validators.required],
     });
-    const prijavaId = this.route.snapshot.params.prijavaId;
+    this.natjecaj = history.state.natjecaj;
+    this.zahtjevService.findAllByNatjecajId(this.natjecaj.id).subscribe(result => {
+      this.zahtjevs = result.body;
+    });
   }
 
-  uploadFiles(event: Event): void {
+  addFiles(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.files !== null) {
       this.selectedFiles = target.files;
@@ -28,14 +42,15 @@ export class UploadFilesComponent implements OnInit {
       console.log('No files selected!');
       return;
     }
-    const formData = new FormData();
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      formData.append('files', this.selectedFiles[i], this.selectedFiles[i].name);
+      this.formData.append('files', this.selectedFiles[i], this.selectedFiles[i].name);
     }
+  }
 
+  uploadFiles(): void {
     const prijavaId = this.route.snapshot.params.prijavaId; // Replace with the ID of the Prijava instance
-    this.http.post(`/api/uploadFiles/${prijavaId}`, formData).subscribe(
+    this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData).subscribe(
       response => console.log(response),
       error => console.error(error)
     );

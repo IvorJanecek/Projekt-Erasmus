@@ -124,4 +124,9 @@ public class ZahtjevResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/zahtjevs/natjecajId/{id}")
+    public List<ZahtjevDTO> findAllByNatjecajId(@PathVariable Long id) {
+        return zahtjevService.findAllByNatjecajId(id);
+    }
 }
