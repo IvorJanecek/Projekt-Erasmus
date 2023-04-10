@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="PrijavaHeading">
+    <span>Prijava</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Osvježi</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prijavas?.length === 0">
+    <span>Nema novih prijava</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="prijavas && prijavas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="prijavaName">
+            <div class="d-flex">
+              <span>Prijava </span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="opis">
+            <div class="d-flex">
+              <span>Opis</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <div class="d-flex">
+              <span>Napravljen</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="prihvacen">
+            <div class="d-flex">
+              <span>Prihvaćen</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="trajanjeOd">
+            <div class="d-flex">
+              <span>Trajanje od</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="trajanjeDo">
+            <div class="d-flex">
+              <span>Trajanje do</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="data">
+            <div class="d-flex">
+              <span>Dokumenti</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="kategorija">
+            <div class="d-flex">
+              <span>Kategorija</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="user.id">
+            <div class="d-flex">
+              <span>User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fakultet.name">
+            <div class="d-flex">
+              <span>Fakultet</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="natjecaj.name">
+            <div class="d-flex">
+              <span>Natječaj</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prijava of prijavas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/prijava', prijava.id, 'view']">{{ prijava.id }}</a>
+          </td>
+          <td>{{ prijava.prijavaName }}</td>
+          <td>{{ prijava.opis }}</td>
+          <td>{{ prijava.createdDate | formatMediumDatetime }}</td>
+          <td>{{ prijava.prihvacen }}</td>
+          <td>{{ prijava.trajanjeOd | formatMediumDate }}</td>
+          <td>{{ prijava.trajanjeDo | formatMediumDate }}</td>
+          <td>
+            <a *ngIf="prijava.data" (click)="openFile(prijava.data, prijava.dataContentType)">Otvori</a>
+            <span *ngIf="prijava.data">{{ prijava.dataContentType }}, {{ byteSize(prijava.data) }}</span>
+          </td>
+          <td>{{ prijava.kategorija }}</td>
+          <td>
+            {{ prijava.user?.id }}
+          </td>
+          <td>
+            <div *ngIf="prijava.fakultet">
+              <a [routerLink]="['/fakultet', prijava.fakultet.id, 'view']">{{ prijava.fakultet.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="prijava.natjecaj">
+              <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prijava', prijava.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Pogledaj</span>
+              </button>
+
+              <button
+                *ngIf="!prijava.prihvacen"
+                jhiHasAnyAuthority="Role_ADMIN"
+                type="submit"
+                [routerLink]="['/prijava', prijava.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">uredi</span>
+              </button>
+
+              <button
+                *ngIf="!prijava.prihvacen"
+                type="submit"
+                (click)="delete(prijava)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Obriši</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="prijavas && prijavas.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

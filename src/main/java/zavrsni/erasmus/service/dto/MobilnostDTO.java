@@ -31,6 +31,8 @@ public class MobilnostDTO implements Serializable {
 
     private PrijavaDTO prijava;
 
+    private UserDTO user;
+
     private List<UploadFileDTO> uploadFiles;
 
     public Long getId() {
@@ -39,6 +41,14 @@ public class MobilnostDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public String getMobilnostName() {
@@ -135,6 +145,7 @@ public class MobilnostDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", data='" + getData() + "'" +
+            ", user=" + getUser() +
             ", natjecaj=" + getNatjecaj() +
             ", prijava=" + getPrijava() +
             "}";

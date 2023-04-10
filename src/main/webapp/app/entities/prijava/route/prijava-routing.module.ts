@@ -8,11 +8,20 @@ import { PrijavaUpdateComponent } from '../update/prijava-update.component';
 import { PrijavaRoutingResolveService } from './prijava-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { UploadFilesComponent } from '../update/upload-files/upload-files.component';
+import { ListAdminComponent } from '../list-admin/list-admin.component';
 
 const prijavaRoute: Routes = [
   {
     path: '',
     component: PrijavaComponent,
+    data: {
+      defaultSort: 'id,' + ASC,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'list-admin',
+    component: ListAdminComponent,
     data: {
       defaultSort: 'id,' + ASC,
     },

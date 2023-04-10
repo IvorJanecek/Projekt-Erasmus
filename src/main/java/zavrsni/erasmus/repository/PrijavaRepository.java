@@ -17,10 +17,10 @@ import zavrsni.erasmus.domain.User;
 @Repository
 public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     @Query(
-        value = "select prijava from Prijava prijava where prijava.user.login = ?#{principal.username}",
-        countQuery = "select count(distinct prijava) from Prijava prijava"
+        value = "SELECT prijava FROM Prijava prijava WHERE (:#{hasRole('ROLE_ADMIN')} = true OR prijava.user.login = ?#{principal.username})",
+        countQuery = "SELECT COUNT(DISTINCT prijava) FROM Prijava prijava WHERE (:#{hasRole('ROLE_ADMIN')} = true OR prijava.user.login = ?#{principal.username})"
     )
-    Page<Prijava> findByUserIsCurrentUser(Pageable pageable);
+    Page<Prijava> findByUserIsCurrentUserOrAdmin(Pageable pageable);
 
     default Optional<Prijava> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
@@ -29,6 +29,8 @@ public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     default List<Prijava> findAllWithEagerRelationships() {
         return this.findAllWithToOneRelationships();
     }
+
+    List<Prijava> findAll();
 
     default Page<Prijava> findAllWithEagerRelationships(Pageable pageable) {
         return this.findAllWithToOneRelationships(pageable);

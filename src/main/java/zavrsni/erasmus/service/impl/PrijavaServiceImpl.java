@@ -77,7 +77,7 @@ public class PrijavaServiceImpl implements PrijavaService {
 
     @Override
     public Page<PrijavaDTO> findByUserIsCurrentUser(Pageable pageable) {
-        return prijavaRepository.findByUserIsCurrentUser(pageable).map(prijavaMapper::toDto);
+        return prijavaRepository.findByUserIsCurrentUserOrAdmin(pageable).map(prijavaMapper::toDto);
     }
 
     public Page<PrijavaDTO> findAllWithEagerRelationships(Pageable pageable) {
@@ -114,6 +114,11 @@ public class PrijavaServiceImpl implements PrijavaService {
     public void delete(Long id) {
         log.debug("Request to delete Prijava : {}", id);
         prijavaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Prijava> getAllPrijave() {
+        return prijavaRepository.findAll();
     }
 
     @Override

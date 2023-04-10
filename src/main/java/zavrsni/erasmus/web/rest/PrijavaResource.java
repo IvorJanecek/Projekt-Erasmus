@@ -22,6 +22,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import zavrsni.erasmus.domain.Natjecaj;
+import zavrsni.erasmus.domain.Prijava;
 import zavrsni.erasmus.domain.User;
 import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.repository.PrijavaRepository;
@@ -132,6 +133,27 @@ public class PrijavaResource {
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString()))
             .body(result);
+    }
+
+    @GetMapping("/prijavas/list")
+    public ResponseEntity<List<PrijavaDTO>> getAllPrijavasForAdmin(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        if ("mobilnost-is-null".equals(filter)) {
+            log.debug("REST request to get all Prijavas where mobilnost is null");
+            return new ResponseEntity<>(prijavaService.findAllWhereMobilnostIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Prijavas");
+        Page<PrijavaDTO> page;
+        if (eagerload) {
+            page = prijavaService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = prijavaService.findAll(pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

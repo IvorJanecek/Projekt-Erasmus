@@ -57,6 +57,9 @@ public class Mobilnost implements Serializable {
     @OneToMany(mappedBy = "mobilnost", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UploadFile> files = new ArrayList<>();
 
+    @ManyToOne
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public List<UploadFile> getFiles() {
@@ -78,6 +81,19 @@ public class Mobilnost implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Mobilnost user(User user) {
+        this.setUser(user);
+        return this;
     }
 
     public String getMobilnostName() {

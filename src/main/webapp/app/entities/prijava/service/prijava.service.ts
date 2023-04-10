@@ -71,6 +71,13 @@ export class PrijavaService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  queryall(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<RestPrijava[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' })
+      .pipe(map(res => this.convertResponseArrayFromServer(res)));
+  }
+
   getPrijavaIdentifier(prijava: Pick<IPrijava, 'id'>): number {
     return prijava.id;
   }

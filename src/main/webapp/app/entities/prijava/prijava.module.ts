@@ -6,9 +6,17 @@ import { PrijavaUpdateComponent } from './update/prijava-update.component';
 import { PrijavaDeleteDialogComponent } from './delete/prijava-delete-dialog.component';
 import { PrijavaRoutingModule } from './route/prijava-routing.module';
 import { UploadFilesComponent } from './update/upload-files/upload-files.component';
+import { ListAdminComponent } from './list-admin/list-admin.component';
 
 @NgModule({
   imports: [SharedModule, PrijavaRoutingModule],
-  declarations: [PrijavaComponent, PrijavaDetailComponent, PrijavaUpdateComponent, PrijavaDeleteDialogComponent, UploadFilesComponent],
+  declarations: [
+    PrijavaComponent,
+    PrijavaDetailComponent,
+    PrijavaUpdateComponent,
+    PrijavaDeleteDialogComponent,
+    UploadFilesComponent,
+    ListAdminComponent,
+  ],
 })
 export class PrijavaModule {}
