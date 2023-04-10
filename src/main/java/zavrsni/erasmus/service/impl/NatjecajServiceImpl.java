@@ -73,6 +73,16 @@ public class NatjecajServiceImpl implements NatjecajService {
         return natjecajRepository.findAll(pageable).map(natjecajMapper::toDto);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<NatjecajDTO> findAllFilteredByUserRoleAndEntityType() {
+        log.debug("svi natjecaji ovisno o useru");
+        return StreamSupport
+            .stream(natjecajRepository.findAllFilteredByUserRoleAndEntityType().spliterator(), false)
+            .map(natjecajMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     /**
      * Get all the natjecajs where Mobilnost is {@code null}.
      *

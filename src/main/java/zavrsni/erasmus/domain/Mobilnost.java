@@ -3,6 +3,8 @@ package zavrsni.erasmus.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -52,7 +54,18 @@ public class Mobilnost implements Serializable {
     @JoinColumn(unique = true)
     private Prijava prijava;
 
+    @OneToMany(mappedBy = "mobilnost", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<UploadFile> files = new ArrayList<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public List<UploadFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<UploadFile> files) {
+        this.files = files;
+    }
 
     public Long getId() {
         return this.id;

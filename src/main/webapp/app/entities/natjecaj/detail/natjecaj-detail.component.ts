@@ -12,6 +12,7 @@ import { filter, switchMap } from 'rxjs';
 import { INatjecaj } from '../natjecaj.model';
 import { NatjecajService } from '../service/natjecaj.service';
 import { ZahtjevModalComponent } from './zahtjev-modal/zahtjev-modal.component';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'jhi-natjecaj-detail',
@@ -29,7 +30,8 @@ export class NatjecajDetailComponent implements OnInit {
     private modalService: NgbModal,
     private natjecajService: NatjecajService,
     protected sortService: SortService,
-    private zahtjevService: ZahtjevService
+    private zahtjevService: ZahtjevService,
+    protected dataUtils: DataUtils
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +77,9 @@ export class NatjecajDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
   }
 }

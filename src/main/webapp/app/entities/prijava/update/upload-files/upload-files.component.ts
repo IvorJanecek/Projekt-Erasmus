@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { ZahtjevService } from '../../../zahtjev/service/zahtjev.service';
 import { IZahtjev } from '../../../zahtjev/zatjev.model';
@@ -21,7 +21,8 @@ export class UploadFilesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private zahtjevService: ZahtjevService
+    private zahtjevService: ZahtjevService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class UploadFilesComponent implements OnInit {
   }
 
   addFiles(event: Event): void {
+    this.formData = new FormData();
     const target = event.target as HTMLInputElement;
     if (target.files !== null) {
       this.selectedFiles = target.files;
@@ -54,5 +56,6 @@ export class UploadFilesComponent implements OnInit {
       response => console.log(response),
       error => console.error(error)
     );
+    this.router.navigate(['/prijava']);
   }
 }

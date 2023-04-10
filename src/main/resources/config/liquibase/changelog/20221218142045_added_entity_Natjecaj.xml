@@ -32,6 +32,9 @@
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="korisnik" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="natjecaj" columnName="create_date" columnDataType="${datetimeType}"/>

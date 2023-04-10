@@ -5,9 +5,10 @@ import { MobilnostDetailComponent } from './detail/mobilnost-detail.component';
 import { MobilnostUpdateComponent } from './update/mobilnost-update.component';
 import { MobilnostDeleteDialogComponent } from './delete/mobilnost-delete-dialog.component';
 import { MobilnostRoutingModule } from './route/mobilnost-routing.module';
+import { UploadComponent } from './detail/upload/upload.component';
 
 @NgModule({
   imports: [SharedModule, MobilnostRoutingModule],
-  declarations: [MobilnostComponent, MobilnostDetailComponent, MobilnostUpdateComponent, MobilnostDeleteDialogComponent],
+  declarations: [MobilnostComponent, MobilnostDetailComponent, MobilnostUpdateComponent, MobilnostDeleteDialogComponent, UploadComponent],
 })
 export class MobilnostModule {}

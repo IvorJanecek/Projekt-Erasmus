@@ -3,14 +3,12 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 
 import { NatjecajFormService, NatjecajFormGroup } from './natjecaj-form.service';
 import { INatjecaj } from '../natjecaj.model';
 import { NatjecajService } from '../service/natjecaj.service';
 import { Status } from 'app/entities/enumerations/status.model';
-import { ZahtjevModalComponent } from '../detail/zahtjev-modal/zahtjev-modal.component';
+import { Korisnik } from 'app/entities/enumerations/korisnik.model';
 
 @Component({
   selector: 'jhi-natjecaj-update',
@@ -20,6 +18,7 @@ export class NatjecajUpdateComponent implements OnInit {
   isSaving = false;
   natjecaj: INatjecaj | null = null;
   statusValues = Object.keys(Status);
+  korisnikValues = Object.keys(Korisnik);
 
   editForm: NatjecajFormGroup = this.natjecajFormService.createNatjecajFormGroup();
 

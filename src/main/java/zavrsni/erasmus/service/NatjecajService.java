@@ -54,6 +54,8 @@ public interface NatjecajService {
      * @param id the id of the entity.
      * @return the entity.
      */
+
+    List<NatjecajDTO> findAllFilteredByUserRoleAndEntityType();
     Optional<NatjecajDTO> findOne(Long id);
 
     /**

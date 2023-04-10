@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
@@ -37,6 +37,7 @@ type NatjecajFormGroupContent = {
   datumOd: FormControl<NatjecajFormRawValue['datumOd']>;
   datumDo: FormControl<NatjecajFormRawValue['datumDo']>;
   status: FormControl<NatjecajFormRawValue['status']>;
+  korisnik: FormControl<NatjecajFormRawValue['korisnik']>;
 };
 
 export type NatjecajFormGroup = FormGroup<NatjecajFormGroupContent>;
@@ -48,6 +49,21 @@ export class NatjecajFormService {
       ...this.getFormDefaults(),
       ...natjecaj,
     });
+
+    const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+      const trajanjeOd = control.parent?.get('datumOd')?.value;
+      const trajanjeDo = control.parent?.get('datumDo')?.value;
+      if (!trajanjeOd || !trajanjeDo) {
+        return null;
+      }
+      const start = dayjs(trajanjeOd);
+      const end = dayjs(trajanjeDo);
+      if (start >= end) {
+        return { dateRangeError: true };
+      }
+      return null;
+    };
+
     return new FormGroup<NatjecajFormGroupContent>({
       id: new FormControl(
         { value: natjecajRawValue.id, disabled: true },
@@ -62,10 +78,17 @@ export class NatjecajFormService {
       description: new FormControl(natjecajRawValue.description, {
         validators: [Validators.required],
       }),
-      createDate: new FormControl(natjecajRawValue.createDate),
-      datumOd: new FormControl(natjecajRawValue.datumOd),
-      datumDo: new FormControl(natjecajRawValue.datumDo),
+      createDate: new FormControl(natjecajRawValue.createDate, {
+        validators: [Validators.required],
+      }),
+      datumOd: new FormControl(natjecajRawValue.datumOd, {
+        validators: [Validators.required, dateValidator],
+      }),
+      datumDo: new FormControl(natjecajRawValue.datumDo, {
+        validators: [Validators.required, dateValidator],
+      }),
       status: new FormControl(natjecajRawValue.status),
+      korisnik: new FormControl(natjecajRawValue.korisnik),
     });
   }
 
@@ -81,6 +104,19 @@ export class NatjecajFormService {
         id: { value: natjecajRawValue.id, disabled: true },
       } as any /* cast to workaround https://github.com/angular/angular/issues/46458 */
     );
+  }
+
+  dateLessThan(from: string, to: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      let f = group.controls[from];
+      let t = group.controls[to];
+      if (f.value > t.value) {
+        return {
+          dates: 'Date from should be less than Date to',
+        };
+      }
+      return {};
+    };
   }
 
   private getFormDefaults(): NatjecajFormDefaults {

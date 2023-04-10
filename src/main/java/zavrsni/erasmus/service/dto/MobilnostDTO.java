@@ -2,6 +2,7 @@ package zavrsni.erasmus.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
@@ -29,6 +30,8 @@ public class MobilnostDTO implements Serializable {
     private NatjecajDTO natjecaj;
 
     private PrijavaDTO prijava;
+
+    private List<UploadFileDTO> uploadFiles;
 
     public Long getId() {
         return id;
@@ -92,6 +95,14 @@ public class MobilnostDTO implements Serializable {
 
     public void setPrijava(PrijavaDTO prijava) {
         this.prijava = prijava;
+    }
+
+    public List<UploadFileDTO> getUploadFiles() {
+        return uploadFiles;
+    }
+
+    public void setUploadFiles(List<UploadFileDTO> uploadFiles) {
+        this.uploadFiles = uploadFiles;
     }
 
     @Override

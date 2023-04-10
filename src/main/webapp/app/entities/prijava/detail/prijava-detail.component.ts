@@ -6,6 +6,8 @@ import { DataUtils } from 'app/core/util/data-util.service';
 import { IMobilnost } from 'app/entities/mobilnost/mobilnost.model';
 import { finalize, Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { IUploadFile } from '../upload_files.model';
+import { PrijavaService } from '../service/prijava.service';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -16,8 +18,13 @@ export class PrijavaDetailComponent implements OnInit {
   isSaving = false;
   mobilnostCollection: any;
   prijavaFormService: any;
-  prijavaService: any;
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute, protected router: Router) {}
+  uploadFiles?: IUploadFile[];
+  constructor(
+    protected dataUtils: DataUtils,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    private prijavaService: PrijavaService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ prijava }) => {
@@ -36,9 +43,10 @@ export class PrijavaDetailComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
-  createMobilnost(prijava: IPrijava): void {
+  createMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen'>): void {
     // set the prihvacen field to true for the Prijava entity
     prijava.prihvacen = true;
+    console.log(prijava.prihvacen);
 
     const PartialUpdatePrijava = {
       id: prijava.id,
@@ -71,7 +79,21 @@ export class PrijavaDetailComponent implements OnInit {
     });
   }
 
-  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj'>): void {
+  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen'>): void {
+    // set the prihvacen field to true for the Prijava entity
+    prijava.prihvacen = true;
+    console.log(prijava.prihvacen);
+
+    const PartialUpdatePrijava = {
+      id: prijava.id,
+      prihvacen: prijava.prihvacen,
+    };
+
+    this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
+      console.log(prijava.prihvacen);
+      this.save();
+    });
+
     const newMobilnost: IMobilnost = {
       prijava: prijava,
       id: prijava.id,

@@ -93,6 +93,14 @@
             <option *ngFor="let status of statusValues" [value]="status">{{ status }}</option>
           </select>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_korisnik">Korisnik</label>
+          <select class="form-control" name="status" formControlName="korisnik" id="field_korisnik" data-cy="korisnik">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let korisnik of korisnikValues" [value]="korisnik">{{ korisnik }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

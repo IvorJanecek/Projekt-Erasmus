@@ -76,7 +76,7 @@ public class Prijava implements Serializable {
     @JsonIgnoreProperties(value = { "prijavas", "mobilnost" }, allowSetters = true)
     private Natjecaj natjecaj;
 
-    @OneToMany(mappedBy = "prijava", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "prijava", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UploadFile> files = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

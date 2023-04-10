@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IPrijava, NewPrijava } from '../prijava.model';
+import { dateValidator } from './date-range-validator';
 
 /**
  * A partial Type with required key is used as form input.
@@ -54,6 +55,20 @@ export class PrijavaFormService {
       ...this.getFormDefaults(),
       ...prijava,
     });
+    const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+      const trajanjeOd = control.parent?.get('trajanjeOd')?.value;
+      const trajanjeDo = control.parent?.get('trajanjeDo')?.value;
+      if (!trajanjeOd || !trajanjeDo) {
+        return null;
+      }
+      const start = dayjs(trajanjeOd);
+      const end = dayjs(trajanjeDo);
+      if (start >= end) {
+        return { dateRangeError: true };
+      }
+      return null;
+    };
+
     return new FormGroup<PrijavaFormGroupContent>({
       id: new FormControl(
         { value: prijavaRawValue.id, disabled: true },
@@ -71,10 +86,10 @@ export class PrijavaFormService {
       createdDate: new FormControl(prijavaRawValue.createdDate),
       prihvacen: new FormControl(prijavaRawValue.prihvacen),
       trajanjeOd: new FormControl(prijavaRawValue.trajanjeOd, {
-        validators: [Validators.required],
+        validators: [Validators.required, dateValidator],
       }),
       trajanjeDo: new FormControl(prijavaRawValue.trajanjeDo, {
-        validators: [Validators.required],
+        validators: [Validators.required, dateValidator],
       }),
       data: new FormControl(prijavaRawValue.data),
       dataContentType: new FormControl(prijavaRawValue.dataContentType),

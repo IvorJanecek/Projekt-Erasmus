@@ -160,9 +160,7 @@ public class NatjecajResource {
             return new ResponseEntity<>(natjecajService.findAllWhereMobilnostIsNull(), HttpStatus.OK);
         }
         log.debug("REST request to get a page of Natjecajs");
-        Page<NatjecajDTO> page = natjecajService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return new ResponseEntity<>(natjecajService.findAllFilteredByUserRoleAndEntityType(), HttpStatus.OK);
     }
 
     /**

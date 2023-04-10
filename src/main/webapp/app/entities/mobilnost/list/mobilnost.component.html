@@ -33,12 +33,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>Id</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="mobilnostName">
             <div class="d-flex">
               <span>Ime</span>
@@ -86,9 +80,8 @@
       >
         <tr *ngFor="let mobilnost of mobilnosts; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/mobilnost', mobilnost.id, 'view']">{{ mobilnost.id }}</a>
+            <a [routerLink]="['/mobilnost', mobilnost.id, 'view']">{{ mobilnost.mobilnostName }}</a>
           </td>
-          <td>{{ mobilnost.mobilnostName }}</td>
           <td>{{ mobilnost.description }}</td>
           <td>{{ mobilnost.createdDate | formatMediumDatetime }}</td>
           <td>

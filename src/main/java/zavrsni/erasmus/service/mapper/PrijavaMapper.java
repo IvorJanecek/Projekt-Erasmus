@@ -12,7 +12,7 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     @Mapping(target = "fakultet", source = "fakultet", qualifiedByName = "fakultetName")
     @Mapping(target = "natjecaj", source = "natjecaj", qualifiedByName = "natjecajName")
-    //@Mapping(target = "uploadFiles", source = "files", qualifiedByName = "uploadFileName")
+    @Mapping(target = "uploadFiles", source = "files", qualifiedByName = "uploadFileName")
     PrijavaDTO toDto(Prijava s);
 
     @Named("userId")
@@ -21,13 +21,13 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     @Mapping(target = "login", source = "login")
     UserDTO toDtoUserId(User user);
 
-    /*@Named("uploadFileName")
+    @Named("uploadFileName")
     @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "fileName", source = "fileName")
     @Mapping(target = "fileType", source = "fileType")
     @Mapping(target = "data", source = "data")
-    UploadFileDTO toUploadFile(UploadFile uploadFile);*/
+    UploadFileDTO toUploadFile(UploadFile uploadFile);
 
     @Named("fakultetName")
     @BeanMapping(ignoreByDefault = true)

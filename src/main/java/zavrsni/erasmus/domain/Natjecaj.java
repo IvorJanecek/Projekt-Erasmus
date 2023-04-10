@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import zavrsni.erasmus.domain.enumeration.Korisnik;
 import zavrsni.erasmus.domain.enumeration.Status;
 
 /**
@@ -49,6 +50,10 @@ public class Natjecaj implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "korisnik")
+    private Korisnik korisnik;
 
     @OneToMany(mappedBy = "natjecaj")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -163,6 +168,19 @@ public class Natjecaj implements Serializable {
         return this;
     }
 
+    public Korisnik getKorisnik() {
+        return this.korisnik;
+    }
+
+    public Natjecaj korisnik(Korisnik korisnik) {
+        this.setKorisnik(korisnik);
+        return this;
+    }
+
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -247,6 +265,7 @@ public class Natjecaj implements Serializable {
             ", datumOd='" + getDatumOd() + "'" +
             ", datumDo='" + getDatumDo() + "'" +
             ", status='" + getStatus() + "'" +
+            ", korisnik='" + getKorisnik() + "'" +
             "}";
     }
 }

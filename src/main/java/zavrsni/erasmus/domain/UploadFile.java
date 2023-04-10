@@ -21,6 +21,10 @@ public class UploadFile {
     @JoinColumn(name = "prijava_id", referencedColumnName = "id")
     private Prijava prijava;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mobilnost_id", referencedColumnName = "id")
+    private Mobilnost mobilnost;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +56,14 @@ public class UploadFile {
     public UploadFile data(byte[] data) {
         this.setData(data);
         return this;
+    }
+
+    public Mobilnost getMobilnost() {
+        return mobilnost;
+    }
+
+    public void setMobilnost(Mobilnost mobilnost) {
+        this.mobilnost = mobilnost;
     }
 
     public void setData(byte[] data) {

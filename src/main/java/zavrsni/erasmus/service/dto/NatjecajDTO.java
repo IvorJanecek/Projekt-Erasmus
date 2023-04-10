@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.*;
+import zavrsni.erasmus.domain.enumeration.Korisnik;
 import zavrsni.erasmus.domain.enumeration.Status;
 
 /**
@@ -29,6 +30,8 @@ public class NatjecajDTO implements Serializable {
     private LocalDate datumDo;
 
     private Status status;
+
+    private Korisnik korisnik;
     private List<ZahtjevDTO> zahtjevs;
 
     public Long getId() {
@@ -95,6 +98,14 @@ public class NatjecajDTO implements Serializable {
         this.status = status;
     }
 
+    public Korisnik getKorisnik() {
+        return korisnik;
+    }
+
+    public void setKorisnik(Korisnik korisnik) {
+        this.korisnik = korisnik;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -127,6 +138,7 @@ public class NatjecajDTO implements Serializable {
             ", datumOd='" + getDatumOd() + "'" +
             ", datumDo='" + getDatumDo() + "'" +
             ", status='" + getStatus() + "'" +
+            ", korisnik='" + getKorisnik() + "'" +
             "}";
     }
 }

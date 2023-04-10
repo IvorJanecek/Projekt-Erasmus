@@ -35,6 +35,7 @@ public class NatjecajMapperImpl implements NatjecajMapper {
         natjecaj.setDatumOd(arg0.getDatumOd());
         natjecaj.setDatumDo(arg0.getDatumDo());
         natjecaj.setStatus(arg0.getStatus());
+        natjecaj.setKorisnik(arg0.getKorisnik());
 
         return natjecaj;
     }
@@ -55,6 +56,7 @@ public class NatjecajMapperImpl implements NatjecajMapper {
         natjecajDTO.setDatumOd(arg0.getDatumOd());
         natjecajDTO.setDatumDo(arg0.getDatumDo());
         natjecajDTO.setStatus(arg0.getStatus());
+        natjecajDTO.setKorisnik(arg0.getKorisnik());
 
         return natjecajDTO;
     }
@@ -125,6 +127,9 @@ public class NatjecajMapperImpl implements NatjecajMapper {
         }
         if (arg1.getStatus() != null) {
             arg0.setStatus(arg1.getStatus());
+        }
+        if (arg1.getKorisnik() != null) {
+            arg0.setKorisnik(arg1.getKorisnik());
         }
     }
 

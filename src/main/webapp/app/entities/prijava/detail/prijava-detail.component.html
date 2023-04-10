@@ -65,21 +65,31 @@
             <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
           </div>
         </dd>
+
+        <dt><span>Fajlovi :</span></dt>
+        <dd>
+          <div *ngFor="let uploadFiles of prijava.uploadFiles">
+            <div *ngIf="uploadFiles.data">
+              <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
+              {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
+            </div>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
       </button>
 
-      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button *ngIf="!prijava.prihvacen" (click)="createMobilnost(prijava)">Prihvati Prijavu</button>
-      </div>
-
       <button *ngIf="!prijava.prihvacen" type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
 
-      <button (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj })">Prijavi mobilnost</button>
+      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button *ngIf="!prijava.prihvacen" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj })">
+          Prijavi mobilnost
+        </button>
+      </div>
     </div>
   </div>
 </div>
