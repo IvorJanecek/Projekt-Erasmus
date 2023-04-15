@@ -1,5 +1,6 @@
 package zavrsni.erasmus.service.impl;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zavrsni.erasmus.domain.Natjecaj;
 import zavrsni.erasmus.domain.Zahtjev;
+import zavrsni.erasmus.domain.enumeration.Status;
 import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.service.NatjecajService;
 import zavrsni.erasmus.service.dto.NatjecajDTO;
@@ -120,5 +122,13 @@ public class NatjecajServiceImpl implements NatjecajService {
     public void delete(Long id) {
         log.debug("Request to delete Natjecaj : {}", id);
         natjecajRepository.deleteById(id);
+    }
+
+    public void closeExpiredNatjecaji() {
+        List<Natjecaj> natjecaji = natjecajRepository.findNatjecajiToClose();
+        for (Natjecaj natjecaj : natjecaji) {
+            natjecaj.setStatus(Status.ZATVOREN);
+            natjecajRepository.save(natjecaj);
+        }
     }
 }

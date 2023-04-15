@@ -20,7 +20,7 @@ export class NatjecajComponent implements OnInit {
   natjecajs?: INatjecaj[];
   isLoading = false;
 
-  predicate = 'id';
+  predicate = 'createDate';
   ascending = true;
 
   itemsPerPage = ITEMS_PER_PAGE;
@@ -96,7 +96,7 @@ export class NatjecajComponent implements OnInit {
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
     const sort = (params.get(SORT) ?? data[DEFAULT_SORT_DATA]).split(',');
     this.predicate = sort[0];
-    this.ascending = sort[1] === ASC;
+    this.ascending = sort[1] === DESC;
   }
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {

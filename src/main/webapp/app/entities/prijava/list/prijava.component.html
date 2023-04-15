@@ -22,12 +22,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="prijavaName">
             <div class="d-flex">
               <span>Prijava </span>
@@ -99,9 +93,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let prijava of prijavas; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/prijava', prijava.id, 'view']">{{ prijava.id }}</a>
-          </td>
           <td>{{ prijava.prijavaName }}</td>
           <td>{{ prijava.opis }}</td>
           <td>{{ prijava.createdDate | formatMediumDatetime }}</td>

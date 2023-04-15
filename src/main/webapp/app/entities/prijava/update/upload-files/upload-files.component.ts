@@ -16,6 +16,7 @@ export class UploadFilesComponent implements OnInit {
   formData: FormData = new FormData();
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
+  fileNames: string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,

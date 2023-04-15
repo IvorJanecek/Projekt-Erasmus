@@ -78,9 +78,7 @@ export class ZahtjevModalComponent implements OnInit {
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
-  }
+  protected onSaveSuccess(): void {}
 
   protected onSaveError(): void {
     // Api for inheritance.

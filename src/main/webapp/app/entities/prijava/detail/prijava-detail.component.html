@@ -10,10 +10,6 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ prijava.id }}</span>
-        </dd>
         <dt><span>Ime prijave</span></dt>
         <dd>
           <span>{{ prijava.prijavaName }}</span>
@@ -38,13 +34,7 @@
         <dd>
           <span>{{ prijava.trajanjeDo | formatMediumDate }}</span>
         </dd>
-        <dt><span>Dokumenti</span></dt>
-        <dd>
-          <div *ngIf="prijava.data">
-            <a (click)="openFile(prijava.data, prijava.dataContentType)">Otvori</a>
-            {{ prijava.dataContentType }}, {{ byteSize(prijava.data) }}
-          </div>
-        </dd>
+
         <dt><span>Kategorija</span></dt>
         <dd>
           <span>{{ prijava.kategorija }}</span>
@@ -63,6 +53,13 @@
         <dd>
           <div *ngIf="prijava.natjecaj">
             <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
+          </div>
+        </dd>
+
+        <dt><span>Zahtjevi za natječaj :</span></dt>
+        <dd>
+          <div *ngFor="let zahtjev of zahtjevs">
+            <span>{{ zahtjev.name }}</span>
           </div>
         </dd>
 
@@ -86,8 +83,8 @@
       </button>
 
       <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button *ngIf="!prijava.prihvacen" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj })">
-          Prijavi mobilnost
+        <button *ngIf="!prijava.prihvacen" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })">
+          Prihvati prijavu i pokreni mobilnost
         </button>
       </div>
     </div>

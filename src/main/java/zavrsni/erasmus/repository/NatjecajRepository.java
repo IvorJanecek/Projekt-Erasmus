@@ -20,4 +20,7 @@ public interface NatjecajRepository extends JpaRepository<Natjecaj, Long> {
         "(:#{hasRole('ROLE_USER')} = true and e.korisnik = 'USER'))"
     )
     List<Natjecaj> findAllFilteredByUserRoleAndEntityType();
+
+    @Query("select n from Natjecaj n where n.datumDo <= current_date and n.status = 'OTVOREN'")
+    List<Natjecaj> findNatjecajiToClose();
 }

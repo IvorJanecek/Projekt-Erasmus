@@ -79,34 +79,6 @@
           <input type="hidden" class="form-control" name="data" id="field_data" data-cy="data" formControlName="data" />
           <input type="hidden" class="form-control" name="dataContentType" id="field_dataContentType" formControlName="dataContentType" />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_natjecaj">Natječaj</label>
-          <select
-            class="form-control"
-            id="field_natjecaj"
-            data-cy="natjecaj"
-            name="natjecaj"
-            formControlName="natjecaj"
-            [compareWith]="compareNatjecaj"
-          >
-            <option [ngValue]="mobilnost?.natjecaj">nesto</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_prijava">Prijava</label>
-          <select
-            class="form-control"
-            id="field_prijava"
-            data-cy="prijava"
-            name="prijava"
-            formControlName="prijava"
-            [compareWith]="comparePrijava"
-          >
-            <option [ngValue]="mobilnost">{{ mobilnost!.prijava?.id }}</option>
-          </select>
-        </div>
       </div>
 
       <div>

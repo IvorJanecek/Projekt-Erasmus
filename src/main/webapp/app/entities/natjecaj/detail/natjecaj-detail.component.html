@@ -58,7 +58,9 @@
 
       <button (click)="createNewPrijava({ id: natjecaj.id })">Prijavi se na natječaj</button>
 
-      <button (click)="createNewZahtjev({ id: natjecaj.id })">Dodaj Zahtjev</button>
+      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="createNewZahtjev({ id: natjecaj.id })">
+        Dodaj Zahtjev
+      </button>
     </div>
   </div>
 </div>

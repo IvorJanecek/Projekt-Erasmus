@@ -14,6 +14,7 @@ import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { NatjecajService } from 'app/entities/natjecaj/service/natjecaj.service';
 import { IPrijava } from 'app/entities/prijava/prijava.model';
 import { PrijavaService } from 'app/entities/prijava/service/prijava.service';
+import { IUser } from 'app/entities/user/user.model';
 
 @Component({
   selector: 'jhi-mobilnost-update',
@@ -23,6 +24,7 @@ export class MobilnostUpdateComponent implements OnInit {
   isSaving = false;
   mobilnost: IMobilnost | null = null;
 
+  usersSharedCollection: IUser[] = [];
   natjecajsCollection: INatjecaj[] = [];
   prijavasCollection: IPrijava[] = [];
 
@@ -76,6 +78,10 @@ export class MobilnostUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const mobilnost = this.mobilnostFormService.getMobilnost(this.editForm);
+    mobilnost.natjecaj = this.mobilnost?.natjecaj;
+    mobilnost.prijava = this.mobilnost?.prijava;
+    mobilnost.user = this.mobilnost?.user;
+    console.log(mobilnost.user);
     if (mobilnost.id !== null) {
       this.subscribeToSaveResponse(this.mobilnostService.update(mobilnost));
     } else {

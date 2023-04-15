@@ -8,6 +8,8 @@ import { finalize, Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { IUploadFile } from '../upload_files.model';
 import { PrijavaService } from '../service/prijava.service';
+import { IZahtjev } from 'app/entities/zahtjev/zatjev.model';
+import { ZahtjevService } from 'app/entities/zahtjev/service/zahtjev.service';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -19,17 +21,25 @@ export class PrijavaDetailComponent implements OnInit {
   mobilnostCollection: any;
   prijavaFormService: any;
   uploadFiles?: IUploadFile[];
+  zahtjevs: IZahtjev[] | null = [];
+
   constructor(
     protected dataUtils: DataUtils,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    private prijavaService: PrijavaService
+    private prijavaService: PrijavaService,
+    private zahtjevService: ZahtjevService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ prijava }) => {
       this.prijava = prijava;
     });
+    if (this.prijava?.natjecaj?.id) {
+      this.zahtjevService.findAllByNatjecajId(this.prijava.natjecaj.id).subscribe(result => {
+        this.zahtjevs = result.body;
+      });
+    }
   }
 
   byteSize(base64String: string): string {
@@ -79,7 +89,7 @@ export class PrijavaDetailComponent implements OnInit {
     });
   }
 
-  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen'>): void {
+  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen' | 'user'>): void {
     // set the prihvacen field to true for the Prijava entity
     prijava.prihvacen = true;
     console.log(prijava.prihvacen);
@@ -98,6 +108,7 @@ export class PrijavaDetailComponent implements OnInit {
       prijava: prijava,
       id: prijava.id,
       natjecaj: prijava.natjecaj,
+      user: prijava.user,
     };
 
     this.router.navigate(['/mobilnost/new'], { state: { mobilnost: newMobilnost } });

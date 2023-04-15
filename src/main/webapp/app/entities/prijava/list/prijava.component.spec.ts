@@ -25,13 +25,13 @@ describe('Prijava Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'id,asc',
+              defaultSort: 'createdDate,desc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'id,desc',
+                sort: 'createdDate,desc',
               })
             ),
             snapshot: { queryParams: {} },
@@ -90,12 +90,12 @@ describe('Prijava Management Component', () => {
     comp.ngOnInit();
 
     // THEN
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['createdDate,desc'] }));
   });
 
   it('should calculate the sort attribute for a non-id attribute', () => {
     // GIVEN
-    comp.predicate = 'name';
+    comp.predicate = 'createdDate';
 
     // WHEN
     comp.navigateToWithComponentValues();
@@ -105,7 +105,7 @@ describe('Prijava Management Component', () => {
       expect.anything(),
       expect.objectContaining({
         queryParams: expect.objectContaining({
-          sort: ['name,asc'],
+          sort: ['createdDate,desc'],
         }),
       })
     );

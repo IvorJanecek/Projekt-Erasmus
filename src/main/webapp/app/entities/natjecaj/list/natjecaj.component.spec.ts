@@ -25,13 +25,13 @@ describe('Natjecaj Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'id,desc',
+              defaultSort: 'createDate,asc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'id,desc',
+                sort: 'createDate,asc',
               })
             ),
             snapshot: { queryParams: {} },

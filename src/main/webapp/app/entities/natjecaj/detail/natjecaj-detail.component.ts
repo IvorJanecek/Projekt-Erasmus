@@ -52,6 +52,10 @@ export class NatjecajDetailComponent implements OnInit {
     );
   }
 
+  onModalHidden(): void {
+    window.location.reload();
+  }
+
   createNewZahtjev(natjecaj: Pick<INatjecaj, 'id'>): void {
     this.numZahtjevsToCreate = 1;
     const modalRef = this.modalService.open(ZahtjevModalComponent, { centered: true });
@@ -63,6 +67,7 @@ export class NatjecajDetailComponent implements OnInit {
       },
       cancel => {
         console.log('cancel Click');
+        window.location.reload();
       }
     );
   }
