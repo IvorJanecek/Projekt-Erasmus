@@ -34,21 +34,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="opis">
-            <div class="d-flex">
-              <span>Opis</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="createdDate">
             <div class="d-flex">
               <span>Napravljen</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="prihvacen">
-            <div class="d-flex">
-              <span>Prihvaćen</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -64,12 +52,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="data">
-            <div class="d-flex">
-              <span>Dokumenti</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="kategorija">
             <div class="d-flex">
               <span>Kategorija</span>
@@ -78,7 +60,7 @@
           </th>
           <th scope="col" jhiSortBy="user.id">
             <div class="d-flex">
-              <span>User</span>
+              <span>Korisnik</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -103,18 +85,12 @@
             <a [routerLink]="['/prijava', prijava.id, 'view']">{{ prijava.id }}</a>
           </td>
           <td>{{ prijava.prijavaName }}</td>
-          <td>{{ prijava.opis }}</td>
           <td>{{ prijava.createdDate | formatMediumDatetime }}</td>
-          <td>{{ prijava.prihvacen }}</td>
           <td>{{ prijava.trajanjeOd | formatMediumDate }}</td>
           <td>{{ prijava.trajanjeDo | formatMediumDate }}</td>
-          <td>
-            <a *ngIf="prijava.data" (click)="openFile(prijava.data, prijava.dataContentType)">Otvori</a>
-            <span *ngIf="prijava.data">{{ prijava.dataContentType }}, {{ byteSize(prijava.data) }}</span>
-          </td>
           <td>{{ prijava.kategorija }}</td>
           <td>
-            {{ prijava.user?.id }}
+            {{ prijava.user?.login }}
           </td>
           <td>
             <div *ngIf="prijava.fakultet">

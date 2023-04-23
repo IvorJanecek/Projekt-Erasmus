@@ -14,17 +14,14 @@
         <dd>
           <span>{{ prijava.prijavaName }}</span>
         </dd>
-        <dt><span>Opis</span></dt>
-        <dd>
-          <span>{{ prijava.opis }}</span>
-        </dd>
         <dt><span>Napravljen</span></dt>
         <dd>
           <span>{{ prijava.createdDate | formatMediumDatetime }}</span>
         </dd>
         <dt><span>Prihvaćen</span></dt>
         <dd>
-          <span>{{ prijava.prihvacen }}</span>
+          <span *ngIf="prijava.prihvacen">DA</span>
+          <span *ngIf="!prijava.prihvacen">NE</span>
         </dd>
         <dt><span>Trajanje od</span></dt>
         <dd>
@@ -39,9 +36,9 @@
         <dd>
           <span>{{ prijava.kategorija }}</span>
         </dd>
-        <dt><span>User</span></dt>
+        <dt><span>Korisnik</span></dt>
         <dd>
-          <span>{{ prijava.user?.id }}</span>
+          <span>{{ prijava.user?.login }}</span>
         </dd>
         <dt><span>Fakultet</span></dt>
         <dd>
@@ -68,22 +65,26 @@
           <div *ngFor="let uploadFiles of prijava.uploadFiles">
             <div *ngIf="uploadFiles.data">
               <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
-              {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
+              {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
             </div>
           </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
       <button *ngIf="!prijava.prihvacen" type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
 
       <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button *ngIf="!prijava.prihvacen" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })">
+        <button
+          *ngIf="!prijava.prihvacen"
+          class="btn btn-primary"
+          (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })"
+        >
           Prihvati prijavu i pokreni mobilnost
         </button>
       </div>

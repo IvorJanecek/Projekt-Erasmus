@@ -26,6 +26,10 @@ public final class SecurityUtils {
         return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
     }
 
+    public static boolean hasCurrentUserAdminRole() {
+        return hasCurrentUserAnyOfAuthorities("ROLE_ADMIN");
+    }
+
     private static String extractPrincipal(Authentication authentication) {
         if (authentication == null) {
             return null;

@@ -60,9 +60,7 @@ export class MobilnostFormService {
       mobilnostName: new FormControl(mobilnostRawValue.mobilnostName, {
         validators: [Validators.required],
       }),
-      description: new FormControl(mobilnostRawValue.description, {
-        validators: [Validators.required],
-      }),
+      description: new FormControl(mobilnostRawValue.description),
       createdDate: new FormControl(mobilnostRawValue.createdDate),
       data: new FormControl(mobilnostRawValue.data),
       dataContentType: new FormControl(mobilnostRawValue.dataContentType),

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { IMobilnost } from '../mobilnost.model';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { HttpClient } from '@angular/common/http';
+import { UploadFileService } from './upload/upload-files-service.service';
 
 @Component({
   selector: 'jhi-mobilnost-detail',
@@ -11,7 +13,13 @@ import { DataUtils } from 'app/core/util/data-util.service';
 export class MobilnostDetailComponent implements OnInit {
   mobilnost: IMobilnost | null = null;
 
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute, protected router: Router) {}
+  constructor(
+    protected dataUtils: DataUtils,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    private http: HttpClient,
+    private uploadFileService: UploadFileService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ mobilnost }) => {
@@ -32,6 +40,17 @@ export class MobilnostDetailComponent implements OnInit {
       const route = `/mobilnost/${mobilnostId.id}/upload`;
       this.router.navigate([route], { state: { mobilnost: mobilnostId.id } });
     }
+  }
+
+  deleteFile(fileId: number): void {
+    this.uploadFileService.deleteFile(fileId).subscribe(() => {
+      this.mobilnost!.uploadFiles = this.mobilnost?.uploadFiles!.filter(uploadFile => uploadFile.id !== fileId);
+    });
+    window.location.reload();
+  }
+
+  onModalHidden(): void {
+    window.location.reload();
   }
 
   previousState(): void {

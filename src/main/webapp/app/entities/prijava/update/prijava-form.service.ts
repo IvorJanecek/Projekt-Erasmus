@@ -80,9 +80,7 @@ export class PrijavaFormService {
       prijavaName: new FormControl(prijavaRawValue.prijavaName, {
         validators: [Validators.required],
       }),
-      opis: new FormControl(prijavaRawValue.opis, {
-        validators: [Validators.required],
-      }),
+      opis: new FormControl(prijavaRawValue.opis),
       createdDate: new FormControl(prijavaRawValue.createdDate),
       prihvacen: new FormControl(prijavaRawValue.prihvacen),
       trajanjeOd: new FormControl(prijavaRawValue.trajanjeOd, {

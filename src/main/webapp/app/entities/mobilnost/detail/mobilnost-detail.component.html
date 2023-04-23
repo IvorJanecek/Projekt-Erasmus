@@ -10,28 +10,13 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>Id</span></dt>
-        <dd>
-          <span>{{ mobilnost.id }}</span>
-        </dd>
         <dt><span>Mobilnost</span></dt>
         <dd>
           <span>{{ mobilnost.mobilnostName }}</span>
         </dd>
-        <dt><span>Opis</span></dt>
-        <dd>
-          <span>{{ mobilnost.description }}</span>
-        </dd>
         <dt><span>Napravljen</span></dt>
         <dd>
           <span>{{ mobilnost.createdDate | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span>Dokumenti</span></dt>
-        <dd>
-          <div *ngIf="mobilnost.data">
-            <a (click)="openFile(mobilnost.data, mobilnost.dataContentType)">Open</a>
-            {{ mobilnost.dataContentType }}, {{ byteSize(mobilnost.data) }}
-          </div>
         </dd>
         <dt><span>Natječaj</span></dt>
         <dd>
@@ -45,14 +30,26 @@
             <a [routerLink]="['/prijava', mobilnost.prijava.id, 'view']">{{ mobilnost.prijava.prijavaName }}</a>
           </div>
         </dd>
+
+        <dt><span>Fajlovi : </span></dt>
+        <dd>
+          <div>
+            <button type="button" (click)="uploadajFajl({ id: mobilnost.id })" class="btn btn-primary">
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>UploadajFajlove</span>
+            </button>
+          </div>
+          <div *ngFor="let uploadFiles of mobilnost.uploadFiles">
+            <div *ngIf="uploadFiles.data">
+              <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
+              {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
+              <button (hidden)="onModalHidden()" (click)="deleteFile(uploadFiles.id)">Delete</button>
+            </div>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
-      </button>
-
-      <button type="button" (click)="uploadajFajl({ id: mobilnost.id })">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>UploadajFajlove</span>
       </button>
 
       <button type="button" [routerLink]="['/mobilnost', mobilnost.id, 'edit']" class="btn btn-primary">

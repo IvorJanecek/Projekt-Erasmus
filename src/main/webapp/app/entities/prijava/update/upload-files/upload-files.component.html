@@ -1,9 +1,18 @@
-<span>Zahtjevi :</span>
-<div *ngFor="let zahtjev of zahtjevs">
-  <span>{{ zahtjev.name }}</span>
-</div>
+<h1>Upload Files</h1>
 
-<form [formGroup]="fileForm" (ngSubmit)="uploadFiles()">
-  <input type="file" name="files" formControlName="files" multiple (change)="addFiles($event)" />
-  <button type="submit">Upload files</button>
+<form [formGroup]="fileForm">
+  <table>
+    <tbody>
+      <ng-container *ngFor="let zahtjev of zahtjevs; let i = index">
+        <tr>
+          <td>
+            <input type="file" (change)="onFileSelect($event, i)" />
+          </td>
+          <td>{{ zahtjev.name }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <button type="button" (click)="uploadFiles()">Upload files</button>
 </form>

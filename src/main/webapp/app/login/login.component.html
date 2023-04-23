@@ -3,7 +3,7 @@
     <div class="col-lg-6 col-md-8 col-sm-10">
       <h1 data-cy="loginTitle">Ulogiraj se</h1>
       <div class="alert alert-danger" *ngIf="authenticationError" data-cy="loginError">
-        <strong>Failed to sign in!</strong> Please check your credentials and try again.
+        <strong>Neuspješno logiranje !</strong> Provjerite unos i pokušajte ponovo!
       </div>
       <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
         <div class="mb-3">
@@ -13,7 +13,7 @@
             class="form-control"
             name="username"
             id="username"
-            placeholder="Your username"
+            placeholder="Tvoj Email"
             formControlName="username"
             #username
             data-cy="username"
@@ -27,7 +27,7 @@
             class="form-control"
             name="password"
             id="password"
-            placeholder="Your password"
+            placeholder="Tvoja Lozinka"
             formControlName="password"
             data-cy="password"
           />

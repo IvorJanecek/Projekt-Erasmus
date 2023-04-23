@@ -111,7 +111,6 @@
                 [routerLink]="['/natjecaj', natjecaj.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
-                [disabled]="natjecaj.status === 'ZATVOREN'"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Uredi</span>
@@ -123,7 +122,6 @@
                 (click)="delete(natjecaj)"
                 class="btn btn-danger btn-sm"
                 data-cy="entityDeleteButton"
-                [disabled]="natjecaj.status === 'ZATVOREN'"
               >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Obriši</span>

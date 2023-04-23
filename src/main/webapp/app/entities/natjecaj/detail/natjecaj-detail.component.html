@@ -43,7 +43,7 @@
         <div *ngIf="natjecaj">
           <div *ngFor="let zahtjev of natjecaj.zahtjevs">
             <span>{{ zahtjev.name }}</span>
-            <button (click)="deleteZahtjev(zahtjev.id)">Delete</button>
+            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Delete</button>
           </div>
         </div>
       </dl>

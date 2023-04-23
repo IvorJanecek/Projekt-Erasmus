@@ -235,9 +235,11 @@ public class PrijavaResource {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin().orElse(null);
         // Retrieve the Prijava entity by ID
         Optional<PrijavaDTO> prijavaDTO = prijavaService.findOne(id);
+        // Check if the current user has admin role
+        boolean isAdmin = SecurityUtils.hasCurrentUserAdminRole();
 
         // Check if the Prijava entity exists and was created by the current user
-        if (prijavaDTO.isPresent() && prijavaDTO.get().getUser().getLogin().equals(currentUserLogin)) {
+        if (prijavaDTO.isPresent() && (prijavaDTO.get().getUser().getLogin().equals(currentUserLogin) || isAdmin)) {
             return ResponseUtil.wrapOrNotFound(prijavaDTO);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

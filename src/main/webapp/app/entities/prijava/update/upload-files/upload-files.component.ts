@@ -12,8 +12,8 @@ import { IZahtjev } from '../../../zahtjev/zatjev.model';
 })
 export class UploadFilesComponent implements OnInit {
   fileForm!: FormGroup;
-  selectedFiles!: FileList;
-  formData: FormData = new FormData();
+  selectedFiles: File[][] = [[], [], []];
+  formData: FormData[] = [new FormData(), new FormData(), new FormData()];
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
   fileNames: string[] = [];
@@ -36,27 +36,28 @@ export class UploadFilesComponent implements OnInit {
     });
   }
 
-  addFiles(event: Event): void {
-    this.formData = new FormData();
+  onFileSelect(event: Event, column: number): void {
     const target = event.target as HTMLInputElement;
     if (target.files !== null) {
-      this.selectedFiles = target.files;
+      this.selectedFiles[column] = [...this.selectedFiles[column], target.files[0]];
+      this.formData[column] = new FormData();
+      this.formData[column].append('files', target.files[0], target.files[0].name);
+      this.fileNames[column] = target.files[0].name;
     } else {
-      console.log('No files selected!');
-      return;
-    }
-
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.formData.append('files', this.selectedFiles[i], this.selectedFiles[i].name);
+      console.log('No file selected!');
     }
   }
 
   uploadFiles(): void {
     const prijavaId = this.route.snapshot.params.prijavaId; // Replace with the ID of the Prijava instance
-    this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData).subscribe(
-      response => console.log(response),
-      error => console.error(error)
-    );
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (this.selectedFiles[i].length > 0) {
+        this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData[i]).subscribe(
+          response => console.log(response),
+          error => console.error(error)
+        );
+      }
+    }
     this.router.navigate(['/prijava']);
   }
 }

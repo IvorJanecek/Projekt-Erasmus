@@ -27,14 +27,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_opis">Opis</label>
-          <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
-          <div *ngIf="editForm.get('opis')!.invalid && (editForm.get('opis')!.dirty || editForm.get('opis')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('opis')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" for="field_createdDate">Napravljen</label>
           <div class="d-flex">
             <input

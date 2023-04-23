@@ -13,62 +13,62 @@ import zavrsni.erasmus.service.dto.ZahtjevDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-23T16:54:11+0200",
-    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
+    date = "2023-03-14T22:55:32+0100",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.4.1 (Amazon.com Inc.)"
 )
 @Component
 public class NatjecajMapperImpl implements NatjecajMapper {
 
     @Override
-    public Natjecaj toEntity(NatjecajDTO dto) {
-        if (dto == null) {
+    public Natjecaj toEntity(NatjecajDTO arg0) {
+        if (arg0 == null) {
             return null;
         }
 
         Natjecaj natjecaj = new Natjecaj();
 
-        natjecaj.setZahtjevs(zahtjevDTOListToZahtjevSet(dto.getZahtjevs()));
-        natjecaj.setId(dto.getId());
-        natjecaj.setName(dto.getName());
-        natjecaj.setDescription(dto.getDescription());
-        natjecaj.setCreateDate(dto.getCreateDate());
-        natjecaj.setDatumOd(dto.getDatumOd());
-        natjecaj.setDatumDo(dto.getDatumDo());
-        natjecaj.setStatus(dto.getStatus());
-        natjecaj.setKorisnik(dto.getKorisnik());
+        natjecaj.setZahtjevs(zahtjevDTOListToZahtjevSet(arg0.getZahtjevs()));
+        natjecaj.setId(arg0.getId());
+        natjecaj.setName(arg0.getName());
+        natjecaj.setDescription(arg0.getDescription());
+        natjecaj.setCreateDate(arg0.getCreateDate());
+        natjecaj.setDatumOd(arg0.getDatumOd());
+        natjecaj.setDatumDo(arg0.getDatumDo());
+        natjecaj.setStatus(arg0.getStatus());
+        natjecaj.setKorisnik(arg0.getKorisnik());
 
         return natjecaj;
     }
 
     @Override
-    public NatjecajDTO toDto(Natjecaj entity) {
-        if (entity == null) {
+    public NatjecajDTO toDto(Natjecaj arg0) {
+        if (arg0 == null) {
             return null;
         }
 
         NatjecajDTO natjecajDTO = new NatjecajDTO();
 
-        natjecajDTO.setId(entity.getId());
-        natjecajDTO.setName(entity.getName());
-        natjecajDTO.setZahtjevs(zahtjevSetToZahtjevDTOList(entity.getZahtjevs()));
-        natjecajDTO.setDescription(entity.getDescription());
-        natjecajDTO.setCreateDate(entity.getCreateDate());
-        natjecajDTO.setDatumOd(entity.getDatumOd());
-        natjecajDTO.setDatumDo(entity.getDatumDo());
-        natjecajDTO.setStatus(entity.getStatus());
-        natjecajDTO.setKorisnik(entity.getKorisnik());
+        natjecajDTO.setId(arg0.getId());
+        natjecajDTO.setName(arg0.getName());
+        natjecajDTO.setZahtjevs(zahtjevSetToZahtjevDTOList(arg0.getZahtjevs()));
+        natjecajDTO.setDescription(arg0.getDescription());
+        natjecajDTO.setCreateDate(arg0.getCreateDate());
+        natjecajDTO.setDatumOd(arg0.getDatumOd());
+        natjecajDTO.setDatumDo(arg0.getDatumDo());
+        natjecajDTO.setStatus(arg0.getStatus());
+        natjecajDTO.setKorisnik(arg0.getKorisnik());
 
         return natjecajDTO;
     }
 
     @Override
-    public List<Natjecaj> toEntity(List<NatjecajDTO> dtoList) {
-        if (dtoList == null) {
+    public List<Natjecaj> toEntity(List<NatjecajDTO> arg0) {
+        if (arg0 == null) {
             return null;
         }
 
-        List<Natjecaj> list = new ArrayList<Natjecaj>(dtoList.size());
-        for (NatjecajDTO natjecajDTO : dtoList) {
+        List<Natjecaj> list = new ArrayList<Natjecaj>(arg0.size());
+        for (NatjecajDTO natjecajDTO : arg0) {
             list.add(toEntity(natjecajDTO));
         }
 
@@ -76,13 +76,13 @@ public class NatjecajMapperImpl implements NatjecajMapper {
     }
 
     @Override
-    public List<NatjecajDTO> toDto(List<Natjecaj> entityList) {
-        if (entityList == null) {
+    public List<NatjecajDTO> toDto(List<Natjecaj> arg0) {
+        if (arg0 == null) {
             return null;
         }
 
-        List<NatjecajDTO> list = new ArrayList<NatjecajDTO>(entityList.size());
-        for (Natjecaj natjecaj : entityList) {
+        List<NatjecajDTO> list = new ArrayList<NatjecajDTO>(arg0.size());
+        for (Natjecaj natjecaj : arg0) {
             list.add(toDto(natjecaj));
         }
 
@@ -90,46 +90,46 @@ public class NatjecajMapperImpl implements NatjecajMapper {
     }
 
     @Override
-    public void partialUpdate(Natjecaj entity, NatjecajDTO dto) {
-        if (dto == null) {
+    public void partialUpdate(Natjecaj arg0, NatjecajDTO arg1) {
+        if (arg1 == null) {
             return;
         }
 
-        if (entity.getZahtjevs() != null) {
-            Set<Zahtjev> set = zahtjevDTOListToZahtjevSet(dto.getZahtjevs());
+        if (arg0.getZahtjevs() != null) {
+            Set<Zahtjev> set = zahtjevDTOListToZahtjevSet(arg1.getZahtjevs());
             if (set != null) {
-                entity.getZahtjevs().clear();
-                entity.getZahtjevs().addAll(set);
+                arg0.getZahtjevs().clear();
+                arg0.getZahtjevs().addAll(set);
             }
         } else {
-            Set<Zahtjev> set = zahtjevDTOListToZahtjevSet(dto.getZahtjevs());
+            Set<Zahtjev> set = zahtjevDTOListToZahtjevSet(arg1.getZahtjevs());
             if (set != null) {
-                entity.setZahtjevs(set);
+                arg0.setZahtjevs(set);
             }
         }
-        if (dto.getId() != null) {
-            entity.setId(dto.getId());
+        if (arg1.getId() != null) {
+            arg0.setId(arg1.getId());
         }
-        if (dto.getName() != null) {
-            entity.setName(dto.getName());
+        if (arg1.getName() != null) {
+            arg0.setName(arg1.getName());
         }
-        if (dto.getDescription() != null) {
-            entity.setDescription(dto.getDescription());
+        if (arg1.getDescription() != null) {
+            arg0.setDescription(arg1.getDescription());
         }
-        if (dto.getCreateDate() != null) {
-            entity.setCreateDate(dto.getCreateDate());
+        if (arg1.getCreateDate() != null) {
+            arg0.setCreateDate(arg1.getCreateDate());
         }
-        if (dto.getDatumOd() != null) {
-            entity.setDatumOd(dto.getDatumOd());
+        if (arg1.getDatumOd() != null) {
+            arg0.setDatumOd(arg1.getDatumOd());
         }
-        if (dto.getDatumDo() != null) {
-            entity.setDatumDo(dto.getDatumDo());
+        if (arg1.getDatumDo() != null) {
+            arg0.setDatumDo(arg1.getDatumDo());
         }
-        if (dto.getStatus() != null) {
-            entity.setStatus(dto.getStatus());
+        if (arg1.getStatus() != null) {
+            arg0.setStatus(arg1.getStatus());
         }
-        if (dto.getKorisnik() != null) {
-            entity.setKorisnik(dto.getKorisnik());
+        if (arg1.getKorisnik() != null) {
+            arg0.setKorisnik(arg1.getKorisnik());
         }
     }
 

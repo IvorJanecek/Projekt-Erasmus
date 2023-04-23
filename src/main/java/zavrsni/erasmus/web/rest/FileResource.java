@@ -55,6 +55,17 @@ public class FileResource {
         }
     }
 
+    @GetMapping("/uploadFiles/mobilnost/{mobilnostId}")
+    public List<UploadFile> getUploadFilesByMobilnostId(@PathVariable Long mobilnostId) {
+        Mobilnost mobilnost = mobilnostRepository
+            .findById(mobilnostId)
+            .orElseThrow(() -> new RuntimeException("Mobilnost with ID " + mobilnostId + " not found"));
+
+        List<UploadFile> uploadFiles = uploadFilesRepository.findByMobilnost(mobilnost);
+
+        return uploadFiles;
+    }
+
     @PostMapping("/uploadFiles/mobilnost/{mobilnostId}")
     public ResponseEntity<String> uploadFilesMobilnost(@PathVariable Long mobilnostId, @RequestParam("files") List<MultipartFile> files) {
         try {
@@ -76,6 +87,21 @@ public class FileResource {
             return ResponseEntity.ok("Files uploaded successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deleteFile/{fileId}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long fileId) {
+        try {
+            UploadFile uploadFile = uploadFilesRepository
+                .findById(fileId)
+                .orElseThrow(() -> new RuntimeException("File with ID " + fileId + " not found"));
+
+            uploadFilesRepository.delete(uploadFile);
+
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete file: " + e.getMessage());
         }
     }
 }
