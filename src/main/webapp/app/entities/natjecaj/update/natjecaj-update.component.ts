@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -25,7 +25,8 @@ export class NatjecajUpdateComponent implements OnInit {
   constructor(
     protected natjecajService: NatjecajService,
     protected natjecajFormService: NatjecajFormService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {

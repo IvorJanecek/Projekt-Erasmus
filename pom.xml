@@ -294,6 +294,11 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot.experimental</groupId>
+            <artifactId>spring-boot-thin-layout</artifactId>
+            <version>1.0.28.RELEASE</version>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
@@ -359,6 +364,33 @@
             <plugin>
                 <groupId>org.gaul</groupId>
                 <artifactId>modernizer-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.2.0</version>
+<configuration>
+                    <deploy.projectId>eighth-saga-361511</deploy.projectId>
+                    <deploy.version>1</deploy.version>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.2.0</version>
+<configuration>
+                    <deploy.projectId>erasmus-365-erasmus</deploy.projectId>
+                    <deploy.version>1</deploy.version>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.2.0</version>
+<configuration>
+                    <deploy.projectId>erasmus-384314</deploy.projectId>
+                    <deploy.version>1</deploy.version>
+                </configuration>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
@@ -1274,6 +1306,68 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+            <id>prod-gae</id>
+            <properties>
+                <spring.profiles.active>prod${profile.api-docs}${profile.no-liquibase},prod-gae</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>gae</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-undertow</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>2.7.3</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.springframework.boot.experimental</groupId>
+                                <artifactId>spring-boot-thin-layout</artifactId>
+                                <version>1.0.24.RELEASE</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>org.springframework.boot</groupId>
+                                        <artifactId>spring-boot-loader-tools</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot.experimental</groupId>
+                        <artifactId>spring-boot-thin-maven-plugin</artifactId>
+                        <version>1.0.24.RELEASE</version>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/appengine-staging</outputDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>resolve</id>
+                                <goals>
+                                    <goal>resolve</goal>
+                                </goals>
+                                <inherited>false</inherited>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- jhipster-needle-maven-add-profile -->
     </profiles>
 </project>

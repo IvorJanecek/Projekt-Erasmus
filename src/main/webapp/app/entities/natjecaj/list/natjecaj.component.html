@@ -33,12 +33,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>Id</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="name">
             <div class="d-flex">
               <span>Ime</span>
@@ -86,9 +80,8 @@
       >
         <tr *ngFor="let natjecaj of natjecajs; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/natjecaj', natjecaj.id, 'view']">{{ natjecaj.id }}</a>
+            <a [routerLink]="['/natjecaj', natjecaj.id, 'view']">{{ natjecaj.name }}</a>
           </td>
-          <td>{{ natjecaj.name }}</td>
           <td
             class="form-control"
             style="word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; width: 600px; height: 133px"

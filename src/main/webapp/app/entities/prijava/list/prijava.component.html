@@ -130,8 +130,6 @@
               </button>
 
               <button
-                *ngIf="!prijava.prihvacen"
-                jhiHasAnyAuthority="Role_ADMIN"
                 type="submit"
                 [routerLink]="['/prijava', prijava.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -141,13 +139,7 @@
                 <span class="d-none d-md-inline">uredi</span>
               </button>
 
-              <button
-                *ngIf="!prijava.prihvacen"
-                type="submit"
-                (click)="delete(prijava)"
-                class="btn btn-danger btn-sm"
-                data-cy="entityDeleteButton"
-              >
+              <button type="submit" (click)="delete(prijava)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Obriši</span>
               </button>
