@@ -9,12 +9,12 @@ import dayjs from 'dayjs/esm';
 export class NgbDateDayjsAdapter extends NgbDateAdapter<dayjs.Dayjs> {
   fromModel(date: dayjs.Dayjs | null): NgbDateStruct | null {
     if (date && dayjs.isDayjs(date) && date.isValid()) {
-      return { day: date.date(), month: date.month() + 1, year: date.year() };
+      return { year: date.year(), month: date.month() + 1, day: date.date() };
     }
     return null;
   }
 
   toModel(date: NgbDateStruct | null): dayjs.Dayjs | null {
-    return date ? dayjs(`${date.day}-${date.month}-${date.year}`) : null;
+    return date ? dayjs(`${date.year}-${date.month}-${date.day}`) : null;
   }
 }

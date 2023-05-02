@@ -41,6 +41,9 @@
             <column name="kategorija" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="status_prijave" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -67,10 +70,10 @@
     -->
     <changeSet id="20221218142047-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/prijava.csv"
-                  separator=";"
-                  tableName="prijava"
-                  usePreparedStatements="true">
+            file="config/liquibase/fake-data/prijava.csv"
+            separator=";"
+            tableName="prijava"
+            usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="prijava_name" type="string"/>
             <column name="opis" type="string"/>
@@ -81,6 +84,8 @@
             <column name="data" type="blob"/>
             <column name="data_content_type" type="string"/>
             <column name="kategorija" type="string"/>
+            <column name="status_prijave" type="string"/>
+
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
