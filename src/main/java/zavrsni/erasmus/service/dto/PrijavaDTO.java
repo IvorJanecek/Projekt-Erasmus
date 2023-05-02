@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import zavrsni.erasmus.domain.enumeration.Kategorija;
+import zavrsni.erasmus.domain.enumeration.StatusPrijave;
 
 /**
  * A DTO for the {@link zavrsni.erasmus.domain.Prijava} entity.
@@ -38,6 +39,8 @@ public class PrijavaDTO implements Serializable {
 
     private String dataContentType;
     private Kategorija kategorija;
+
+    private StatusPrijave statusPrijave;
 
     private UserDTO user;
 
@@ -127,6 +130,14 @@ public class PrijavaDTO implements Serializable {
         this.kategorija = kategorija;
     }
 
+    public StatusPrijave getStatusPrijave() {
+        return statusPrijave;
+    }
+
+    public void setStatusPrijave(StatusPrijave statusPrijave) {
+        this.statusPrijave = statusPrijave;
+    }
+
     public UserDTO getUser() {
         return user;
     }
@@ -195,6 +206,7 @@ public class PrijavaDTO implements Serializable {
             ", user=" + getUser() +
             ", fakultet=" + getFakultet() +
             ", natjecaj=" + getNatjecaj() +
+            ", statusPrijave=" + getStatusPrijave() +
             "}";
     }
 }

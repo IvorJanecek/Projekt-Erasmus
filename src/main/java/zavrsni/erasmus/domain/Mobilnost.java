@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import zavrsni.erasmus.domain.enumeration.StatusMobilnosti;
+import zavrsni.erasmus.domain.enumeration.StatusPrijave;
 
 /**
  * A Mobilnost.
@@ -59,6 +61,10 @@ public class Mobilnost implements Serializable {
 
     @ManyToOne
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusMobilnosti statusMobilnosti;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -120,6 +126,19 @@ public class Mobilnost implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public StatusMobilnosti getStatusMobilnosti() {
+        return this.statusMobilnosti;
+    }
+
+    public Mobilnost statusMobilnosti(StatusMobilnosti statusMobilnosti) {
+        this.setStatusMobilnosti(statusMobilnosti);
+        return this;
+    }
+
+    public void setStatusMobilnosti(StatusMobilnosti statusMobilnosti) {
+        this.statusMobilnosti = statusMobilnosti;
     }
 
     public Instant getCreatedDate() {
@@ -216,6 +235,7 @@ public class Mobilnost implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", data='" + getData() + "'" +
             ", dataContentType='" + getDataContentType() + "'" +
+            ", statusMobilnosti='" + getStatusMobilnosti() + "'" +
             "}";
     }
 }

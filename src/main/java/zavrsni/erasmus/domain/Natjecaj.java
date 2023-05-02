@@ -11,6 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import zavrsni.erasmus.domain.enumeration.Korisnik;
 import zavrsni.erasmus.domain.enumeration.Status;
 
@@ -71,6 +73,21 @@ public class Natjecaj implements Serializable {
 
     public Set<Zahtjev> getZahtjevs() {
         return zahtjevs;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public class NatjecajHasPrijaveException extends RuntimeException {
+
+        public NatjecajHasPrijaveException(String message) {
+            super(message);
+        }
+    }
+
+    @PreRemove
+    private void preventDeleteIfHasPrijave() {
+        if (!prijavas.isEmpty()) {
+            throw new NatjecajHasPrijaveException("Nije moguće izbrisati natječaj jer postoje prijave.");
+        }
     }
 
     public Set<Zahtjev> getZahtjevsByNatjecajId(Long natjecajId) {

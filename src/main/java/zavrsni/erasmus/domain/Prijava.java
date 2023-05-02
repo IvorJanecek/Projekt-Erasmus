@@ -10,7 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.mapstruct.EnumMapping;
 import zavrsni.erasmus.domain.enumeration.Kategorija;
+import zavrsni.erasmus.domain.enumeration.StatusPrijave;
 
 /**
  * A Prijava.
@@ -60,6 +62,10 @@ public class Prijava implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "kategorija")
     private Kategorija kategorija;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusPrijave statusPrijave;
 
     @ManyToOne
     private User user;
@@ -215,6 +221,19 @@ public class Prijava implements Serializable {
         return this;
     }
 
+    public StatusPrijave getStatusPrijave() {
+        return this.statusPrijave;
+    }
+
+    public Prijava statusPrijave(StatusPrijave statusPrijave) {
+        this.setStatusPrijave(statusPrijave);
+        return this;
+    }
+
+    public void setStatusPrijave(StatusPrijave statusPrijave) {
+        this.statusPrijave = statusPrijave;
+    }
+
     public void setKategorija(Kategorija kategorija) {
         this.kategorija = kategorija;
     }
@@ -310,6 +329,7 @@ public class Prijava implements Serializable {
             ", data='" + getData() + "'" +
             ", dataContentType='" + getDataContentType() + "'" +
             ", kategorija='" + getKategorija() + "'" +
+            ", statusPrijave'" + getStatusPrijave() + "'" +
             "}";
     }
 }

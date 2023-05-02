@@ -34,6 +34,7 @@ export class UploadFilesComponent implements OnInit {
     this.zahtjevService.findAllByNatjecajId(this.natjecaj.id).subscribe(result => {
       this.zahtjevs = result.body;
     });
+    this.fileForm.get('files')!.disable();
   }
 
   onFileSelect(event: Event, column: number): void {
@@ -46,18 +47,27 @@ export class UploadFilesComponent implements OnInit {
     } else {
       console.log('No file selected!');
     }
+
+    const allFilesSelected = this.selectedFiles.every(files => files.length > 0);
+    if (allFilesSelected) {
+      this.fileForm.get('files')!.enable(); // Enable the button
+    } else {
+      this.fileForm.get('files')!.disable(); // Disable the button
+    }
   }
 
   uploadFiles(): void {
     const prijavaId = this.route.snapshot.params.prijavaId; // Replace with the ID of the Prijava instance
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      if (this.selectedFiles[i].length > 0) {
+    if (this.selectedFiles.every(files => files.length > 0)) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
         this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData[i]).subscribe(
           response => console.log(response),
           error => console.error(error)
         );
       }
+      this.router.navigate(['/prijava']);
+    } else {
+      console.log('Please select a file for each row!');
     }
-    this.router.navigate(['/prijava']);
   }
 }

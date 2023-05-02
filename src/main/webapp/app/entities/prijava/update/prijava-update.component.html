@@ -27,6 +27,14 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" for="field_opis">Opis</label>
+          <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
+          <div *ngIf="editForm.get('opis')!.invalid && (editForm.get('opis')!.dirty || editForm.get('opis')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('opis')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" for="field_createdDate">Napravljen</label>
           <div class="d-flex">
             <input
@@ -99,6 +107,20 @@
           <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
             <option [ngValue]="null"></option>
             <option *ngFor="let kategorija of kategorijaValues.slice(2)" [value]="kategorija">{{ kategorija }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+          <label class="form-label" for="field_statusPrijave">statusPrijave</label>
+          <select
+            class="form-control"
+            name="statusPrijave"
+            formControlName="statusPrijave"
+            id="field_statusPrijave"
+            data-cy="statusPrijave"
+          >
+            <option [value]="statusPrijaveValues[0]">{{ statusPrijaveValues[0] }}</option>
+            <option *ngFor="let statusPrijave of statusPrijaveValues.slice(1)" [value]="statusPrijave">{{ statusPrijave }}</option>
           </select>
         </div>
 

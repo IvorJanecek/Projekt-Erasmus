@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
+import zavrsni.erasmus.domain.enumeration.StatusMobilnosti;
 
 /**
  * A DTO for the {@link zavrsni.erasmus.domain.Mobilnost} entity.
@@ -32,6 +33,8 @@ public class MobilnostDTO implements Serializable {
     private PrijavaDTO prijava;
 
     private UserDTO user;
+
+    private StatusMobilnosti statusMobilnosti;
 
     private List<UploadFileDTO> uploadFiles;
 
@@ -115,6 +118,14 @@ public class MobilnostDTO implements Serializable {
         this.uploadFiles = uploadFiles;
     }
 
+    public StatusMobilnosti getStatusMobilnosti() {
+        return statusMobilnosti;
+    }
+
+    public void setStatusMobilnosti(StatusMobilnosti statusMobilnosti) {
+        this.statusMobilnosti = statusMobilnosti;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -148,6 +159,7 @@ public class MobilnostDTO implements Serializable {
             ", user=" + getUser() +
             ", natjecaj=" + getNatjecaj() +
             ", prijava=" + getPrijava() +
-            "}";
+            ", statusMobilnosti=" + getStatusMobilnosti() +
+             "}";
     }
 }

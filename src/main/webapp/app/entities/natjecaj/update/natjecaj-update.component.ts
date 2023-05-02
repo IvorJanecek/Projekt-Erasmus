@@ -3,12 +3,14 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import 'dayjs/locale/hr';
 
 import { NatjecajFormService, NatjecajFormGroup } from './natjecaj-form.service';
 import { INatjecaj } from '../natjecaj.model';
 import { NatjecajService } from '../service/natjecaj.service';
 import { Status } from 'app/entities/enumerations/status.model';
 import { Korisnik } from 'app/entities/enumerations/korisnik.model';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-natjecaj-update',
@@ -36,6 +38,10 @@ export class NatjecajUpdateComponent implements OnInit {
         this.updateForm(natjecaj);
       }
     });
+  }
+
+  formatDate(date: Date): string {
+    return dayjs(date).format('DD-MM-YYYY');
   }
 
   previousState(): void {

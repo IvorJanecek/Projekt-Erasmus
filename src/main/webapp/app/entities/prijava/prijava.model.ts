@@ -4,6 +4,7 @@ import { IFakultet } from 'app/entities/fakultet/fakultet.model';
 import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { Kategorija } from 'app/entities/enumerations/kategorija.model';
 import { IUploadFile } from './upload_files.model';
+import { StatusPrijave } from '../enumerations/statusprijave.mode';
 
 export interface IPrijava {
   id: number;
@@ -18,8 +19,9 @@ export interface IPrijava {
   kategorija?: Kategorija | null;
   user?: Pick<IUser, 'id' | 'login'> | null;
   fakultet?: Pick<IFakultet, 'id' | 'name'> | null;
-  natjecaj?: Pick<INatjecaj, 'id'> | null;
+  natjecaj?: Pick<INatjecaj, 'id' | 'name'> | null;
   uploadFiles?: IUploadFile[];
+  statusPrijave?: StatusPrijave | null;
 }
 
 export type NewPrijava = Omit<IPrijava, 'id'> & { id: null };

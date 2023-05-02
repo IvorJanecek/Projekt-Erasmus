@@ -44,6 +44,7 @@ type PrijavaFormGroupContent = {
   user: FormControl<PrijavaFormRawValue['user']>;
   fakultet: FormControl<PrijavaFormRawValue['fakultet']>;
   natjecaj: FormControl<PrijavaFormRawValue['natjecaj']>;
+  statusPrijave: FormControl<PrijavaFormRawValue['statusPrijave']>;
 };
 
 export type PrijavaFormGroup = FormGroup<PrijavaFormGroupContent>;
@@ -92,6 +93,7 @@ export class PrijavaFormService {
       data: new FormControl(prijavaRawValue.data),
       dataContentType: new FormControl(prijavaRawValue.dataContentType),
       kategorija: new FormControl(prijavaRawValue.kategorija),
+      statusPrijave: new FormControl(prijavaRawValue.statusPrijave),
       user: new FormControl(prijavaRawValue.user),
       fakultet: new FormControl(prijavaRawValue.fakultet),
       natjecaj: new FormControl(prijavaRawValue.natjecaj),

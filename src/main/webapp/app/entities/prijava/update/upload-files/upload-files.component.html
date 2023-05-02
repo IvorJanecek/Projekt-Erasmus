@@ -6,7 +6,7 @@
       <ng-container *ngFor="let zahtjev of zahtjevs; let i = index">
         <tr>
           <td>
-            <input type="file" (change)="onFileSelect($event, i)" />
+            <input type="file" (change)="onFileSelect($event, i)" [ngModel]="selectedFiles[i]" name="file-{{ i }}" />
           </td>
           <td>{{ zahtjev.name }}</td>
         </tr>

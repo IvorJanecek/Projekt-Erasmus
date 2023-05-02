@@ -19,6 +19,7 @@ import { NatjecajService } from 'app/entities/natjecaj/service/natjecaj.service'
 import { Kategorija } from 'app/entities/enumerations/kategorija.model';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { StatusPrijave } from 'app/entities/enumerations/statusprijave.mode';
 
 @Component({
   selector: 'jhi-prijava-update',
@@ -28,6 +29,7 @@ export class PrijavaUpdateComponent implements OnInit {
   isSaving = false;
   prijava: IPrijava | null = null;
   kategorijaValues = Object.keys(Kategorija);
+  statusPrijaveValues = Object.keys(StatusPrijave);
 
   usersSharedCollection: IUser[] = [];
   fakultetsSharedCollection: IFakultet[] = [];
@@ -67,6 +69,8 @@ export class PrijavaUpdateComponent implements OnInit {
       this.prijava = prijava;
       if (prijava) {
         this.updateForm(prijava);
+      } else {
+        this.editForm.patchValue({ statusPrijave: StatusPrijave.NOVA_PRIJAVA });
       }
 
       this.loadRelationshipsOptions();

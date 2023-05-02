@@ -49,6 +49,7 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         }
         prijava.setDataContentType(arg0.getDataContentType());
         prijava.setKategorija(arg0.getKategorija());
+        prijava.setStatusPrijave(arg0.getStatusPrijave());
         prijava.user(userDTOToUser(arg0.getUser()));
         prijava.fakultet(fakultetDTOToFakultet(arg0.getFakultet()));
         prijava.natjecaj(natjecajDTOToNatjecaj(arg0.getNatjecaj()));
@@ -121,6 +122,9 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         if (arg1.getKategorija() != null) {
             arg0.setKategorija(arg1.getKategorija());
         }
+        if (arg1.getStatusPrijave() != null) {
+            arg0.setStatusPrijave(arg1.getStatusPrijave());
+        }
         if (arg1.getUser() != null) {
             if (arg0.getUser() == null) {
                 arg0.user(new User());
@@ -166,6 +170,7 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         }
         prijavaDTO.setDataContentType(s.getDataContentType());
         prijavaDTO.setKategorija(s.getKategorija());
+        prijavaDTO.setStatusPrijave(s.getStatusPrijave());
 
         return prijavaDTO;
     }
