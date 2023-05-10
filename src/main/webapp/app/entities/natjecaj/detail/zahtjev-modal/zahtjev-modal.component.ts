@@ -18,6 +18,7 @@ export class ZahtjevModalComponent implements OnInit {
   numberOfEntities: number | null = null;
   numZahtjevsToCreate = 1;
   isSaving = false;
+  editModal = false;
   zahtjev: IZahtjev | null = null;
 
   natjecajsSharedCollection: INatjecaj[] = [];
@@ -32,7 +33,9 @@ export class ZahtjevModalComponent implements OnInit {
     protected activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.zahtjevFormService.resetForm(this.editForm, history.state.zahtjev);
+  }
 
   @Input() natjecaj: INatjecaj | undefined;
 
@@ -59,6 +62,9 @@ export class ZahtjevModalComponent implements OnInit {
     this.isSaving = true;
     let zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
     zahtjev.natjecaj = this.natjecaj;
+    if (this.editModal) {
+      zahtjev.id = this.zahtjev!.id;
+    }
     if (zahtjev.id !== null) {
       this.subscribeToSaveResponse(this.zahtjevService.update(zahtjev));
     } else {

@@ -10,6 +10,9 @@ import { IUploadFile } from '../upload_files.model';
 import { PrijavaService } from '../service/prijava.service';
 import { IZahtjev } from 'app/entities/zahtjev/zatjev.model';
 import { ZahtjevService } from 'app/entities/zahtjev/service/zahtjev.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ZahtjevModalComponent } from '../../natjecaj/detail/zahtjev-modal/zahtjev-modal.component';
+import { FileModalComponent } from './file-modal/file-modal.component';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -28,7 +31,8 @@ export class PrijavaDetailComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     private prijavaService: PrijavaService,
-    private zahtjevService: ZahtjevService
+    private zahtjevService: ZahtjevService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +44,26 @@ export class PrijavaDetailComponent implements OnInit {
         this.zahtjevs = result.body;
       });
     }
+  }
+
+  onModalHidden(): void {
+    window.location.reload();
+  }
+
+  urediFile(file: Pick<IUploadFile, 'id'>): void {
+    const modalRef = this.modalService.open(FileModalComponent, { centered: true });
+
+    modalRef.componentInstance.uploadFile = file;
+
+    modalRef.result.then(
+      yes => {
+        console.log('Ok click');
+      },
+      cancel => {
+        console.log('cancel Click');
+        window.location.reload();
+      }
+    );
   }
 
   byteSize(base64String: string): string {

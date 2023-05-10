@@ -7,6 +7,7 @@ import { PrijavaDeleteDialogComponent } from './delete/prijava-delete-dialog.com
 import { PrijavaRoutingModule } from './route/prijava-routing.module';
 import { UploadFilesComponent } from './update/upload-files/upload-files.component';
 import { ListAdminComponent } from './list-admin/list-admin.component';
+import { FileModalComponent } from './detail/file-modal/file-modal.component';
 
 @NgModule({
   imports: [SharedModule, PrijavaRoutingModule],
@@ -17,6 +18,7 @@ import { ListAdminComponent } from './list-admin/list-admin.component';
     PrijavaDeleteDialogComponent,
     UploadFilesComponent,
     ListAdminComponent,
+    FileModalComponent,
   ],
 })
 export class PrijavaModule {}

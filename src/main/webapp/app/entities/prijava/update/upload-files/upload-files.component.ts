@@ -60,7 +60,7 @@ export class UploadFilesComponent implements OnInit {
     const prijavaId = this.route.snapshot.params.prijavaId; // Replace with the ID of the Prijava instance
     if (this.selectedFiles.every(files => files.length > 0)) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData[i]).subscribe(
+        this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData[i], { responseType: 'text' }).subscribe(
           response => console.log(response),
           error => console.error(error)
         );

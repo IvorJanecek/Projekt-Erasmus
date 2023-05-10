@@ -56,6 +56,13 @@
       <dt><span>Zahtjev:</span></dt>
       <dd style="display: flex; justify-content: space-between">
         <span>{{ zahtjev.name }}</span>
+        <button
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
+          (hidden)="onModalHidden()"
+          (click)="urediZahtjev({ id: natjecaj!.id }, { id: zahtjev.id, name: zahtjev.name })"
+        >
+          +
+        </button>
         <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Delete</button>
       </dd>
     </div>

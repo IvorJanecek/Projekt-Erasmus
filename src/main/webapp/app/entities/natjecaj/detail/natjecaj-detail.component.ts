@@ -56,6 +56,25 @@ export class NatjecajDetailComponent implements OnInit {
     window.location.reload();
   }
 
+  urediZahtjev(natjecaj: Pick<INatjecaj, 'id'>, zahtjev: Pick<IZahtjev, 'id' | 'name'>): void {
+    const modalRef = this.modalService.open(ZahtjevModalComponent, { centered: true });
+
+    modalRef.componentInstance.zahtjev = zahtjev;
+    modalRef.componentInstance.natjecaj = natjecaj;
+    modalRef.componentInstance.editModal = true;
+    history.state.zahtjev = zahtjev;
+
+    modalRef.result.then(
+      yes => {
+        console.log('Ok click');
+      },
+      cancel => {
+        console.log('cancel Click');
+        window.location.reload();
+      }
+    );
+  }
+
   createNewZahtjev(natjecaj: Pick<INatjecaj, 'id'>): void {
     this.numZahtjevsToCreate = 1;
     const modalRef = this.modalService.open(ZahtjevModalComponent, { centered: true });

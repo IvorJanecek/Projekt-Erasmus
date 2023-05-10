@@ -55,6 +55,24 @@ public class FileResource {
         }
     }
 
+    @PatchMapping("/uploadFile/{fileId}")
+    public ResponseEntity<String> uploadFile(@PathVariable Long fileId, @RequestParam("file") MultipartFile file) {
+        try {
+            UploadFile uploadFile = uploadFilesRepository
+                .findById(fileId)
+                .orElseThrow(() -> new RuntimeException("File with ID " + fileId + " not found"));
+
+            uploadFile.setFileName(file.getOriginalFilename());
+            uploadFile.setFileType(file.getContentType());
+            uploadFile.setData(file.getBytes());
+            uploadFilesRepository.save(uploadFile);
+
+            return ResponseEntity.ok("File edited successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to edit file " + e.getMessage());
+        }
+    }
+
     @GetMapping("/uploadFiles/mobilnost/{mobilnostId}")
     public List<UploadFile> getUploadFilesByMobilnostId(@PathVariable Long mobilnostId) {
         Mobilnost mobilnost = mobilnostRepository

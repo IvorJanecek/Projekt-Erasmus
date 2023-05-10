@@ -56,6 +56,7 @@
         <div *ngFor="let uploadFiles of prijava?.uploadFiles">
           <div *ngIf="uploadFiles.data">
             <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
+            <a (hidden)="onModalHidden()" (click)="urediFile({ id: uploadFiles.id })">Edit</a>
             {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
           </div>
         </div>
