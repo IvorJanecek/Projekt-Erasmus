@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-md-4">
     <div *ngIf="natjecaj">
       <h2 data-cy="natjecajDetailsHeading"><span>Natjecaj</span></h2>
 
@@ -34,14 +34,6 @@
         <dd>
           <span>{{ natjecaj.status }}</span>
         </dd>
-        <dt><span>Zahtjevi :</span></dt>
-
-        <div *ngIf="natjecaj">
-          <div *ngFor="let zahtjev of natjecaj.zahtjevs">
-            <span>{{ zahtjev.name }}</span>
-            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Delete</button>
-          </div>
-        </div>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
@@ -57,6 +49,15 @@
       <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="createNewZahtjev({ id: natjecaj.id })">
         Dodaj Zahtjev
       </button>
+    </div>
+  </div>
+  <div class="col-md-3 jh-entity-details">
+    <div class="row-md jh-entity-details" *ngFor="let zahtjev of natjecaj?.zahtjevs">
+      <dt><span>Zahtjev:</span></dt>
+      <dd style="display: flex; justify-content: space-between">
+        <span>{{ zahtjev.name }}</span>
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Delete</button>
+      </dd>
     </div>
   </div>
 </div>

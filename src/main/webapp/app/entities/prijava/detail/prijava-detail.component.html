@@ -52,23 +52,13 @@
             <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
           </div>
         </dd>
-
-        <dt><span>Zahtjevi za natječaj :</span></dt>
-        <dd>
-          <div *ngFor="let zahtjev of zahtjevs">
-            <span>{{ zahtjev.name }}</span>
+        <dt><span> Dokumenti</span></dt>
+        <div *ngFor="let uploadFiles of prijava?.uploadFiles">
+          <div *ngIf="uploadFiles.data">
+            <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
+            {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
           </div>
-        </dd>
-
-        <dt><span>Dokumenti :</span></dt>
-        <dd>
-          <div *ngFor="let uploadFiles of prijava.uploadFiles">
-            <div *ngIf="uploadFiles.data">
-              <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
-              {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
-            </div>
-          </div>
-        </dd>
+        </div>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
@@ -89,5 +79,13 @@
         </button>
       </div>
     </div>
+  </div>
+  <div class="row-md-3 jh-entity-details">
+    <dt><span>Zahtjevi za natječaj :</span></dt>
+    <dd>
+      <div *ngFor="let zahtjev of zahtjevs">
+        <span>{{ zahtjev.name }}</span>
+      </div>
+    </dd>
   </div>
 </div>
