@@ -41,9 +41,6 @@ public class Prijava implements Serializable {
     @Column(name = "created_date")
     private Instant createdDate;
 
-    @Column(name = "prihvacen")
-    private Boolean prihvacen;
-
     @NotNull
     @Column(name = "trajanje_od", nullable = false)
     private LocalDate trajanjeOd;
@@ -145,19 +142,6 @@ public class Prijava implements Serializable {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Boolean getPrihvacen() {
-        return this.prihvacen;
-    }
-
-    public Prijava prihvacen(Boolean prihvacen) {
-        this.setPrihvacen(prihvacen);
-        return this;
-    }
-
-    public void setPrihvacen(Boolean prihvacen) {
-        this.prihvacen = prihvacen;
     }
 
     public LocalDate getTrajanjeOd() {
@@ -323,7 +307,6 @@ public class Prijava implements Serializable {
             ", prijavaName='" + getPrijavaName() + "'" +
             ", opis='" + getOpis() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
-            ", prihvacen='" + getPrihvacen() + "'" +
             ", trajanjeOd='" + getTrajanjeOd() + "'" +
             ", trajanjeDo='" + getTrajanjeDo() + "'" +
             ", data='" + getData() + "'" +

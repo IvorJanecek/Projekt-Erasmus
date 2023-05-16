@@ -13,6 +13,7 @@ import { ZahtjevService } from 'app/entities/zahtjev/service/zahtjev.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ZahtjevModalComponent } from '../../natjecaj/detail/zahtjev-modal/zahtjev-modal.component';
 import { FileModalComponent } from './file-modal/file-modal.component';
+import { StatusPrijave } from 'app/entities/enumerations/statusprijave.mode';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -77,18 +78,18 @@ export class PrijavaDetailComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
-  createMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen'>): void {
-    // set the prihvacen field to true for the Prijava entity
-    prijava.prihvacen = true;
-    console.log(prijava.prihvacen);
+  createMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'statusPrijave'>): void {
+    // Set the prijava.statusPrijave to PRIHVACEN for the Prijava entity
+    prijava.statusPrijave = StatusPrijave.PRIHVACEN;
+    console.log(prijava.statusPrijave);
 
-    const PartialUpdatePrijava = {
-      id: prijava.id,
-      prihvacen: prijava.prihvacen,
+    const partialUpdatePrijava = {
+      id: prijava.id!,
+      statusPrijave: prijava.statusPrijave || null,
     };
 
-    this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
-      console.log(prijava.prihvacen);
+    this.prijavaService.partialUpdate(partialUpdatePrijava).subscribe(() => {
+      console.log(prijava.statusPrijave);
       this.save();
     });
   }
@@ -113,18 +114,18 @@ export class PrijavaDetailComponent implements OnInit {
     });
   }
 
-  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'prihvacen' | 'user'>): void {
+  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'statusPrijave' | 'user'>): void {
     // set the prihvacen field to true for the Prijava entity
-    prijava.prihvacen = true;
-    console.log(prijava.prihvacen);
+    prijava.statusPrijave = StatusPrijave.PRIHVACEN;
+    console.log(prijava.statusPrijave);
 
     const PartialUpdatePrijava = {
       id: prijava.id,
-      prihvacen: prijava.prihvacen,
+      statusPrijave: prijava.statusPrijave,
     };
 
     this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
-      console.log(prijava.prihvacen);
+      console.log(prijava.statusPrijave);
       this.save();
     });
 
@@ -136,6 +137,22 @@ export class PrijavaDetailComponent implements OnInit {
     };
 
     this.router.navigate(['/mobilnost/new'], { state: { mobilnost: newMobilnost } });
+  }
+
+  odbijPrijavu(prijava: Pick<IPrijava, 'id' | 'statusPrijave'>): void {
+    // set the prihvacen field to true for the Prijava entity
+    prijava.statusPrijave = StatusPrijave.ODBIJEN;
+    console.log(prijava.statusPrijave);
+
+    const PartialUpdatePrijava = {
+      id: prijava.id,
+      statusPrijave: prijava.statusPrijave,
+    };
+
+    this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
+      console.log(prijava.statusPrijave);
+      this.save();
+    });
   }
 
   protected onSaveSuccess(): void {

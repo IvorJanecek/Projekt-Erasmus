@@ -37,7 +37,7 @@
           </th>
           <th scope="col" jhiSortBy="prihvacen">
             <div class="d-flex">
-              <span>Prihvaćen</span>
+              <span>Status Prijave</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -57,12 +57,6 @@
           <th scope="col" jhiSortBy="kategorija">
             <div class="d-flex">
               <span>Kategorija</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="statusPrijave">
-            <div class="d-flex">
-              <span>Status Prijave</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -92,11 +86,10 @@
           <td>{{ prijava.prijavaName }}</td>
 
           <td>{{ prijava.createdDate | formatMediumDatetime }}</td>
-          <td>{{ prijava.prihvacen }}</td>
+          <td>{{ prijava.statusPrijave }}</td>
           <td>{{ prijava.trajanjeOd | formatMediumDate }}</td>
           <td>{{ prijava.trajanjeDo | formatMediumDate }}</td>
           <td>{{ prijava.kategorija }}</td>
-          <td>{{ prijava.statusPrijave }}</td>
           <td>
             {{ prijava.user?.login }}
           </td>

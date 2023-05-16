@@ -40,6 +40,7 @@
           </div>
           <div *ngFor="let uploadFiles of mobilnost.uploadFiles">
             <div *ngIf="uploadFiles.data">
+              <a (hidden)="onModalHidden()" (click)="urediFile({ id: uploadFiles.id })">Edit</a>
               <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
               {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
               <button (hidden)="onModalHidden()" (click)="deleteFile(uploadFiles.id)">Delete</button>

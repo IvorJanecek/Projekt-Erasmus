@@ -5,6 +5,9 @@ import { IMobilnost } from '../mobilnost.model';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { HttpClient } from '@angular/common/http';
 import { UploadFileService } from './upload/upload-files-service.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IUploadFile } from 'app/entities/prijava/upload_files.model';
+import { FileModalComponent } from './file-modal/file-modal.component';
 
 @Component({
   selector: 'jhi-mobilnost-detail',
@@ -12,13 +15,15 @@ import { UploadFileService } from './upload/upload-files-service.service';
 })
 export class MobilnostDetailComponent implements OnInit {
   mobilnost: IMobilnost | null = null;
+  uploadFiles?: IUploadFile[];
 
   constructor(
     protected dataUtils: DataUtils,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     private http: HttpClient,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +45,22 @@ export class MobilnostDetailComponent implements OnInit {
       const route = `/mobilnost/${mobilnostId.id}/upload`;
       this.router.navigate([route], { state: { mobilnost: mobilnostId.id } });
     }
+  }
+
+  urediFile(file: Pick<IUploadFile, 'id'>): void {
+    const modalRef = this.modalService.open(FileModalComponent, { centered: true });
+
+    modalRef.componentInstance.uploadFile = file;
+
+    modalRef.result.then(
+      yes => {
+        console.log('Ok click');
+      },
+      cancel => {
+        console.log('cancel Click');
+        window.location.reload();
+      }
+    );
   }
 
   deleteFile(fileId: number): void {

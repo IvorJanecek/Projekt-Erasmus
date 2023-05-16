@@ -26,8 +26,6 @@ public class PrijavaDTO implements Serializable {
 
     private Instant createdDate;
 
-    private Boolean prihvacen;
-
     @NotNull
     private LocalDate trajanjeOd;
 
@@ -80,14 +78,6 @@ public class PrijavaDTO implements Serializable {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Boolean getPrihvacen() {
-        return prihvacen;
-    }
-
-    public void setPrihvacen(Boolean prihvacen) {
-        this.prihvacen = prihvacen;
     }
 
     public LocalDate getTrajanjeOd() {
@@ -199,7 +189,6 @@ public class PrijavaDTO implements Serializable {
             ", prijavaName='" + getPrijavaName() + "'" +
             ", opis='" + getOpis() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
-            ", prihvacen='" + getPrihvacen() + "'" +
             ", trajanjeOd='" + getTrajanjeOd() + "'" +
             ", trajanjeDo='" + getTrajanjeDo() + "'" +
             ", kategorija='" + getKategorija() + "'" +

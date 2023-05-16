@@ -15,6 +15,7 @@ import { NatjecajService } from 'app/entities/natjecaj/service/natjecaj.service'
 import { IPrijava } from 'app/entities/prijava/prijava.model';
 import { PrijavaService } from 'app/entities/prijava/service/prijava.service';
 import { IUser } from 'app/entities/user/user.model';
+import { StatusMobilnosti } from 'app/entities/enumerations/statusmobilnosti.mode';
 
 @Component({
   selector: 'jhi-mobilnost-update',
@@ -81,6 +82,8 @@ export class MobilnostUpdateComponent implements OnInit {
     mobilnost.natjecaj = this.mobilnost?.natjecaj;
     mobilnost.prijava = this.mobilnost?.prijava;
     mobilnost.user = this.mobilnost?.user;
+    mobilnost.statusMobilnosti = 'OTVORENA' as StatusMobilnosti;
+
     console.log(mobilnost.user);
     if (mobilnost.id !== null) {
       this.subscribeToSaveResponse(this.mobilnostService.update(mobilnost));

@@ -28,14 +28,13 @@ type PrijavaFormRawValue = FormValueOf<IPrijava>;
 
 type NewPrijavaFormRawValue = FormValueOf<NewPrijava>;
 
-type PrijavaFormDefaults = Pick<NewPrijava, 'id' | 'createdDate' | 'prihvacen'>;
+type PrijavaFormDefaults = Pick<NewPrijava, 'id' | 'createdDate'>;
 
 type PrijavaFormGroupContent = {
   id: FormControl<PrijavaFormRawValue['id'] | NewPrijava['id']>;
   prijavaName: FormControl<PrijavaFormRawValue['prijavaName']>;
   opis: FormControl<PrijavaFormRawValue['opis']>;
   createdDate: FormControl<PrijavaFormRawValue['createdDate']>;
-  prihvacen: FormControl<PrijavaFormRawValue['prihvacen']>;
   trajanjeOd: FormControl<PrijavaFormRawValue['trajanjeOd']>;
   trajanjeDo: FormControl<PrijavaFormRawValue['trajanjeDo']>;
   data: FormControl<PrijavaFormRawValue['data']>;
@@ -83,7 +82,6 @@ export class PrijavaFormService {
       }),
       opis: new FormControl(prijavaRawValue.opis),
       createdDate: new FormControl(prijavaRawValue.createdDate),
-      prihvacen: new FormControl(prijavaRawValue.prihvacen),
       trajanjeOd: new FormControl(prijavaRawValue.trajanjeOd, {
         validators: [Validators.required, dateValidator],
       }),
@@ -120,7 +118,6 @@ export class PrijavaFormService {
     return {
       id: null,
       createdDate: currentTime,
-      prihvacen: false,
     };
   }
 

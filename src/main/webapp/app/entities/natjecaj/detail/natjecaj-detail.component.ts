@@ -23,6 +23,7 @@ export class NatjecajDetailComponent implements OnInit {
   prijavaService: any;
   numZahtjevsToCreate = 1;
   zahtjevs?: IZahtjev[];
+  zahtjev: IZahtjev | null = null;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -76,7 +77,6 @@ export class NatjecajDetailComponent implements OnInit {
   }
 
   createNewZahtjev(natjecaj: Pick<INatjecaj, 'id'>): void {
-    this.numZahtjevsToCreate = 1;
     const modalRef = this.modalService.open(ZahtjevModalComponent, { centered: true });
 
     modalRef.componentInstance.natjecaj = natjecaj;

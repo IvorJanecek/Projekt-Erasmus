@@ -49,11 +49,6 @@
           </div>
         </div>
 
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="row mb-3">
-          <label class="form-label" for="field_prihvacen">Prihvaćen</label>
-          <input type="checkbox" class="form-check" name="prihvacen" id="field_prihvacen" data-cy="prihvacen" formControlName="prihvacen" />
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" for="field_trajanjeOd">Trajanje od</label>
           <div class="input-group">
@@ -107,20 +102,6 @@
           <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
             <option [ngValue]="null"></option>
             <option *ngFor="let kategorija of kategorijaValues.slice(2)" [value]="kategorija">{{ kategorija }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-          <label class="form-label" for="field_statusPrijave">statusPrijave</label>
-          <select
-            class="form-control"
-            name="statusPrijave"
-            formControlName="statusPrijave"
-            id="field_statusPrijave"
-            data-cy="statusPrijave"
-          >
-            <option [value]="statusPrijaveValues[0]">{{ statusPrijaveValues[0] }}</option>
-            <option *ngFor="let statusPrijave of statusPrijaveValues.slice(1)" [value]="statusPrijave">{{ statusPrijave }}</option>
           </select>
         </div>
 

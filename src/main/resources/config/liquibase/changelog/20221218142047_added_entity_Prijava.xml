@@ -23,9 +23,6 @@
             <column name="created_date" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="prihvacen" type="boolean">
-                <constraints nullable="true" />
-            </column>
             <column name="trajanje_od" type="date">
                 <constraints nullable="false" />
             </column>
@@ -78,7 +75,6 @@
             <column name="prijava_name" type="string"/>
             <column name="opis" type="string"/>
             <column name="created_date" type="date"/>
-            <column name="prihvacen" type="boolean"/>
             <column name="trajanje_od" type="date"/>
             <column name="trajanje_do" type="date"/>
             <column name="data" type="blob"/>

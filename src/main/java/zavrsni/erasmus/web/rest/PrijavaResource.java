@@ -22,7 +22,6 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import zavrsni.erasmus.domain.Natjecaj;
-import zavrsni.erasmus.domain.Prijava;
 import zavrsni.erasmus.domain.User;
 import zavrsni.erasmus.repository.NatjecajRepository;
 import zavrsni.erasmus.repository.PrijavaRepository;

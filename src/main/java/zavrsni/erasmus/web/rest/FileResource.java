@@ -1,16 +1,24 @@
 package zavrsni.erasmus.web.rest;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
 import zavrsni.erasmus.domain.Mobilnost;
 import zavrsni.erasmus.domain.Prijava;
 import zavrsni.erasmus.domain.UploadFile;
 import zavrsni.erasmus.repository.MobilnostRepository;
 import zavrsni.erasmus.repository.PrijavaRepository;
 import zavrsni.erasmus.repository.UploadFilesRepository;
+import zavrsni.erasmus.service.dto.ZahtjevDTO;
+import zavrsni.erasmus.web.rest.errors.BadRequestAlertException;
 
 @RestController
 @RequestMapping("/api")
@@ -90,7 +98,6 @@ public class FileResource {
             Mobilnost mobilnost = mobilnostRepository
                 .findById(mobilnostId)
                 .orElseThrow(() -> new RuntimeException("Prijava with ID " + mobilnostId + " not found"));
-
             for (MultipartFile file : files) {
                 UploadFile uploadFile = new UploadFile();
                 uploadFile.setFileName(file.getOriginalFilename());

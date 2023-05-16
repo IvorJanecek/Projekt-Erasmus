@@ -11,7 +11,6 @@ export interface IPrijava {
   prijavaName?: string | null;
   opis?: string | null;
   createdDate?: dayjs.Dayjs | null;
-  prihvacen?: boolean | null;
   trajanjeOd?: dayjs.Dayjs | null;
   trajanjeDo?: dayjs.Dayjs | null;
   data?: string | null;

@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-6">
     <div *ngIf="prijava">
       <h2 data-cy="prijavaDetailsHeading"><span>Prijava</span></h2>
 
@@ -18,10 +18,9 @@
         <dd>
           <span>{{ prijava.createdDate | formatMediumDatetime }}</span>
         </dd>
-        <dt><span>Prihvaćen</span></dt>
+        <dt><span>Status</span></dt>
         <dd>
-          <span *ngIf="prijava.prihvacen">DA</span>
-          <span *ngIf="!prijava.prihvacen">NE</span>
+          <span>{{ prijava.statusPrijave }}</span>
         </dd>
         <dt><span>Trajanje od</span></dt>
         <dd>
@@ -52,7 +51,32 @@
             <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
           </div>
         </dd>
-        <dt><span> Dokumenti</span></dt>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
+      </button>
+
+      <button type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
+      </button>
+
+      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button class="btn btn-primary" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })">
+          Prihvati prijavu i pokreni mobilnost
+        </button>
+      </div>
+
+      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button class="btn btn-danger" (click)="odbijPrijavu({ id: prijava.id })">Odbij Prijavu</button>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="text-align: center">
+    <div class="col-md-8 jh-entity-details">
+      <h2>Dokumenti</h2>
+      <div class="row-md-8">
+        <dt><span>Dokumenti</span></dt>
         <div *ngFor="let uploadFiles of prijava?.uploadFiles">
           <div *ngIf="uploadFiles.data">
             <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
@@ -60,33 +84,18 @@
             {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
           </div>
         </div>
-      </dl>
-
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
-      </button>
-
-      <button *ngIf="!prijava.prihvacen" type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
-      </button>
-
-      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button
-          *ngIf="!prijava.prihvacen"
-          class="btn btn-primary"
-          (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })"
-        >
-          Prihvati prijavu i pokreni mobilnost
-        </button>
       </div>
     </div>
-  </div>
-  <div class="row-md-3 jh-entity-details">
-    <dt><span>Zahtjevi za natječaj :</span></dt>
-    <dd>
-      <div *ngFor="let zahtjev of zahtjevs">
-        <span>{{ zahtjev.name }}</span>
+    <div class="col-md-4 jh-entity-details">
+      <h2>Zahtjevi</h2>
+      <div class="row-md-4">
+        <dt><span>Zahtjevi</span></dt>
+        <dd>
+          <div *ngFor="let zahtjev of zahtjevs">
+            <span>{{ zahtjev.name }}</span>
+          </div>
+        </dd>
       </div>
-    </dd>
+    </div>
   </div>
 </div>

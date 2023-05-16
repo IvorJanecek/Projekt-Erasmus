@@ -12,8 +12,8 @@ import { IZahtjev } from '../../../zahtjev/zatjev.model';
 })
 export class UploadFilesComponent implements OnInit {
   fileForm!: FormGroup;
-  selectedFiles: File[][] = [[], [], []];
-  formData: FormData[] = [new FormData(), new FormData(), new FormData()];
+  selectedFiles: File[][] = [];
+  formData: FormData[] = [];
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
   fileNames: string[] = [];
@@ -40,10 +40,18 @@ export class UploadFilesComponent implements OnInit {
   onFileSelect(event: Event, column: number): void {
     const target = event.target as HTMLInputElement;
     if (target.files !== null) {
-      this.selectedFiles[column] = [...this.selectedFiles[column], target.files[0]];
-      this.formData[column] = new FormData();
-      this.formData[column].append('files', target.files[0], target.files[0].name);
-      this.fileNames[column] = target.files[0].name;
+      const files = Array.from(target.files); // Convert FileList to array
+      if (!Array.isArray(this.selectedFiles[column])) {
+        this.selectedFiles[column] = []; // Initialize as empty array if not already
+      }
+      this.selectedFiles[column] = [...this.selectedFiles[column], ...files];
+      // Rest of the code...
+      if (target.files !== null) {
+        this.selectedFiles[column] = [...this.selectedFiles[column], target.files[0]];
+        this.formData[column] = new FormData();
+        this.formData[column].append('files', target.files[0], target.files[0].name);
+        this.fileNames[column] = ''; // Update with an empty string
+      }
     } else {
       console.log('No file selected!');
     }

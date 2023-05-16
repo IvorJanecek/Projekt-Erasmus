@@ -55,6 +55,13 @@
     <div class="row-md jh-entity-details" *ngFor="let zahtjev of natjecaj?.zahtjevs">
       <dt><span>Zahtjev:</span></dt>
       <dd style="display: flex; justify-content: space-between">
+        <button
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
+          (hidden)="onModalHidden()"
+          (click)="urediZahtjev({ id: natjecaj!.id }, { id: zahtjev.id })"
+        >
+          +
+        </button>
         <span>{{ zahtjev.name }}</span>
         <button
           *jhiHasAnyAuthority="'ROLE_ADMIN'"

@@ -40,7 +40,6 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         prijava.setPrijavaName(arg0.getPrijavaName());
         prijava.setOpis(arg0.getOpis());
         prijava.setCreatedDate(arg0.getCreatedDate());
-        prijava.setPrihvacen(arg0.getPrihvacen());
         prijava.setTrajanjeOd(arg0.getTrajanjeOd());
         prijava.setTrajanjeDo(arg0.getTrajanjeDo());
         byte[] data = arg0.getData();
@@ -103,9 +102,6 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         if (arg1.getCreatedDate() != null) {
             arg0.setCreatedDate(arg1.getCreatedDate());
         }
-        if (arg1.getPrihvacen() != null) {
-            arg0.setPrihvacen(arg1.getPrihvacen());
-        }
         if (arg1.getTrajanjeOd() != null) {
             arg0.setTrajanjeOd(arg1.getTrajanjeOd());
         }
@@ -161,7 +157,7 @@ public class PrijavaMapperImpl implements PrijavaMapper {
         prijavaDTO.setPrijavaName(s.getPrijavaName());
         prijavaDTO.setOpis(s.getOpis());
         prijavaDTO.setCreatedDate(s.getCreatedDate());
-        prijavaDTO.setPrihvacen(s.getPrihvacen());
+
         prijavaDTO.setTrajanjeOd(s.getTrajanjeOd());
         prijavaDTO.setTrajanjeDo(s.getTrajanjeDo());
         byte[] data = s.getData();
