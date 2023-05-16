@@ -49,8 +49,8 @@ public interface PrijavaRepository extends JpaRepository<Prijava, Long> {
     Page<Prijava> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        value = "select distinct prijava from Prijava prijava left join fetch prijava.fakultet left join fetch prijava.natjecaj where prijava.user.login = ?#{principal.username}",
-        countQuery = "select count(distinct prijava) from Prijava prijava"
+        value = "select distinct prijava from Prijava prijava left join fetch prijava.fakultet left join fetch prijava.natjecaj where (:#{hasRole('ROLE_ADMIN')} = true OR prijava.user.login = ?#{principal.username})",
+        countQuery = "select count(distinct prijava) from Prijava prijava WHERE (:#{hasRole('ROLE_ADMIN')} = true OR prijava.user.login = ?#{principal.username})"
     )
     Page<Prijava> findAllWithToOneRelationshipsForCurrentUser(Pageable pageable);
 

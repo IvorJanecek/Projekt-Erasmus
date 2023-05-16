@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import zavrsni.erasmus.domain.Mobilnost;
+import zavrsni.erasmus.domain.Prijava;
 
 /**
  * Spring Data JPA repository for the Mobilnost entity.
@@ -17,6 +18,22 @@ public interface MobilnostRepository extends JpaRepository<Mobilnost, Long> {
     default Optional<Mobilnost> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
+
+    @Query(
+        value = "SELECT mobilnost FROM Mobilnost mobilnost WHERE (:#{hasRole('ROLE_ADMIN')} = true OR mobilnost.user.login = ?#{principal.username})",
+        countQuery = "SELECT COUNT(DISTINCT mobilnost) FROM Mobilnost mobilnost WHERE (:#{hasRole('ROLE_ADMIN')} = true OR mobilnost.user.login = ?#{principal.username})"
+    )
+    Page<Mobilnost> findByUserIsCurrentUserOrAdmin(Pageable pageable);
+
+    default Page<Mobilnost> findAllWithEagerRelationshipsForCurrentUser(Pageable pageable) {
+        return this.findAllWithToOneRelationshipsForCurrentUser(pageable);
+    }
+
+    @Query(
+        value = "select distinct mobilnost from Mobilnost mobilnost left join fetch mobilnost.prijava left join fetch mobilnost.natjecaj where (:#{hasRole('ROLE_ADMIN')} = true OR mobilnost.user.login = ?#{principal.username})",
+        countQuery = "select count(distinct mobilnost) from Mobilnost mobilnost WHERE (:#{hasRole('ROLE_ADMIN')} = true OR mobilnost.user.login = ?#{principal.username})"
+    )
+    Page<Mobilnost> findAllWithToOneRelationshipsForCurrentUser(Pageable pageable);
 
     default List<Mobilnost> findAllWithEagerRelationships() {
         return this.findAllWithToOneRelationships();

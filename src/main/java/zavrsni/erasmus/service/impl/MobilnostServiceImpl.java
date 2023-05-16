@@ -11,6 +11,7 @@ import zavrsni.erasmus.domain.Mobilnost;
 import zavrsni.erasmus.repository.MobilnostRepository;
 import zavrsni.erasmus.service.MobilnostService;
 import zavrsni.erasmus.service.dto.MobilnostDTO;
+import zavrsni.erasmus.service.dto.PrijavaDTO;
 import zavrsni.erasmus.service.mapper.MobilnostMapper;
 
 /**
@@ -78,6 +79,16 @@ public class MobilnostServiceImpl implements MobilnostService {
     public Optional<MobilnostDTO> findOne(Long id) {
         log.debug("Request to get Mobilnost : {}", id);
         return mobilnostRepository.findOneWithEagerRelationships(id).map(mobilnostMapper::toDto);
+    }
+
+    @Override
+    public Page<MobilnostDTO> findByUserIsCurrentUser(Pageable pageable) {
+        return mobilnostRepository.findByUserIsCurrentUserOrAdmin(pageable).map(mobilnostMapper::toDto);
+    }
+
+    @Override
+    public Page<MobilnostDTO> findByUserIsCurrentUserWithEagerRelationships(Pageable pageable) {
+        return mobilnostRepository.findAllWithEagerRelationshipsForCurrentUser(pageable).map(mobilnostMapper::toDto);
     }
 
     @Override

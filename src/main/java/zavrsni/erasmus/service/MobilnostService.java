@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import zavrsni.erasmus.service.dto.MobilnostDTO;
+import zavrsni.erasmus.service.dto.PrijavaDTO;
 
 /**
  * Service Interface for managing {@link zavrsni.erasmus.domain.Mobilnost}.
@@ -49,6 +50,9 @@ public interface MobilnostService {
      */
     Page<MobilnostDTO> findAllWithEagerRelationships(Pageable pageable);
 
+    Page<MobilnostDTO> findByUserIsCurrentUser(Pageable pageable);
+
+    Page<MobilnostDTO> findByUserIsCurrentUserWithEagerRelationships(Pageable pageable);
     /**
      * Get the "id" mobilnost.
      *
