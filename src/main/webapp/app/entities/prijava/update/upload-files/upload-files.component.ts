@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { INatjecaj } from 'app/entities/natjecaj/natjecaj.model';
 import { ZahtjevService } from '../../../zahtjev/service/zahtjev.service';
 import { IZahtjev } from '../../../zahtjev/zatjev.model';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-upload-files',
@@ -13,7 +14,7 @@ import { IZahtjev } from '../../../zahtjev/zatjev.model';
 export class UploadFilesComponent implements OnInit {
   fileForm!: FormGroup;
   selectedFiles: File[][] = [];
-  formData: FormData[] = [];
+  formData: FormData[][] = [];
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
   fileNames: string[] = [];
@@ -45,13 +46,12 @@ export class UploadFilesComponent implements OnInit {
         this.selectedFiles[column] = []; // Initialize as empty array if not already
       }
       this.selectedFiles[column] = [...this.selectedFiles[column], ...files];
-      // Rest of the code...
-      if (target.files !== null) {
-        this.selectedFiles[column] = [...this.selectedFiles[column], target.files[0]];
-        this.formData[column] = new FormData();
-        this.formData[column].append('files', target.files[0], target.files[0].name);
-        this.fileNames[column] = ''; // Update with an empty string
+      if (!Array.isArray(this.formData[column])) {
+        this.formData[column] = []; // Initialize as empty array if not already
       }
+      this.formData[column] = [...this.formData[column], new FormData()]; // Create a new FormData object for each file
+      this.formData[column][this.formData[column].length - 1].append('files', files[0], files[0].name); // Append the file to the last FormData object
+      this.fileNames[column] = ''; // Update with an empty string
     } else {
       console.log('No file selected!');
     }
@@ -66,16 +66,37 @@ export class UploadFilesComponent implements OnInit {
 
   uploadFiles(): void {
     const prijavaId = this.route.snapshot.params.prijavaId; // Replace with the ID of the Prijava instance
-    if (this.selectedFiles.every(files => files.length > 0)) {
+
+    // Check if all rows have selected files
+    const allFilesSelected = this.selectedFiles.length === this.zahtjevs?.length && this.selectedFiles.every(files => files.length > 0);
+
+    if (allFilesSelected) {
+      // Create an array to store the observables for each file upload request
+      const uploadRequests: Observable<any>[] = [];
+
+      // Iterate over the selected files and create upload requests
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.http.post(`/api/uploadFiles/${prijavaId}`, this.formData[i], { responseType: 'text' }).subscribe(
-          response => console.log(response),
-          error => console.error(error)
-        );
+        for (let j = 0; j < this.selectedFiles[i].length; j++) {
+          const file = this.selectedFiles[i][j];
+          const formData = this.formData[i][j];
+
+          // Create an upload request for each file
+          const uploadRequest = this.http.post(`/api/uploadFiles/${prijavaId}`, formData, { responseType: 'text' });
+
+          uploadRequests.push(uploadRequest);
+        }
       }
-      this.router.navigate(['/prijava']);
+
+      forkJoin(uploadRequests).subscribe(
+        response => {
+          this.router.navigate(['/prijava']);
+        },
+        error => {
+          console.error('Error uploading files', error);
+        }
+      );
     } else {
-      console.log('Please select a file for each row!');
+      console.log('Please select file for each row');
     }
   }
 }

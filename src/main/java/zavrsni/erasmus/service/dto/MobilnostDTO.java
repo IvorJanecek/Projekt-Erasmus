@@ -2,6 +2,7 @@ package zavrsni.erasmus.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Lob;
@@ -19,15 +20,19 @@ public class MobilnostDTO implements Serializable {
     @NotNull
     private String mobilnostName;
 
-    @NotNull
-    private String description;
-
     private Instant createdDate;
 
     @Lob
     private byte[] data;
 
     private String dataContentType;
+
+    @NotNull
+    private LocalDate trajanjeOd;
+
+    @NotNull
+    private LocalDate trajanjeDo;
+
     private NatjecajDTO natjecaj;
 
     private PrijavaDTO prijava;
@@ -37,6 +42,8 @@ public class MobilnostDTO implements Serializable {
     private StatusMobilnosti statusMobilnosti;
 
     private List<UploadFileDTO> uploadFiles;
+
+    private List<AdminFileDTO> uploadFilesAdmin;
 
     public Long getId() {
         return id;
@@ -62,14 +69,6 @@ public class MobilnostDTO implements Serializable {
         this.mobilnostName = mobilnostName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Instant getCreatedDate() {
         return createdDate;
     }
@@ -84,6 +83,22 @@ public class MobilnostDTO implements Serializable {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public LocalDate getTrajanjeOd() {
+        return trajanjeOd;
+    }
+
+    public void setTrajanjeOd(LocalDate trajanjeOd) {
+        this.trajanjeOd = trajanjeOd;
+    }
+
+    public LocalDate getTrajanjeDo() {
+        return trajanjeDo;
+    }
+
+    public void setTrajanjeDo(LocalDate trajanjeDo) {
+        this.trajanjeDo = trajanjeDo;
     }
 
     public String getDataContentType() {
@@ -116,6 +131,14 @@ public class MobilnostDTO implements Serializable {
 
     public void setUploadFiles(List<UploadFileDTO> uploadFiles) {
         this.uploadFiles = uploadFiles;
+    }
+
+    public List<AdminFileDTO> getUploadFilesAdmin() {
+        return uploadFilesAdmin;
+    }
+
+    public void setUploadFilesAdmin(List<AdminFileDTO> uploadFilesAdmin) {
+        this.uploadFilesAdmin = uploadFilesAdmin;
     }
 
     public StatusMobilnosti getStatusMobilnosti() {
@@ -153,10 +176,11 @@ public class MobilnostDTO implements Serializable {
         return "MobilnostDTO{" +
             "id=" + getId() +
             ", mobilnostName='" + getMobilnostName() + "'" +
-            ", description='" + getDescription() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", data='" + getData() + "'" +
             ", user=" + getUser() +
+            ", trajanjeOd='" + getTrajanjeOd() + "'" +
+            ", trajanjeDo='" + getTrajanjeDo() + "'" +
             ", natjecaj=" + getNatjecaj() +
             ", prijava=" + getPrijava() +
             ", statusMobilnosti=" + getStatusMobilnosti() +

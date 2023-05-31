@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { IPrijava } from '../prijava.model';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { IMobilnost } from 'app/entities/mobilnost/mobilnost.model';
+import { IMobilnost, NewMobilnost } from 'app/entities/mobilnost/mobilnost.model';
 import { finalize, Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { IUploadFile } from '../upload_files.model';
@@ -14,6 +14,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ZahtjevModalComponent } from '../../natjecaj/detail/zahtjev-modal/zahtjev-modal.component';
 import { FileModalComponent } from './file-modal/file-modal.component';
 import { StatusPrijave } from 'app/entities/enumerations/statusprijave.mode';
+import { MobilnostService } from 'app/entities/mobilnost/service/mobilnost.service';
+import { StatusMobilnosti } from 'app/entities/enumerations/statusmobilnosti.mode';
+import { MobilnostFormGroup, MobilnostFormService } from 'app/entities/mobilnost/update/mobilnost-form.service';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -26,6 +29,7 @@ export class PrijavaDetailComponent implements OnInit {
   prijavaFormService: any;
   uploadFiles?: IUploadFile[];
   zahtjevs: IZahtjev[] | null = [];
+  mobilnost: IMobilnost | null = null;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -33,7 +37,9 @@ export class PrijavaDetailComponent implements OnInit {
     protected router: Router,
     private prijavaService: PrijavaService,
     private zahtjevService: ZahtjevService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private mobilnostService: MobilnostService,
+    protected mobilnostFormService: MobilnostFormService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +52,8 @@ export class PrijavaDetailComponent implements OnInit {
       });
     }
   }
+
+  editForm: MobilnostFormGroup = this.mobilnostFormService.createMobilnostFormGroup();
 
   onModalHidden(): void {
     window.location.reload();
@@ -103,9 +111,6 @@ export class PrijavaDetailComponent implements OnInit {
       this.subscribeToSaveResponse(this.prijavaService.create(prijava));
     }
   }
-  editForm(editForm: any) {
-    throw new Error('Method not implemented.');
-  }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPrijava>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
@@ -114,8 +119,8 @@ export class PrijavaDetailComponent implements OnInit {
     });
   }
 
-  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'statusPrijave' | 'user'>): void {
-    // set the prihvacen field to true for the Prijava entity
+  createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'trajanjeOd' | 'trajanjeDo' | 'statusPrijave' | 'user'>): void {
+    // Set the prihvacen field to true for the Prijava entity
     prijava.statusPrijave = StatusPrijave.PRIHVACEN;
     console.log(prijava.statusPrijave);
 
@@ -126,17 +131,33 @@ export class PrijavaDetailComponent implements OnInit {
 
     this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
       console.log(prijava.statusPrijave);
+      this.saveMobilnost(prijava);
       this.save();
     });
+  }
 
-    const newMobilnost: IMobilnost = {
+  saveMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'trajanjeOd' | 'trajanjeDo' | 'statusPrijave' | 'user'>): void {
+    const newMobilnost: NewMobilnost = {
+      mobilnostName: 'Mobilnost za ' + prijava.natjecaj?.name,
       prijava: prijava,
-      id: prijava.id,
+      id: null,
       natjecaj: prijava.natjecaj,
       user: prijava.user,
+      trajanjeOd: prijava.trajanjeOd,
+      trajanjeDo: prijava.trajanjeDo,
     };
 
-    this.router.navigate(['/mobilnost/new'], { state: { mobilnost: newMobilnost } });
+    const mobilnost = this.mobilnostFormService.getMobilnost(this.editForm);
+    mobilnost.mobilnostName = this.mobilnost?.mobilnostName;
+    mobilnost.natjecaj = this.mobilnost?.natjecaj;
+    mobilnost.prijava = this.mobilnost?.prijava;
+    mobilnost.user = this.mobilnost?.user;
+    mobilnost.trajanjeOd = this.mobilnost?.trajanjeOd;
+    mobilnost.trajanjeOd = this.mobilnost?.trajanjeDo;
+
+    this.mobilnostService.create(newMobilnost).subscribe(() => {
+      console.log('Mobilnost created successfully');
+    });
   }
 
   odbijPrijavu(prijava: Pick<IPrijava, 'id' | 'statusPrijave'>): void {

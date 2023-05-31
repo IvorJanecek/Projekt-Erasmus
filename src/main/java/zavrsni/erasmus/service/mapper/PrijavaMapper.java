@@ -22,12 +22,20 @@ public interface PrijavaMapper extends EntityMapper<PrijavaDTO, Prijava> {
     UserDTO toDtoUserId(User user);
 
     @Named("uploadFileName")
-    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "fileName", source = "fileName")
     @Mapping(target = "fileType", source = "fileType")
     @Mapping(target = "data", source = "data")
+    @Mapping(target = "prijava", ignore = true) // Ignore mapping of 'prijava' property
     UploadFileDTO toUploadFile(UploadFile uploadFile);
+
+    @Named("uploadFile")
+    @BeanMapping(ignoreByDefault = false)
+    default UploadFileDTO toUploadFileWithPrijava(UploadFile uploadFile) {
+        UploadFileDTO uploadFileDTO = toUploadFile(uploadFile);
+        uploadFileDTO.setPrijava(null);
+        return uploadFileDTO;
+    }
 
     @Named("fakultetName")
     @BeanMapping(ignoreByDefault = true)

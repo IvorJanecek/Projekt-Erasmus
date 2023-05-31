@@ -1,6 +1,6 @@
 <div class="modal-header">
-  <h4 *ngIf="editModal === false" class="modal-title">Create Zahtjev</h4>
-  <h4 *ngIf="editModal === true" class="modal-title">Edit Zahtjev</h4>
+  <h4 *ngIf="editModal === false" class="modal-title">Napravi Zahtjev</h4>
+  <h4 *ngIf="editModal === true" class="modal-title">Uredi Zahtjev</h4>
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
 </div>
 <div class="d-flex justify-content-center">
@@ -15,7 +15,7 @@
         </div> -->
 
         <div class="row mb-3">
-          <label class="form-label" for="field_name">Name</label>
+          <label class="form-label" for="field_name">Ime zahtjeva</label>
           <input
             *ngIf="editModal === true"
             type="text"

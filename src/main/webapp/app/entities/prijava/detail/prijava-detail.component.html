@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-6">
+  <div class="col-4">
     <div *ngIf="prijava">
       <h2 data-cy="prijavaDetailsHeading"><span>Prijava</span></h2>
 
@@ -48,7 +48,7 @@
         <dt><span>Natječaj</span></dt>
         <dd>
           <div *ngIf="prijava.natjecaj">
-            <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.id }}</a>
+            <a [routerLink]="['/natjecaj', prijava.natjecaj.id, 'view']">{{ prijava.natjecaj.name }}</a>
           </div>
         </dd>
       </dl>
@@ -57,45 +57,76 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/prijava', prijava.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
-      </button>
+      <ng-container *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'">
+        <button
+          type="button"
+          *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+          [routerLink]="['/prijava', prijava.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
+        </button>
+      </ng-container>
 
       <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button class="btn btn-primary" (click)="createNewMobilnost({ id: prijava.id, natjecaj: prijava.natjecaj, user: prijava.user })">
-          Prihvati prijavu i pokreni mobilnost
+        <button
+          *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
+          class="btn btn-primary"
+          (click)="
+            createNewMobilnost({
+              id: prijava.id,
+              natjecaj: prijava.natjecaj,
+              user: prijava.user,
+              trajanjeDo: prijava.trajanjeDo,
+              trajanjeOd: prijava.trajanjeOd
+            })
+          "
+        >
+          Prihvati prijavu
         </button>
       </div>
 
       <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button class="btn btn-danger" (click)="odbijPrijavu({ id: prijava.id })">Odbij Prijavu</button>
+        <button
+          *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
+          class="btn btn-danger"
+          (click)="odbijPrijavu({ id: prijava.id })"
+        >
+          Odbij Prijavu
+        </button>
       </div>
     </div>
   </div>
-  <div class="row" style="text-align: center">
-    <div class="col-md-8 jh-entity-details">
-      <h2>Dokumenti</h2>
-      <div class="row-md-8">
-        <dt><span>Dokumenti</span></dt>
-        <div *ngFor="let uploadFiles of prijava?.uploadFiles">
-          <div *ngIf="uploadFiles.data">
-            <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Open</a>
-            <a (hidden)="onModalHidden()" (click)="urediFile({ id: uploadFiles.id })">Edit</a>
-            {{ uploadFiles.fileName }}, {{ uploadFiles.fileType }}, {{ byteSize(uploadFiles.data) }}
+  <table class="col-4">
+    <tr>
+      <th>Dokumenti</th>
+      <th>Zahtjevi</th>
+    </tr>
+    <ng-container *ngFor="let file of prijava?.uploadFiles; let fileIndex = index">
+      <tr>
+        <td>
+          <div *ngIf="file.data">
+            <a (click)="openFile(file.data, file.fileType)">Otvori</a>
+            <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
+              <a
+                class="padding-left: 10px"
+                *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                (hidden)="onModalHidden()"
+                (click)="urediFile({ id: file.id })"
+                >Uredi</a
+              >
+            </ng-container>
+            <u> {{ file.fileName }} </u>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 jh-entity-details">
-      <h2>Zahtjevi</h2>
-      <div class="row-md-4">
-        <dt><span>Zahtjevi</span></dt>
-        <dd>
-          <div *ngFor="let zahtjev of zahtjevs">
-            <span>{{ zahtjev.name }}</span>
+        </td>
+        <td>
+          <div *ngFor="let zahtjev of zahtjevs; let zahtjevIndex = index">
+            <span *ngIf="fileIndex === zahtjevIndex"
+              ><u>{{ zahtjev.name }}</u></span
+            >
           </div>
-        </dd>
-      </div>
-    </div>
-  </div>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
 </div>

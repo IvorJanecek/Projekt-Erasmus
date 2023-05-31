@@ -13,6 +13,7 @@ public interface MobilnostMapper extends EntityMapper<MobilnostDTO, Mobilnost> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     @Mapping(target = "prijava", source = "prijava", qualifiedByName = "prijavaPrijavaName")
     @Mapping(target = "uploadFiles", source = "files", qualifiedByName = "uploadFileName")
+    @Mapping(target = "uploadFilesAdmin", source = "filesAdmin", qualifiedByName = "uploadFileAdminName")
     MobilnostDTO toDto(Mobilnost s);
 
     @Named("userId")
@@ -34,6 +35,14 @@ public interface MobilnostMapper extends EntityMapper<MobilnostDTO, Mobilnost> {
     @Mapping(target = "fileType", source = "fileType")
     @Mapping(target = "data", source = "data")
     UploadFileDTO toUploadFile(UploadFile uploadFile);
+
+    @Named("uploadFileAdminName")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "fileName", source = "fileName")
+    @Mapping(target = "fileType", source = "fileType")
+    @Mapping(target = "data", source = "data")
+    AdminFileDTO toAdminUploadFile(UploadFileAdmin uploadFileAdmin);
 
     @Named("prijavaPrijavaName")
     @BeanMapping(ignoreByDefault = true)

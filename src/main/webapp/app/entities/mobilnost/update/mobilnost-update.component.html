@@ -6,45 +6,6 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" for="field_id">Id</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_mobilnostName">Mobilnost</label>
-          <input
-            type="text"
-            class="form-control"
-            name="mobilnostName"
-            id="field_mobilnostName"
-            data-cy="mobilnostName"
-            formControlName="mobilnostName"
-          />
-          <div
-            *ngIf="
-              editForm.get('mobilnostName')!.invalid && (editForm.get('mobilnostName')!.dirty || editForm.get('mobilnostName')!.touched)
-            "
-          >
-            <small class="form-text text-danger" *ngIf="editForm.get('mobilnostName')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_description">Opis</label>
-          <input
-            type="text"
-            class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
         <div class="row mb-3" style="display: none">
           <label class="form-label" for="field_createdDate">Created Date</label>
           <div class="d-flex">

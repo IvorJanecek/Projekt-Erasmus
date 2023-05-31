@@ -29,9 +29,9 @@
             </div>
           </th>
 
-          <th scope="col" jhiSortBy="createdDate">
+          <th scope="col" jhiSortBy="statusMobilnosti">
             <div class="d-flex">
-              <span>Napravljen</span>
+              <span>Status Mobilnosti</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -61,7 +61,8 @@
           <td>
             <a [routerLink]="['/mobilnost', mobilnost.id, 'view']">{{ mobilnost.mobilnostName }}</a>
           </td>
-          <td>{{ mobilnost.createdDate | formatMediumDatetime }}</td>
+          <td>{{ mobilnost.statusMobilnosti }}</td>
+
           <td>
             <div *ngIf="mobilnost.natjecaj">
               <a [routerLink]="['/natjecaj', mobilnost.natjecaj.id, 'view']">{{ mobilnost.natjecaj.name }}</a>

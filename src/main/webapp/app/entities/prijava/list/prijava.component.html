@@ -115,20 +115,29 @@
                 <span class="d-none d-md-inline">Pogledaj</span>
               </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/prijava', prijava.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">uredi</span>
-              </button>
+              <ng-container *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'">
+                <button
+                  *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                  type="submit"
+                  [routerLink]="['/prijava', prijava.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline">Uredi</span>
+                </button>
 
-              <button type="submit" (click)="delete(prijava)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Obriši</span>
-              </button>
+                <button
+                  *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                  type="submit"
+                  (click)="delete(prijava)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Obriši</span>
+                </button>
+              </ng-container>
             </div>
           </td>
         </tr>

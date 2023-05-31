@@ -2,6 +2,15 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "authenticationType": "jwt",
+    "aws": {
+      "applicationName": "erasmus",
+      "awsRegion": "eu-central-1",
+      "bucketName": "erasmusbucket",
+      "dbInstanceClass": "db.t2.small",
+      "dbName": "erasmus",
+      "environmentName": "erasmus-env",
+      "instanceType": "t2.small"
+    },
     "baseName": "ERASMUS",
     "blueprints": [],
     "buildTool": "maven",

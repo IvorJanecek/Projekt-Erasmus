@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ZahtjevComponent } from '../list/zahtjev.component';
 import { ASC } from 'app/config/navigation.constants';

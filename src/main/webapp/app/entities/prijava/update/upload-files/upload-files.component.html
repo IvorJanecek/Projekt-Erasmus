@@ -1,24 +1,40 @@
-<h1>Upload Files</h1>
+<style>
+  td {
+    padding-bottom: 10px;
+    padding-right: 80px; /* Add padding-bottom to create spacing between rows */
+  }
+  .row-spacing {
+    margin-bottom: 100px; /* Add margin-bottom to create space between rows */
+  }
+</style>
 
 <form [formGroup]="fileForm">
-  <table>
-    <tbody>
+  <h1 class="d-flex justify-content-center">Upload Files</h1>
+  <table class="d-flex justify-content-center">
+    <tbody class="row-spacing">
+      <tr>
+        <th>Dokumenti</th>
+        <th>Zahtjevi</th>
+      </tr>
       <ng-container *ngFor="let zahtjev of zahtjevs; let i = index">
-        <tr>
+        <tr class="row-spacing">
           <td>
-            <input
-              type="file"
-              (change)="onFileSelect($event, i)"
-              [ngModel]="selectedFiles[i]"
-              [ngModelOptions]="{ standalone: true }"
-              name="file-{{ i }}"
-            />
+            <u>
+              <input
+                type="file"
+                (change)="onFileSelect($event, i)"
+                [ngModel]="selectedFiles[i]"
+                [ngModelOptions]="{ standalone: true }"
+                name="file-{{ i }}"
+            /></u>
           </td>
-          <td>{{ zahtjev.name }}</td>
+          <td class="margin-left:50px">
+            <u>{{ zahtjev.name }}</u>
+          </td>
         </tr>
       </ng-container>
     </tbody>
   </table>
 
-  <button type="button" (click)="uploadFiles()">Upload files</button>
+  <button class="d-flex justify-content-center" type="button" (click)="uploadFiles()">Upload files</button>
 </form>

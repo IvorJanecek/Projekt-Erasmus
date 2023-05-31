@@ -32,10 +32,11 @@ type MobilnostFormDefaults = Pick<NewMobilnost, 'id' | 'createdDate'>;
 type MobilnostFormGroupContent = {
   id: FormControl<MobilnostFormRawValue['id'] | NewMobilnost['id']>;
   mobilnostName: FormControl<MobilnostFormRawValue['mobilnostName']>;
-  description: FormControl<MobilnostFormRawValue['description']>;
   createdDate: FormControl<MobilnostFormRawValue['createdDate']>;
   data: FormControl<MobilnostFormRawValue['data']>;
   dataContentType: FormControl<MobilnostFormRawValue['dataContentType']>;
+  trajanjeOd: FormControl<MobilnostFormRawValue['trajanjeOd']>;
+  trajanjeDo: FormControl<MobilnostFormRawValue['trajanjeDo']>;
   natjecaj: FormControl<MobilnostFormRawValue['natjecaj']>;
   prijava: FormControl<MobilnostFormRawValue['prijava']>;
 };
@@ -60,7 +61,12 @@ export class MobilnostFormService {
       mobilnostName: new FormControl(mobilnostRawValue.mobilnostName, {
         validators: [Validators.required],
       }),
-      description: new FormControl(mobilnostRawValue.description),
+      trajanjeOd: new FormControl(mobilnostRawValue.trajanjeOd, {
+        validators: [Validators.required],
+      }),
+      trajanjeDo: new FormControl(mobilnostRawValue.trajanjeDo, {
+        validators: [Validators.required],
+      }),
       createdDate: new FormControl(mobilnostRawValue.createdDate),
       data: new FormControl(mobilnostRawValue.data),
       dataContentType: new FormControl(mobilnostRawValue.dataContentType),

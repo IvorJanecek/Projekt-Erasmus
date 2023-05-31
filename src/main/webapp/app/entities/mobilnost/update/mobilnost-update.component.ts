@@ -79,6 +79,7 @@ export class MobilnostUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const mobilnost = this.mobilnostFormService.getMobilnost(this.editForm);
+    mobilnost.mobilnostName = this.mobilnost?.mobilnostName;
     mobilnost.natjecaj = this.mobilnost?.natjecaj;
     mobilnost.prijava = this.mobilnost?.prijava;
     mobilnost.user = this.mobilnost?.user;

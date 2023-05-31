@@ -1,8 +1,6 @@
 package zavrsni.erasmus.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

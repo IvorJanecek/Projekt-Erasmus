@@ -101,7 +101,10 @@ export class PrijavaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     let prijava = this.prijavaFormService.getPrijava(this.editForm);
+    prijava.prijavaName = 'Prijava za ' + String(this.prijava?.natjecaj?.name);
     prijava.natjecaj = this.prijava?.natjecaj;
+    console.log(prijava.prijavaName);
+    console.log(prijava.natjecaj);
 
     for (let i = 0; i < this.usersSharedCollection.length; i++) {
       if (this.usersSharedCollection[i].login === this.currentAccount?.login) {

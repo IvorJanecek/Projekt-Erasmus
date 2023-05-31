@@ -8,6 +8,7 @@ import { MobilnostUpdateComponent } from '../update/mobilnost-update.component';
 import { MobilnostRoutingResolveService } from './mobilnost-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { UploadComponent } from '../detail/upload/upload.component';
+import { UploadAdminComponent } from '../detail/upload-admin/upload-admin.component';
 
 const mobilnostRoute: Routes = [
   {
@@ -45,6 +46,14 @@ const mobilnostRoute: Routes = [
   {
     path: ':id/upload',
     component: UploadComponent,
+    resolve: {
+      mobilnost: MobilnostRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/upload-admin',
+    component: UploadAdminComponent,
     resolve: {
       mobilnost: MobilnostRoutingResolveService,
     },

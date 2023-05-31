@@ -9,7 +9,6 @@ import { StatusPrijave } from '../enumerations/statusprijave.mode';
 export interface IPrijava {
   id: number;
   prijavaName?: string | null;
-  opis?: string | null;
   createdDate?: dayjs.Dayjs | null;
   trajanjeOd?: dayjs.Dayjs | null;
   trajanjeDo?: dayjs.Dayjs | null;

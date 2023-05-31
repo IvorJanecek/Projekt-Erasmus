@@ -21,9 +21,6 @@ public class PrijavaDTO implements Serializable {
     @NotNull
     private String prijavaName;
 
-    @NotNull
-    private String opis;
-
     private Instant createdDate;
 
     @NotNull
@@ -62,14 +59,6 @@ public class PrijavaDTO implements Serializable {
 
     public void setPrijavaName(String prijavaName) {
         this.prijavaName = prijavaName;
-    }
-
-    public String getOpis() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
     }
 
     public Instant getCreatedDate() {
@@ -187,7 +176,6 @@ public class PrijavaDTO implements Serializable {
         return "PrijavaDTO{" +
             "id=" + getId() +
             ", prijavaName='" + getPrijavaName() + "'" +
-            ", opis='" + getOpis() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", trajanjeOd='" + getTrajanjeOd() + "'" +
             ", trajanjeDo='" + getTrajanjeDo() + "'" +

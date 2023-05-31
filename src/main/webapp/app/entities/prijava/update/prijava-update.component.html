@@ -6,34 +6,6 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_prijavaName">Ime prijave</label>
-          <input
-            type="text"
-            class="form-control"
-            name="prijavaName"
-            id="field_prijavaName"
-            data-cy="prijavaName"
-            formControlName="prijavaName"
-          />
-          <div *ngIf="editForm.get('prijavaName')!.invalid && (editForm.get('prijavaName')!.dirty || editForm.get('prijavaName')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('prijavaName')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_opis">Opis</label>
-          <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
-          <div *ngIf="editForm.get('opis')!.invalid && (editForm.get('opis')!.dirty || editForm.get('opis')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('opis')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" for="field_createdDate">Napravljen</label>
           <div class="d-flex">

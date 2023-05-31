@@ -3,6 +3,7 @@ package zavrsni.erasmus.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -32,10 +33,6 @@ public class Mobilnost implements Serializable {
     @Column(name = "mobilnost_name", nullable = false)
     private String mobilnostName;
 
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
-
     @Column(name = "created_date")
     private Instant createdDate;
 
@@ -45,6 +42,14 @@ public class Mobilnost implements Serializable {
 
     @Column(name = "data_content_type")
     private String dataContentType;
+
+    @NotNull
+    @Column(name = "trajanje_od", nullable = false)
+    private LocalDate trajanjeOd;
+
+    @NotNull
+    @Column(name = "trajanje_do", nullable = false)
+    private LocalDate trajanjeDo;
 
     @JsonIgnoreProperties(value = { "prijavas", "mobilnost" }, allowSetters = true)
     @OneToOne
@@ -58,6 +63,9 @@ public class Mobilnost implements Serializable {
 
     @OneToMany(mappedBy = "mobilnost", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UploadFile> files = new ArrayList<>();
+
+    @OneToMany(mappedBy = "mobilnost", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<UploadFileAdmin> filesAdmin = new ArrayList<>();
 
     @ManyToOne
     private User user;
@@ -74,6 +82,14 @@ public class Mobilnost implements Serializable {
 
     public void setFiles(List<UploadFile> files) {
         this.files = files;
+    }
+
+    public List<UploadFileAdmin> getFilesAdmin() {
+        return filesAdmin;
+    }
+
+    public void setFilesAdmin(List<UploadFileAdmin> filesAdmin) {
+        this.filesAdmin = filesAdmin;
     }
 
     public Long getId() {
@@ -115,19 +131,6 @@ public class Mobilnost implements Serializable {
         this.mobilnostName = mobilnostName;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Mobilnost description(String description) {
-        this.setDescription(description);
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public StatusMobilnosti getStatusMobilnosti() {
         return this.statusMobilnosti;
     }
@@ -148,6 +151,32 @@ public class Mobilnost implements Serializable {
     public Mobilnost createdDate(Instant createdDate) {
         this.setCreatedDate(createdDate);
         return this;
+    }
+
+    public LocalDate getTrajanjeOd() {
+        return this.trajanjeOd;
+    }
+
+    public Mobilnost trajanjeOd(LocalDate trajanjeOd) {
+        this.setTrajanjeOd(trajanjeOd);
+        return this;
+    }
+
+    public void setTrajanjeOd(LocalDate trajanjeOd) {
+        this.trajanjeOd = trajanjeOd;
+    }
+
+    public LocalDate getTrajanjeDo() {
+        return this.trajanjeDo;
+    }
+
+    public Mobilnost trajanjeDo(LocalDate trajanjeDo) {
+        this.setTrajanjeDo(trajanjeDo);
+        return this;
+    }
+
+    public void setTrajanjeDo(LocalDate trajanjeDo) {
+        this.trajanjeDo = trajanjeDo;
     }
 
     public void setCreatedDate(Instant createdDate) {
@@ -231,9 +260,10 @@ public class Mobilnost implements Serializable {
         return "Mobilnost{" +
             "id=" + getId() +
             ", mobilnostName='" + getMobilnostName() + "'" +
-            ", description='" + getDescription() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", data='" + getData() + "'" +
+            ", trajanjeOd='" + getTrajanjeOd() + "'" +
+            ", trajanjeDo='" + getTrajanjeDo() + "'" +
             ", dataContentType='" + getDataContentType() + "'" +
             ", statusMobilnosti='" + getStatusMobilnosti() + "'" +
             "}";

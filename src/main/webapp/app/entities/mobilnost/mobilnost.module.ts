@@ -7,6 +7,8 @@ import { MobilnostDeleteDialogComponent } from './delete/mobilnost-delete-dialog
 import { MobilnostRoutingModule } from './route/mobilnost-routing.module';
 import { UploadComponent } from './detail/upload/upload.component';
 import { FileModalComponent } from './detail/file-modal/file-modal.component';
+import { AdminFileModalComponent } from './detail/admin-file-modal/admin-file-modal.component';
+import { UploadAdminComponent } from './detail/upload-admin/upload-admin.component';
 
 @NgModule({
   imports: [SharedModule, MobilnostRoutingModule],
@@ -17,6 +19,8 @@ import { FileModalComponent } from './detail/file-modal/file-modal.component';
     MobilnostDeleteDialogComponent,
     UploadComponent,
     FileModalComponent,
+    AdminFileModalComponent,
+    UploadAdminComponent,
   ],
 })
 export class MobilnostModule {}

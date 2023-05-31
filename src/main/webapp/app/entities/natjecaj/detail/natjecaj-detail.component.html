@@ -44,34 +44,30 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
 
-      <button (click)="createNewPrijava({ id: natjecaj.id })">Prijavi se na natječaj</button>
-
-      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="createNewZahtjev({ id: natjecaj.id })">
-        Dodaj Zahtjev
+      <button *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR" (click)="createNewPrijava({ id: natjecaj.id, name: natjecaj.name })">
+        Prijavi se na natječaj
       </button>
     </div>
   </div>
   <div class="col-md-3 jh-entity-details">
+    <h2 class="d-flex justify-content-center">Zahtjevi</h2>
+    <hr />
     <div class="row-md jh-entity-details" *ngFor="let zahtjev of natjecaj?.zahtjevs">
       <dt><span>Zahtjev:</span></dt>
       <dd style="display: flex; justify-content: space-between">
         <button
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
           (hidden)="onModalHidden()"
-          (click)="urediZahtjev({ id: natjecaj!.id }, { id: zahtjev.id })"
-        >
-          +
-        </button>
-        <span>{{ zahtjev.name }}</span>
-        <button
-          *jhiHasAnyAuthority="'ROLE_ADMIN'"
-          (hidden)="onModalHidden()"
           (click)="urediZahtjev({ id: natjecaj!.id }, { id: zahtjev.id, name: zahtjev.name })"
         >
-          +
+          Uredi
         </button>
-        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Delete</button>
+        <span>{{ zahtjev.name }}</span>
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="deleteZahtjev(zahtjev.id)">Obriši</button>
       </dd>
     </div>
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="createNewZahtjev({ id: natjecaj!.id })">
+      Dodaj Zahtjev
+    </button>
   </div>
 </div>

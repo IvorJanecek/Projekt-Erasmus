@@ -34,10 +34,6 @@ public class Prijava implements Serializable {
     @Column(name = "prijava_name", nullable = false)
     private String prijavaName;
 
-    @NotNull
-    @Column(name = "opis", nullable = false)
-    private String opis;
-
     @Column(name = "created_date")
     private Instant createdDate;
 
@@ -116,19 +112,6 @@ public class Prijava implements Serializable {
 
     public void setPrijavaName(String prijavaName) {
         this.prijavaName = prijavaName;
-    }
-
-    public String getOpis() {
-        return this.opis;
-    }
-
-    public Prijava opis(String opis) {
-        this.setOpis(opis);
-        return this;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
     }
 
     public Instant getCreatedDate() {
@@ -305,7 +288,6 @@ public class Prijava implements Serializable {
         return "Prijava{" +
             "id=" + getId() +
             ", prijavaName='" + getPrijavaName() + "'" +
-            ", opis='" + getOpis() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", trajanjeOd='" + getTrajanjeOd() + "'" +
             ", trajanjeDo='" + getTrajanjeDo() + "'" +

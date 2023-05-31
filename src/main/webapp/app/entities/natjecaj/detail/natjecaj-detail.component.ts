@@ -91,11 +91,13 @@ export class NatjecajDetailComponent implements OnInit {
     );
   }
 
-  createNewPrijava(natjecaj: Pick<INatjecaj, 'id'>): void {
+  createNewPrijava(natjecaj: Pick<INatjecaj, 'id' | 'name'>): void {
     const newPrijava: IPrijava = {
       natjecaj: natjecaj,
       id: natjecaj.id,
+      prijavaName: 'Prijava za ' + natjecaj.name,
     };
+    console.log(newPrijava.prijavaName);
     this.router.navigate(['/prijava/new'], { state: { prijava: newPrijava } });
   }
 

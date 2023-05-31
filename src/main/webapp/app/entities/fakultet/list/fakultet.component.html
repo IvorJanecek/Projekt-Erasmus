@@ -33,12 +33,6 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="name">
             <div class="d-flex">
               <span>Name</span>
@@ -68,9 +62,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let fakultet of fakultets; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/fakultet', fakultet.id, 'view']">{{ fakultet.id }}</a>
-          </td>
           <td>{{ fakultet.name }}</td>
           <td>{{ fakultet.zemlja }}</td>
           <td>{{ fakultet.grad }}</td>

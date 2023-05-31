@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zavrsni.erasmus.domain.Mobilnost;
+import zavrsni.erasmus.domain.enumeration.StatusMobilnosti;
 import zavrsni.erasmus.repository.MobilnostRepository;
 import zavrsni.erasmus.service.MobilnostService;
 import zavrsni.erasmus.service.dto.MobilnostDTO;
@@ -36,6 +37,9 @@ public class MobilnostServiceImpl implements MobilnostService {
     public MobilnostDTO save(MobilnostDTO mobilnostDTO) {
         log.debug("Request to save Mobilnost : {}", mobilnostDTO);
         Mobilnost mobilnost = mobilnostMapper.toEntity(mobilnostDTO);
+        if (mobilnost.getId() == null) {
+            mobilnost.setStatusMobilnosti(StatusMobilnosti.OTVORENA);
+        }
         mobilnost = mobilnostRepository.save(mobilnost);
         return mobilnostMapper.toDto(mobilnost);
     }

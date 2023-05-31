@@ -34,12 +34,7 @@ export class ZahtjevModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ zahtjev }) => {
-      this.zahtjev = zahtjev;
-      if (zahtjev) {
-        this.updateForm(zahtjev);
-      }
-    });
+    this.zahtjevFormService.resetForm(this.editForm, history.state.zahtjev);
   }
 
   @Input() natjecaj: INatjecaj | undefined;
@@ -67,7 +62,10 @@ export class ZahtjevModalComponent implements OnInit {
     this.isSaving = true;
     let zahtjev = this.zahtjevFormService.getZahtjev(this.editForm);
     zahtjev.natjecaj = this.natjecaj;
-    zahtjev.id = this.zahtjev!.id;
+    console.log(this.zahtjev?.id);
+    if (this.editModal) {
+      zahtjev.id = this.zahtjev!.id;
+    }
     if (zahtjev.id !== null) {
       this.subscribeToSaveResponse(this.zahtjevService.update(zahtjev));
     } else {
