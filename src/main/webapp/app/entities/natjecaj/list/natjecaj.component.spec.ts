@@ -25,13 +25,13 @@ describe('Natjecaj Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'createDate,asc',
+              defaultSort: 'createDate,desc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'createDate,asc',
+                sort: 'createDate,desc',
               })
             ),
             snapshot: { queryParams: {} },
@@ -105,7 +105,7 @@ describe('Natjecaj Management Component', () => {
       expect.anything(),
       expect.objectContaining({
         queryParams: expect.objectContaining({
-          sort: ['name,asc'],
+          sort: ['name,desc'],
         }),
       })
     );
