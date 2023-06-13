@@ -10,6 +10,10 @@
 
 <form [formGroup]="fileForm">
   <h1 class="d-flex justify-content-center">Upload Files</h1>
+  <jhi-alert-error></jhi-alert-error>
+  <div class="alert alert-warning" id="upload-error" *ngIf="this.errorMessage !== ''">
+    <span>{{ this.errorMessage }}</span>
+  </div>
   <table class="d-flex justify-content-center">
     <tbody class="row-spacing">
       <tr>

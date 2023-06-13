@@ -18,6 +18,7 @@ export class UploadFilesComponent implements OnInit {
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
   fileNames: string[] = [];
+  errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -92,11 +93,11 @@ export class UploadFilesComponent implements OnInit {
           this.router.navigate(['/prijava']);
         },
         error => {
-          console.error('Error uploading files', error);
+          this.errorMessage = 'Error uploading files';
         }
       );
     } else {
-      console.log('Please select file for each row');
+      this.errorMessage = 'Please select file for each row';
     }
   }
 }
