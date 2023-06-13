@@ -1,0 +1,113 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-prijava-heading" data-cy="PrijavaCreateUpdateHeading">Napravi ili uredi Prijavu</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createdDate">Napravljen</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trajanjeOd">Trajanje od</label>
+          <div class="input-group">
+            <input
+              id="field_trajanjeOd"
+              data-cy="trajanjeOd"
+              type="text"
+              class="form-control"
+              name="trajanjeOd"
+              ngbDatepicker
+              #trajanjeOdDp="ngbDatepicker"
+              formControlName="trajanjeOd"
+            />
+            <button type="button" class="btn btn-secondary" (click)="trajanjeOdDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('trajanjeOd')!.invalid && (editForm.get('trajanjeOd')!.dirty || editForm.get('trajanjeOd')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trajanjeDo">Trajanje do</label>
+          <div class="input-group">
+            <input
+              id="field_trajanjeDo"
+              data-cy="trajanjeDo"
+              type="text"
+              class="form-control"
+              name="trajanjeDo"
+              ngbDatepicker
+              #trajanjeDoDp="ngbDatepicker"
+              formControlName="trajanjeDo"
+            />
+            <button type="button" class="btn btn-secondary" (click)="trajanjeDoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('trajanjeDo')!.invalid && (editForm.get('trajanjeDo')!.dirty || editForm.get('trajanjeDo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeDo')?.errors?.required"> Ovo polje je potrebno </small>
+          </div>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_USER'">
+          <label class="form-label" for="field_kategorija">Kategorija</label>
+          <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let kategorija of kategorijaValues.slice(0, 2)" [value]="kategorija">{{ kategorija }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="'ROLE_PROFESOR'">
+          <label class="form-label" for="field_kategorija">Kategorija</label>
+          <select class="form-control" name="kategorija" formControlName="kategorija" id="field_kategorija" data-cy="kategorija">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let kategorija of kategorijaValues.slice(2)" [value]="kategorija">{{ kategorija }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fakultet">Fakultet</label>
+          <select
+            class="form-control"
+            id="field_fakultet"
+            data-cy="fakultet"
+            name="fakultet"
+            formControlName="fakultet"
+            [compareWith]="compareFakultet"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="fakultetOption" *ngFor="let fakultetOption of fakultetsSharedCollection">{{ fakultetOption.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkaži promjene</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Spremi</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

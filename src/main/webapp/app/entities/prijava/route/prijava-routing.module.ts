@@ -9,6 +9,7 @@ import { PrijavaRoutingResolveService } from './prijava-routing-resolve.service'
 import { ASC } from 'app/config/navigation.constants';
 import { UploadFilesComponent } from '../update/upload-files/upload-files.component';
 import { ListAdminComponent } from '../list-admin/list-admin.component';
+import { EditPrijavaComponent } from '../edit-prijava/edit-prijava.component';
 
 const prijavaRoute: Routes = [
   {
@@ -52,7 +53,7 @@ const prijavaRoute: Routes = [
   },
   {
     path: ':id/edit',
-    component: PrijavaUpdateComponent,
+    component: EditPrijavaComponent,
     resolve: {
       prijava: PrijavaRoutingResolveService,
     },

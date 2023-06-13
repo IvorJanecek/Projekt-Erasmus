@@ -88,17 +88,6 @@
               <button
                 *jhiHasAnyAuthority="'ROLE_ADMIN'"
                 type="submit"
-                [routerLink]="['/mobilnost', mobilnost.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Uredi</span>
-              </button>
-
-              <button
-                *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                type="submit"
                 (click)="delete(mobilnost)"
                 class="btn btn-danger btn-sm"
                 data-cy="entityDeleteButton"

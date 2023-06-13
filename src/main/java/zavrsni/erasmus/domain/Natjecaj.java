@@ -62,7 +62,7 @@ public class Natjecaj implements Serializable {
     @JsonIgnoreProperties(value = { "user", "fakultet", "mobilnost", "natjecaj" }, allowSetters = true)
     private Set<Prijava> prijavas = new HashSet<>();
 
-    @OneToMany(mappedBy = "natjecaj", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "natjecaj", cascade = CascadeType.ALL)
     private Set<Zahtjev> zahtjevs = new HashSet<>();
 
     @JsonIgnoreProperties(value = { "natjecaj", "prijava" }, allowSetters = true)
