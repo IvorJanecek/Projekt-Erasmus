@@ -82,13 +82,11 @@
           <td>
             <a [routerLink]="['/natjecaj', natjecaj.id, 'view']">{{ natjecaj.name }}</a>
           </td>
-          <td
-            class="form-control"
-            style="word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; width: 700px; height: 133px"
-          >
-            {{ natjecaj.description }}
+          <td>
+            <div class="d-flex">
+              <span style="max-width: 700px">{{ natjecaj.description }}</span>
+            </div>
           </td>
-
           <td>{{ natjecaj.createDate | formatMediumDatetime }}</td>
           <td>{{ natjecaj.datumOd | formatMediumDate }}</td>
           <td>{{ natjecaj.datumDo | formatMediumDate }}</td>

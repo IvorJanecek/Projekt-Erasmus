@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
+import { DATE_FORMAT } from 'app/config/input.constants';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -11,8 +12,10 @@ import { IMobilnost, NewMobilnost } from '../mobilnost.model';
 
 export type PartialUpdateMobilnost = Partial<IMobilnost> & Pick<IMobilnost, 'id'>;
 
-type RestOf<T extends IMobilnost | NewMobilnost> = Omit<T, 'createdDate'> & {
+type RestOf<T extends IMobilnost | NewMobilnost> = Omit<T, 'createdDate' | 'trajanjeOd' | 'trajanjeDo'> & {
   createdDate?: string | null;
+  trajanjeOd?: string | null;
+  trajanjeDo?: string | null;
 };
 
 export type RestMobilnost = RestOf<IMobilnost>;
@@ -100,6 +103,8 @@ export class MobilnostService {
     return {
       ...mobilnost,
       createdDate: mobilnost.createdDate?.toJSON() ?? null,
+      trajanjeOd: mobilnost.trajanjeOd?.format(DATE_FORMAT) ?? null,
+      trajanjeDo: mobilnost.trajanjeDo?.format(DATE_FORMAT) ?? null,
     };
   }
 
@@ -107,6 +112,8 @@ export class MobilnostService {
     return {
       ...restMobilnost,
       createdDate: restMobilnost.createdDate ? dayjs(restMobilnost.createdDate) : undefined,
+      trajanjeOd: restMobilnost.trajanjeOd ? dayjs(restMobilnost.trajanjeOd) : undefined,
+      trajanjeDo: restMobilnost.trajanjeDo ? dayjs(restMobilnost.trajanjeDo) : undefined,
     };
   }
 

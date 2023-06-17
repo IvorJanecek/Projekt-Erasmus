@@ -24,6 +24,7 @@ export class NatjecajDetailComponent implements OnInit {
   numZahtjevsToCreate = 1;
   zahtjevs?: IZahtjev[];
   zahtjev: IZahtjev | null = null;
+  errorMessage: string = '';
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -92,6 +93,10 @@ export class NatjecajDetailComponent implements OnInit {
   }
 
   createNewPrijava(natjecaj: Pick<INatjecaj, 'id' | 'name'>): void {
+    if (this.natjecaj?.zahtjevs?.length === 0) {
+      this.errorMessage = 'Nema zahtjeva,nema dalje.';
+      return;
+    }
     const newPrijava: IPrijava = {
       natjecaj: natjecaj,
       id: natjecaj.id,
