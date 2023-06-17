@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * A Fakultet.
@@ -55,6 +57,21 @@ public class Fakultet implements Serializable {
     public Fakultet id(Long id) {
         this.setId(id);
         return this;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public class FakultetHasPrijaveException extends RuntimeException {
+
+        public FakultetHasPrijaveException(String message) {
+            super(message);
+        }
+    }
+
+    @PreRemove
+    private void preventDeleteIfHasPrijave() {
+        if (!prijavas.isEmpty()) {
+            throw new Fakultet.FakultetHasPrijaveException("Nije moguće izbrisati fakultet jer se koristi u prijavi.");
+        }
     }
 
     public void setId(Long id) {

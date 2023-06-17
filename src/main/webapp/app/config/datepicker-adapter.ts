@@ -15,6 +15,6 @@ export class NgbDateDayjsAdapter extends NgbDateAdapter<dayjs.Dayjs> {
   }
 
   toModel(date: NgbDateStruct | null): dayjs.Dayjs | null {
-    return date ? dayjs(`${date.year}-${date.month}-${date.day}`) : null;
+    return date ? dayjs(`${date.year}.${date.month}.${date.day}`) : null;
   }
 }

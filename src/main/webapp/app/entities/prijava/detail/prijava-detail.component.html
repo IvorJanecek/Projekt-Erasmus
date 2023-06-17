@@ -97,36 +97,43 @@
       </div>
     </div>
   </div>
-  <table class="col-4">
-    <tr>
-      <th>Dokumenti</th>
-      <th>Zahtjevi</th>
-    </tr>
-    <ng-container *ngFor="let file of prijava?.uploadFiles; let fileIndex = index">
+
+  <div class="col-4" style="margin-left: 30px">
+    <table>
       <tr>
-        <td>
-          <div *ngIf="file.data">
-            <a (click)="openFile(file.data, file.fileType)">Otvori</a>
-            <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
-              <a
-                class="padding-left: 10px"
-                *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
-                (hidden)="onModalHidden()"
-                (click)="urediFile({ id: file.id })"
-                >Uredi</a
-              >
-            </ng-container>
-            <u> {{ file.fileName }} </u>
-          </div>
-        </td>
-        <td>
-          <div *ngFor="let zahtjev of zahtjevs; let zahtjevIndex = index">
-            <span *ngIf="fileIndex === zahtjevIndex"
-              ><u>{{ zahtjev.name }}</u></span
-            >
-          </div>
-        </td>
+        <th class="col-4"><h2>Zahtjevi</h2></th>
+        <th class="col-4"><h2>Dokumenti</h2></th>
       </tr>
-    </ng-container>
-  </table>
+
+      <ng-container *ngFor="let zahtjev of zahtjevs; let zahtjevIndex = index">
+        <tr>
+          <td style="padding-top: 40px">
+            <u>{{ zahtjev.name }}</u>
+          </td>
+          <ng-container *ngFor="let file of prijava?.uploadFiles; let fileIndex = index">
+            <ng-container *ngIf="fileIndex === zahtjevIndex">
+              <td style="padding-top: 30px">
+                <div *ngIf="file.data">
+                  <a (click)="openFile(file.data, file.fileType)">Otvori</a>
+                  <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
+                    <a
+                      class="padding-left: 10px"
+                      *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                      (hidden)="onModalHidden()"
+                      (click)="urediFile({ id: file.id })"
+                      >Uredi</a
+                    >
+                  </ng-container>
+                  <u>{{ file.fileName }}</u>
+                </div>
+              </td>
+            </ng-container>
+          </ng-container>
+        </tr>
+        <tr>
+          <td colspan="99"><br /></td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
 </div>

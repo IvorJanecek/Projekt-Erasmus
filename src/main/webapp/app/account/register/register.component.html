@@ -7,13 +7,13 @@
 
       <div class="alert alert-danger" *ngIf="error"><strong>Registration failed!</strong> Please try again later.</div>
 
-      <div class="alert alert-danger" *ngIf="errorUserExists">
-        <strong>Login name already registered!</strong> Please choose another one.
+      <div class="alert alert-danger" *ngIf="errorUserExists"><strong>Ime se već koristi</strong> Molimo odaberite neko drugo ime.</div>
+
+      <div class="alert alert-danger" *ngIf="errorEmailExists">
+        <strong>Email se već koristi. </strong> Molimo odaberite neki drugi mail.
       </div>
 
-      <div class="alert alert-danger" *ngIf="errorEmailExists"><strong>Email is already in use!</strong> Please choose another one.</div>
-
-      <div class="alert alert-danger" *ngIf="doNotMatch">The password and its confirmation do not match!</div>
+      <div class="alert alert-danger" *ngIf="doNotMatch">Lozinka i potvrda lozinke se ne podudaraju</div>
     </div>
   </div>
 
