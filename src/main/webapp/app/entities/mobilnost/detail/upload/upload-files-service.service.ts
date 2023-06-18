@@ -11,6 +11,9 @@ export class UploadFileService {
   constructor(private http: HttpClient) {}
 
   deleteFile(fileId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/deleteFile/${fileId}`);
+    return this.http.delete(`${this.baseUrl}/deleteFile/${fileId}`, { responseType: 'text' });
+  }
+  deleteFileAdmin(fileAdminId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/deleteFileAdmin/${fileAdminId}`, { responseType: 'text' });
   }
 }

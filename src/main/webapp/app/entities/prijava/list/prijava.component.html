@@ -117,7 +117,7 @@
 
               <ng-container *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'">
                 <button
-                  *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                  *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                   type="submit"
                   [routerLink]="['/prijava', prijava.id, 'edit']"
                   class="btn btn-primary btn-sm"
@@ -128,7 +128,7 @@
                 </button>
 
                 <button
-                  *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                  *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                   type="submit"
                   (click)="delete(prijava)"
                   class="btn btn-danger btn-sm"

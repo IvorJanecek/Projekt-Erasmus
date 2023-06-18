@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IMobilnost } from '../../mobilnost.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class UploadAdminComponent implements OnInit {
   formData: FormData = new FormData();
   mobilnost: IMobilnost | null = null;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.fileForm = this.formBuilder.group({
@@ -43,9 +43,13 @@ export class UploadAdminComponent implements OnInit {
 
   uploadFiles(): void {
     const mobilnostId = this.mobilnost; // Replace with the ID of the Prijava instance
-    this.http.post(`/api/uploadFilesAdmin/mobilnost/${mobilnostId}`, this.formData).subscribe(
-      response => console.log(response),
+    this.http.post(`/api/uploadFilesAdmin/mobilnost/${mobilnostId}`, this.formData, { responseType: 'text' }).subscribe(
+      response => {
+        console.log(response);
+        this.router.navigate([`/mobilnost/${mobilnostId}/view`]);
+      },
       error => console.error(error)
     );
+    this.router.navigate(['/mobilnost']);
   }
 }

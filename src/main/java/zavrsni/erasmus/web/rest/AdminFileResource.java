@@ -59,7 +59,7 @@ public class AdminFileResource {
         try {
             Mobilnost mobilnost = mobilnostRepository
                 .findById(mobilnostId)
-                .orElseThrow(() -> new RuntimeException("Prijava with ID " + mobilnostId + " not found"));
+                .orElseThrow(() -> new RuntimeException("Prijava sa ID " + mobilnostId + " nije pronađena"));
             for (MultipartFile file : files) {
                 UploadFileAdmin uploadFileAdmin = new UploadFileAdmin();
                 uploadFileAdmin.setFileName(file.getOriginalFilename());
@@ -71,9 +71,9 @@ public class AdminFileResource {
 
             mobilnostRepository.save(mobilnost);
 
-            return ResponseEntity.ok("Files uploaded successfully");
+            return ResponseEntity.ok("Dokument uspješno uploadan");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nije uspjelo uploadat dokumente: " + e.getMessage());
         }
     }
 
@@ -82,13 +82,13 @@ public class AdminFileResource {
         try {
             UploadFileAdmin uploadFileAdmin = uploadFilesAdminRepository
                 .findById(fileId)
-                .orElseThrow(() -> new RuntimeException("File with ID " + fileId + " not found"));
+                .orElseThrow(() -> new RuntimeException("Dokument sa ID " + fileId + " nije pronađen"));
 
             uploadFilesAdminRepository.delete(uploadFileAdmin);
 
-            return ResponseEntity.ok("File deleted successfully");
+            return ResponseEntity.ok("Dokumentu uspješno obrisan");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete file: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nije uspijelo obrisati dokument: " + e.getMessage());
         }
     }
 }

@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-  <div class="col-md-4">
+  <div class="col-md-6">
     <div *ngIf="natjecaj">
       <h2 data-cy="natjecajDetailsHeading"><span>Natjecaj</span></h2>
 
@@ -20,7 +20,7 @@
         </dd>
         <dt><span>Opis</span></dt>
         <dd>
-          <span>{{ natjecaj.description }}</span>
+          <span style="word-break: break-word">{{ natjecaj.description }}</span>
         </dd>
         <dt><span>Napravljen</span></dt>
         <dd>
@@ -48,7 +48,7 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
 
-      <button *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR" (click)="createNewPrijava({ id: natjecaj.id, name: natjecaj.name })">
+      <button *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']" (click)="createNewPrijava({ id: natjecaj.id, name: natjecaj.name })">
         Prijavi se na natječaj
       </button>
     </div>

@@ -17,6 +17,7 @@ import { StatusPrijave } from 'app/entities/enumerations/statusprijave.mode';
 import { MobilnostService } from 'app/entities/mobilnost/service/mobilnost.service';
 import { StatusMobilnosti } from 'app/entities/enumerations/statusmobilnosti.mode';
 import { MobilnostFormGroup, MobilnostFormService } from 'app/entities/mobilnost/update/mobilnost-form.service';
+import { UploadfileComponent } from './uploadfile/uploadfile.component';
 
 @Component({
   selector: 'jhi-prijava-detail',
@@ -73,6 +74,14 @@ export class PrijavaDetailComponent implements OnInit {
         window.location.reload();
       }
     );
+  }
+
+  uploadajFajl(prijavaId: Pick<IPrijava, 'id'>) {
+    if (prijavaId) {
+      const prijavaId = this.prijava?.id;
+      const route = `/prijava/upload-files/${prijavaId}`;
+      this.router.navigate([route], { state: { natjecaj: this.prijava?.natjecaj } });
+    }
   }
 
   byteSize(base64String: string): string {

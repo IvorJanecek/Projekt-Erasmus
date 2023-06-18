@@ -34,7 +34,7 @@ export class ZahtjevFormService {
         }
       ),
       name: new FormControl(zahtjevRawValue.name, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(40)],
       }),
       natjecaj: new FormControl(zahtjevRawValue.natjecaj),
     });

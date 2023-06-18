@@ -93,7 +93,7 @@
           <label class="form-label" for="field_korisnik">Korisnik</label>
           <select class="form-control" name="status" formControlName="korisnik" id="field_korisnik" data-cy="korisnik">
             <option [ngValue]="null"></option>
-            <option *ngFor="let korisnik of korisnikValues" [value]="korisnik">{{ korisnik }}</option>
+            <option *ngFor="let korisnik of korisnikValues" [value]="korisnik">{{ korisnik === 'USER' ? 'STUDENT' : korisnik }}</option>
           </select>
         </div>
       </div>

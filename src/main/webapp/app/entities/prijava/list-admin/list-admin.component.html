@@ -113,7 +113,7 @@
               </button>
 
               <button
-                jhiHasAnyAuthority="Role_ADMIN"
+                *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                 type="submit"
                 [routerLink]="['/prijava', prijava.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -123,7 +123,13 @@
                 <span class="d-none d-md-inline">uredi</span>
               </button>
 
-              <button type="submit" (click)="delete(prijava)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
+                type="submit"
+                (click)="delete(prijava)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Obriši</span>
               </button>

@@ -60,71 +60,75 @@
       <ng-container *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'">
         <button
           type="button"
-          *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+          *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
           [routerLink]="['/prijava', prijava.id, 'edit']"
           class="btn btn-primary"
         >
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
         </button>
       </ng-container>
+      <div class="row justify-content-center">
+        <div class="col">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <button
+              *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
+              class="btn btn-primary"
+              (click)="
+                createNewMobilnost({
+                  id: prijava.id,
+                  natjecaj: prijava.natjecaj,
+                  user: prijava.user,
+                  trajanjeDo: prijava.trajanjeDo,
+                  trajanjeOd: prijava.trajanjeOd
+                })
+              "
+            >
+              Prihvati prijavu
+            </button>
+          </div>
+        </div>
 
-      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button
-          *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
-          class="btn btn-primary"
-          (click)="
-            createNewMobilnost({
-              id: prijava.id,
-              natjecaj: prijava.natjecaj,
-              user: prijava.user,
-              trajanjeDo: prijava.trajanjeDo,
-              trajanjeOd: prijava.trajanjeOd
-            })
-          "
-        >
-          Prihvati prijavu
-        </button>
-      </div>
-
-      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-        <button
-          *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
-          class="btn btn-danger"
-          (click)="odbijPrijavu({ id: prijava.id })"
-        >
-          Odbij Prijavu
-        </button>
+        <div class="col-8">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <button
+              *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
+              class="btn btn-danger"
+              (click)="odbijPrijavu({ id: prijava.id })"
+            >
+              Odbij Prijavu
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="col-4" style="margin-left: 30px">
+  <div class="col-4 jh-entity-details" style="margin-left: 30px">
     <table>
       <tr>
-        <th class="col-4"><h2>Zahtjevi</h2></th>
-        <th class="col-4"><h2>Dokumenti</h2></th>
+        <h2 class="d-flex justify-content-center">Zahtjevi</h2>
+        <th class="col-6 justify-content-center"><h2>Dokumenti</h2></th>
       </tr>
 
       <ng-container *ngFor="let zahtjev of zahtjevs; let zahtjevIndex = index">
         <tr>
-          <td style="padding-top: 40px">
+          <td style="display: flex; padding-top: 30px; justify-content: center">
             <u>{{ zahtjev.name }}</u>
           </td>
           <ng-container *ngFor="let file of prijava?.uploadFiles; let fileIndex = index">
             <ng-container *ngIf="fileIndex === zahtjevIndex">
-              <td style="padding-top: 30px">
+              <td style="padding-top: 30px; justify-content: space-between">
                 <div *ngIf="file.data">
                   <a (click)="openFile(file.data, file.fileType)">Otvori</a>
                   <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
                     <a
                       class="padding-left: 10px"
-                      *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
+                      *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                       (hidden)="onModalHidden()"
                       (click)="urediFile({ id: file.id })"
                       >Uredi</a
                     >
                   </ng-container>
-                  <u>{{ file.fileName }}</u>
+                  <u style="padding-left: 10px">{{ file.fileName }}</u>
                 </div>
               </td>
             </ng-container>
@@ -134,6 +138,13 @@
           <td colspan="99"><br /></td>
         </tr>
       </ng-container>
+
+      <!-- Conditionally display the upload button -->
+      <tr *ngIf="zahtjevs!.length > (prijava?.uploadFiles)!.length">
+        <td colspan="2" style="padding-top: 30px">
+          <button (click)="uploadajFajl({ id: prijava!.id })" class="btn btn-primary">Upload Files</button>
+        </td>
+      </tr>
     </table>
   </div>
 </div>

@@ -7,21 +7,6 @@
         <jhi-alert-error></jhi-alert-error>
 
         <div class="row mb-3">
-          <label class="form-label" for="field_createdDate">Napravljen</label>
-          <div class="d-flex">
-            <input
-              id="field_createdDate"
-              data-cy="createdDate"
-              type="datetime-local"
-              class="form-control"
-              name="createdDate"
-              formControlName="createdDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" for="field_trajanjeOd">Trajanje od</label>
           <div class="input-group">
             <input
@@ -37,7 +22,7 @@
             <button type="button" class="btn btn-secondary" (click)="trajanjeOdDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
           </div>
           <div *ngIf="editForm.get('trajanjeOd')!.invalid && (editForm.get('trajanjeOd')!.dirty || editForm.get('trajanjeOd')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> Ovo polje je potrebno! </small>
           </div>
         </div>
 
@@ -57,7 +42,7 @@
             <button type="button" class="btn btn-secondary" (click)="trajanjeDoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
           </div>
           <div *ngIf="editForm.get('trajanjeDo')!.invalid && (editForm.get('trajanjeDo')!.dirty || editForm.get('trajanjeDo')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeDo')?.errors?.required"> Ovo polje je potrebno </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeDo')?.errors?.required"> Ovo polje je potrebno! </small>
           </div>
         </div>
 

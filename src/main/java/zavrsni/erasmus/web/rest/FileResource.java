@@ -109,7 +109,7 @@ public class FileResource {
 
             mobilnostRepository.save(mobilnost);
 
-            return ResponseEntity.ok("Files uploaded successfully");
+            return ResponseEntity.ok("Dokument uspješno uploadan");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload files: " + e.getMessage());
         }
@@ -124,9 +124,9 @@ public class FileResource {
 
             uploadFilesRepository.delete(uploadFile);
 
-            return ResponseEntity.ok("File deleted successfully");
+            return ResponseEntity.ok("Dokument uspješno obrisan");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete file: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nije uspjelo obrisati dokument: " + e.getMessage());
         }
     }
 }

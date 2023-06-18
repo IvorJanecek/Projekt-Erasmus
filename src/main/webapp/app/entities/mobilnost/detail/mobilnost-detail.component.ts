@@ -14,6 +14,7 @@ import { Observable, finalize } from 'rxjs';
 import { MobilnostService } from '../service/mobilnost.service';
 import { MobilnostFormGroup, MobilnostFormService } from '../update/mobilnost-form.service';
 import { StatusMobilnosti } from 'app/entities/enumerations/statusmobilnosti.mode';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-mobilnost-detail',
@@ -23,6 +24,7 @@ export class MobilnostDetailComponent implements OnInit {
   mobilnost: IMobilnost | null = null;
   uploadFiles?: IUploadFile[];
   isSaving = false;
+  today: dayjs.Dayjs = dayjs();
 
   editForm: MobilnostFormGroup = this.mobilnostFormService.createMobilnostFormGroup();
 
@@ -99,8 +101,20 @@ export class MobilnostDetailComponent implements OnInit {
   deleteFile(fileId: number): void {
     this.uploadFileService.deleteFile(fileId).subscribe(() => {
       this.mobilnost!.uploadFiles = this.mobilnost?.uploadFiles!.filter(uploadFile => uploadFile.id !== fileId);
+      window.location.reload();
     });
-    window.location.reload();
+  }
+  deleteFileAdmin(fileAdminId: number): void {
+    this.uploadFileService.deleteFileAdmin(fileAdminId).subscribe(
+      (response: string) => {
+        console.log(response); // Log the response as text
+        this.mobilnost!.uploadFilesAdmin = this.mobilnost?.uploadFilesAdmin!.filter(uploadFileAdmin => uploadFileAdmin.id !== fileAdminId);
+        window.location.reload();
+      },
+      error => {
+        console.error(error); // Log the error message for debugging
+      }
+    );
   }
 
   onModalHidden(): void {
@@ -112,19 +126,25 @@ export class MobilnostDetailComponent implements OnInit {
   }
 
   prihvatiMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti'>): void {
-    // set the prihvacen field to true for the Prijava entity
-    mobilnost.statusMobilnosti = StatusMobilnosti.ZATVORENA;
-    console.log(mobilnost.statusMobilnosti);
+    const datumDo: dayjs.Dayjs = dayjs(this.mobilnost?.trajanjeDo); // Convert datumDo to Dayjs object
+    const isDatumDoValid: boolean = datumDo.isSame(this.today, 'day') || datumDo.isBefore(this.today, 'day');
 
-    const PartialUpdatePrijava = {
-      id: mobilnost.id,
-      statusMobilnosti: mobilnost.statusMobilnosti,
-    };
+    if (isDatumDoValid) {
+      // set the statusMobilnosti field to ZATVORENA for the Mobilnost entity
+      mobilnost.statusMobilnosti = StatusMobilnosti.ZATVORENA;
 
-    this.mobilnostService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
-      console.log(mobilnost.statusMobilnosti);
-      this.save();
-    });
+      const PartialUpdatePrijava = {
+        id: mobilnost.id,
+        statusMobilnosti: mobilnost.statusMobilnosti,
+      };
+
+      this.mobilnostService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
+        this.save();
+      });
+    } else {
+      // Display an error message or handle the case when the date is not valid
+      console.log('Error: datumDo is not greater than or equal to today');
+    }
   }
 
   neispravnaMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti'>): void {

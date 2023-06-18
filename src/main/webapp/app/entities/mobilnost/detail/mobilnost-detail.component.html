@@ -40,66 +40,110 @@
         </dd>
       </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
-      </button>
-    </div>
-    <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-      <button *ngIf="mobilnost?.statusMobilnosti !== 'ZATVORENA'" class="btn btn-danger" (click)="prihvatiMobilnost({ id: mobilnost!.id })">
-        Zatvori Mobilnost
-      </button>
-    </div>
-    <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
-      <button
-        *ngIf="mobilnost?.statusMobilnosti !== 'ZATVORENA' && mobilnost?.statusMobilnosti !== 'NEISPRAVNA'"
-        class="btn btn-danger"
-        (click)="neispravnaMobilnost({ id: mobilnost!.id })"
-      >
-        Neispravna Mobilnost
-      </button>
-    </div>
-  </div>
-  <div>
-    <dt><span>Dokumenti-Korisnik : </span></dt>
-    <dd>
-      <div *ngFor="let uploadFiles of mobilnost!.uploadFiles">
-        <div *ngIf="uploadFiles.data">
-          <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Otvori</a>
-          <a *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR" (hidden)="onModalHidden()" (click)="urediFile({ id: uploadFiles.id })"
-            >Uredi</a
-          >
-          <u>{{ uploadFiles.fileName }}</u>
-          <button *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR" (hidden)="onModalHidden()" (click)="deleteFile(uploadFiles.id)">
-            Obriši
+      <div class="row">
+        <div class="col-2">
+          <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
           </button>
         </div>
-      </div>
-      <div>
-        <button
-          *jhiHasAnyAuthority="'ROLE_USER'; rOLE_PROFESSOR"
-          type="button"
-          (click)="uploadajFajl({ id: mobilnost!.id })"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>UploadajFajlove</span>
-        </button>
-      </div>
-    </dd>
-    <dt><span>Dokumenti-Administrator : </span></dt>
-    <dd>
-      <div *ngFor="let uploadFilesAdmin of mobilnost!.uploadFilesAdmin">
-        <div *ngIf="uploadFilesAdmin.data">
-          <a (click)="openFile(uploadFilesAdmin.data, uploadFilesAdmin.fileType)">Otvori</a>
-          <a *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="urediFileAdmin({ id: uploadFilesAdmin.id })">Uredi</a>
-          <u> {{ uploadFilesAdmin.fileName }}</u>
-          <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="deleteFile(uploadFilesAdmin.id)">Obriši</button>
+        <div class="col-2">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <button
+              class="btn btn-primary"
+              *ngIf="mobilnost?.statusMobilnosti !== 'ZATVORENA'"
+              class="btn btn-danger"
+              (click)="prihvatiMobilnost({ id: mobilnost!.id })"
+            >
+              Zatvori Mobilnost
+            </button>
+          </div>
+        </div>
+        <div class="col-2">
+          <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <button
+              *ngIf="mobilnost?.statusMobilnosti !== 'ZATVORENA' && mobilnost?.statusMobilnosti !== 'NEISPRAVNA'"
+              class="btn btn-danger"
+              (click)="neispravnaMobilnost({ id: mobilnost!.id })"
+            >
+              Neispravna Mobilnost
+            </button>
+          </div>
         </div>
       </div>
-      <div>
-        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" (click)="uploadajFajlAdmin({ id: mobilnost!.id })" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uploadaj Dokumente</span>
-        </button>
+    </div>
+  </div>
+
+  <div class="col-8">
+    <div class="row">
+      <div class="col">
+        <dl class="col-md jh-entity-details">
+          <h2 class="d-flex justify-content-center">Dokumenti Korisnik</h2>
+          <hr />
+
+          <div class="row-md jh-entity-details" *ngFor="let uploadFiles of mobilnost!.uploadFiles">
+            <dd style="display: flex; justify-content: space-between">
+              <div *ngIf="uploadFiles.data">
+                <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Otvori</a>
+                <a
+                  *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
+                  (hidden)="onModalHidden()"
+                  (click)="urediFile({ id: uploadFiles.id })"
+                  >Uredi</a
+                >
+                <u>{{ uploadFiles.fileName }}</u>
+                <button
+                  *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
+                  (hidden)="onModalHidden()"
+                  (click)="deleteFile(uploadFiles.id)"
+                >
+                  Obriši
+                </button>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <button
+              *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
+              type="button"
+              (click)="uploadajFajl({ id: mobilnost!.id })"
+              class="btn btn-primary"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>UploadajFajlove</span>
+            </button>
+          </div>
+        </dl>
       </div>
-    </dd>
+      <div class="col">
+        <dl class="col-md jh-entity-details">
+          <h2 class="d-flex justify-content-center">Dokumenti Administrator</h2>
+          <hr />
+
+          <div class="row-md jh-entity-details" *ngFor="let uploadFilesAdmin of mobilnost!.uploadFilesAdmin">
+            <dd style="display: flex; justify-content: space-between">
+              <div *ngIf="uploadFilesAdmin.data">
+                <a (click)="openFile(uploadFilesAdmin.data, uploadFilesAdmin.fileType)">Otvori</a>
+                <a *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="urediFileAdmin({ id: uploadFilesAdmin.id })"
+                  >Uredi</a
+                >
+                <u>{{ uploadFilesAdmin.fileName }}</u>
+                <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="deleteFileAdmin(uploadFilesAdmin.id)">
+                  Obriši
+                </button>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <button
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
+              type="button"
+              (click)="uploadajFajlAdmin({ id: mobilnost!.id })"
+              class="btn btn-primary"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uploadaj Dokumente</span>
+            </button>
+          </div>
+        </dl>
+      </div>
+    </div>
   </div>
 </div>

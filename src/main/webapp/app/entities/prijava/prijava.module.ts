@@ -9,6 +9,7 @@ import { UploadFilesComponent } from './update/upload-files/upload-files.compone
 import { ListAdminComponent } from './list-admin/list-admin.component';
 import { FileModalComponent } from './detail/file-modal/file-modal.component';
 import { EditPrijavaComponent } from './edit-prijava/edit-prijava.component';
+import { UploadfileComponent } from './detail/uploadfile/uploadfile.component';
 
 @NgModule({
   imports: [SharedModule, PrijavaRoutingModule],
@@ -21,6 +22,7 @@ import { EditPrijavaComponent } from './edit-prijava/edit-prijava.component';
     ListAdminComponent,
     FileModalComponent,
     EditPrijavaComponent,
+    UploadfileComponent,
   ],
 })
 export class PrijavaModule {}
