@@ -66,6 +66,7 @@ export class NatjecajComponent implements OnInit {
       .subscribe({
         next: (res: EntityArrayResponseType) => {
           this.onResponseSuccess(res);
+          location.reload();
         },
       });
   }

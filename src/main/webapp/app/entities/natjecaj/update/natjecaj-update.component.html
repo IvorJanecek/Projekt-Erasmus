@@ -29,6 +29,9 @@
 
           <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="(editForm.get('description')?.value)!.length >= 450"
+              >Opis je prevelik i nemože biti veći od 450 slova.</small
+            >
           </div>
         </div>
 

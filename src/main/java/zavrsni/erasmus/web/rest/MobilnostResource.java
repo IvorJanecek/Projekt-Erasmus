@@ -64,7 +64,7 @@ public class MobilnostResource {
         MobilnostDTO result = mobilnostService.save(mobilnostDTO);
         return ResponseEntity
             .created(new URI("/api/mobilnosts/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -98,7 +98,7 @@ public class MobilnostResource {
         MobilnostDTO result = mobilnostService.update(mobilnostDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, mobilnostDTO.getId().toString()))
+            .headers(HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, mobilnostDTO.getId().toString()))
             .body(result);
     }
 
@@ -134,7 +134,7 @@ public class MobilnostResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, mobilnostDTO.getId().toString())
+            HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, mobilnostDTO.getId().toString())
         );
     }
 
@@ -186,7 +186,7 @@ public class MobilnostResource {
         mobilnostService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

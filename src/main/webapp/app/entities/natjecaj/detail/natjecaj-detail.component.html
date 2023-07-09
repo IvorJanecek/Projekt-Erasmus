@@ -20,7 +20,11 @@
         </dd>
         <dt><span>Opis</span></dt>
         <dd>
-          <span style="word-break: break-word">{{ natjecaj.description }}</span>
+          <div class="d-flex">
+            <textarea readonly="true" style="resize: none; background-color: transparent; border: none" rows="4" cols="75">{{
+              natjecaj.description
+            }}</textarea>
+          </div>
         </dd>
         <dt><span>Napravljen</span></dt>
         <dd>

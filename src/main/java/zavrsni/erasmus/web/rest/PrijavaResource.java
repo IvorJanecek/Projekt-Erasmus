@@ -96,7 +96,7 @@ public class PrijavaResource {
         PrijavaDTO result = prijavaService.save(prijavaDTO);
         return ResponseEntity
             .created(new URI("/api/prijavas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -130,7 +130,7 @@ public class PrijavaResource {
         PrijavaDTO result = prijavaService.update(prijavaDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString()))
+            .headers(HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString()))
             .body(result);
     }
 
@@ -187,7 +187,7 @@ public class PrijavaResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString())
+            HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prijavaDTO.getId().toString())
         );
     }
 
@@ -257,7 +257,7 @@ public class PrijavaResource {
         prijavaService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

@@ -49,7 +49,7 @@ public class ZahtjevResource {
         ZahtjevDTO result = zahtjevService.save(zahtjevDTO);
         return ResponseEntity
             .created(new URI("/api/zahtjevs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -73,7 +73,7 @@ public class ZahtjevResource {
         ZahtjevDTO result = zahtjevService.update(zahtjevDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, zahtjevDTO.getId().toString()))
+            .headers(HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, zahtjevDTO.getId().toString()))
             .body(result);
     }
 
@@ -98,7 +98,7 @@ public class ZahtjevResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, zahtjevDTO.getId().toString())
+            HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, zahtjevDTO.getId().toString())
         );
     }
 
@@ -121,7 +121,7 @@ public class ZahtjevResource {
         zahtjevService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 

@@ -58,7 +58,7 @@ public class FakultetResource {
         FakultetDTO result = fakultetService.save(fakultetDTO);
         return ResponseEntity
             .created(new URI("/api/fakultets/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -92,7 +92,7 @@ public class FakultetResource {
         FakultetDTO result = fakultetService.update(fakultetDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, fakultetDTO.getId().toString()))
+            .headers(HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, fakultetDTO.getId().toString()))
             .body(result);
     }
 
@@ -128,7 +128,7 @@ public class FakultetResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, fakultetDTO.getId().toString())
+            HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, fakultetDTO.getId().toString())
         );
     }
 
@@ -168,7 +168,7 @@ public class FakultetResource {
         fakultetService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

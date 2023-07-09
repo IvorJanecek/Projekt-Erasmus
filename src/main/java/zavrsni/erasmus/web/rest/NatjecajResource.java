@@ -63,7 +63,7 @@ public class NatjecajResource {
         NatjecajDTO result = natjecajService.save(natjecajDTO);
         return ResponseEntity
             .created(new URI("/api/natjecajs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -97,7 +97,7 @@ public class NatjecajResource {
         NatjecajDTO result = natjecajService.update(natjecajDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, natjecajDTO.getId().toString()))
+            .headers(HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, natjecajDTO.getId().toString()))
             .body(result);
     }
 
@@ -133,7 +133,7 @@ public class NatjecajResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, natjecajDTO.getId().toString())
+            HHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, natjecajDTO.getId().toString())
         );
     }
 
@@ -194,7 +194,7 @@ public class NatjecajResource {
         natjecajService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
 }

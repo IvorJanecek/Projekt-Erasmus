@@ -76,7 +76,7 @@ export class NatjecajFormService {
         validators: [Validators.required, Validators.maxLength(100)],
       }),
       description: new FormControl(natjecajRawValue.description, {
-        validators: [Validators.required, Validators.maxLength(250)],
+        validators: [Validators.required, Validators.maxLength(450)],
       }),
       createDate: new FormControl(natjecajRawValue.createDate, {
         validators: [Validators.required],

@@ -88,14 +88,9 @@ export class UploadFilesComponent implements OnInit {
         }
       }
 
-      forkJoin(uploadRequests).subscribe(
-        response => {
-          this.router.navigate(['/prijava']);
-        },
-        error => {
-          this.errorMessage = 'Error uploading files';
-        }
-      );
+      forkJoin(uploadRequests).subscribe(response => {
+        this.router.navigate(['/prijava']);
+      });
     } else {
       this.errorMessage = 'Please select file for each row';
     }
