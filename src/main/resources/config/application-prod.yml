@@ -53,6 +53,17 @@ spring:
     port: 587
     username: erasmusmev238@gmail.com
     password: mqvosuwmxhelmhsy
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            protocols: TLSv1.2
+            trust: smtp.gmail.com
+          starttls:
+            enable: true
+            required: true
   thymeleaf:
     cache: true
 
