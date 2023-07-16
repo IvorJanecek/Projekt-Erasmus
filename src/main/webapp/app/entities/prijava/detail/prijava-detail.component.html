@@ -119,16 +119,18 @@
               <td style="padding-top: 30px; justify-content: space-between">
                 <div *ngIf="file.data">
                   <a (click)="openFile(file.data, file.fileType)">Otvori</a>
+
+                  <u style="padding-left: 10px">{{ file.fileName }}</u>
                   <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
-                    <a
+                    <button
                       class="padding-left: 10px"
                       *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                       (hidden)="onModalHidden()"
                       (click)="urediFile({ id: file.id })"
-                      >Uredi</a
                     >
+                      Uredi
+                    </button>
                   </ng-container>
-                  <u style="padding-left: 10px">{{ file.fileName }}</u>
                 </div>
               </td>
             </ng-container>

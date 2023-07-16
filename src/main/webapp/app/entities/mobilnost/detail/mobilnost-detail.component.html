@@ -84,12 +84,13 @@
             <dd style="display: flex; justify-content: space-between">
               <div *ngIf="uploadFiles.data">
                 <a (click)="openFile(uploadFiles.data, uploadFiles.fileType)">Otvori</a>
-                <a
+                <button
                   *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                   (hidden)="onModalHidden()"
                   (click)="urediFile({ id: uploadFiles.id })"
-                  >Uredi</a
                 >
+                  Uredi
+                </button>
                 <u>{{ uploadFiles.fileName }}</u>
                 <button
                   *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
@@ -122,9 +123,9 @@
             <dd style="display: flex; justify-content: space-between">
               <div *ngIf="uploadFilesAdmin.data">
                 <a (click)="openFile(uploadFilesAdmin.data, uploadFilesAdmin.fileType)">Otvori</a>
-                <a *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="urediFileAdmin({ id: uploadFilesAdmin.id })"
-                  >Uredi</a
-                >
+                <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="urediFileAdmin({ id: uploadFilesAdmin.id })">
+                  Uredi
+                </button>
                 <u>{{ uploadFilesAdmin.fileName }}</u>
                 <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="deleteFileAdmin(uploadFilesAdmin.id)">
                   Obriši

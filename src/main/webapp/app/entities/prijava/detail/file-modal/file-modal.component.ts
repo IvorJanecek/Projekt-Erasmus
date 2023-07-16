@@ -14,6 +14,7 @@ export class FileModalComponent implements OnInit {
   fileForm!: FormGroup;
   formData: FormData = new FormData();
   uploadFile: IUploadFile | null = null;
+  errorMessage = '';
 
   constructor(
     public modal: NgbActiveModal,
@@ -40,9 +41,16 @@ export class FileModalComponent implements OnInit {
   }
 
   onFileSelect(event: any): void {
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-      this.formData.append('file', file, file.name);
+    const file = event.target.files[0];
+    const fileSizeInBytes = file.size;
+    const maxSizeInBytes = 1048576; // 1 MB in bytes
+
+    if (fileSizeInBytes > maxSizeInBytes) {
+      this.errorMessage = 'Dokument je veći od 1MB!';
+      this.fileForm.get('file')?.setValue(null); // Clear the file input value
+      return;
     }
+
+    this.formData.set('file', file, file.name);
   }
 }

@@ -1,6 +1,9 @@
 <div class="modal-header">
-  <h4 class="modal-title">Edit File</h4>
+  <h4 class="modal-title">Uredi Dokument</h4>
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="alert alert-warning" id="upload-error" *ngIf="this.errorMessage !== ''">
+  <span>{{ this.errorMessage }}</span>
 </div>
 <div class="d-flex justify-content-center">
   <div class="col-8">
@@ -8,10 +11,10 @@
       <input formControlName="file" type="file" (change)="onFileSelect($event)" />
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="modal.dismiss()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Odustani</span>
         </button>
         <button type="submit" [disabled]="fileForm.invalid" class="btn btn-primary">
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Update file</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Ažuriraj Dokument</span>
         </button>
       </div>
     </form>

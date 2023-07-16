@@ -1,4 +1,18 @@
-<form [formGroup]="fileForm" (ngSubmit)="uploadFiles()">
-  <input type="file" name="files" formControlName="files" multiple (change)="addFiles($event)" />
-  <button type="submit">Upload files</button>
-</form>
+<div class="d-flex justify-content-center">
+  <div class="row">
+    <div class="col">
+      <h2 class="mb-4">Unesi Dokumente</h2>
+      <div class="alert alert-warning mb-4" id="upload-error" *ngIf="errorMessage !== ''">
+        <span>{{ errorMessage }}</span>
+      </div>
+      <form [formGroup]="fileForm" (ngSubmit)="uploadFiles()">
+        <div class="col mb-3">
+          <input type="file" name="files" formControlName="files" multiple (change)="addFiles($event)" />
+        </div>
+        <div class="col text-center">
+          <button class="btn btn-primary" type="submit">Unesi dokumente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

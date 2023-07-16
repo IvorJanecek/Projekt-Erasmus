@@ -14,6 +14,7 @@ export class UploadComponent implements OnInit {
   selectedFiles!: FileList;
   formData: FormData = new FormData();
   mobilnost: IMobilnost | null = null;
+  errorMessage = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private route: ActivatedRoute) {}
 
@@ -35,10 +36,18 @@ export class UploadComponent implements OnInit {
     }
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.formData.append('files', this.selectedFiles[i], this.selectedFiles[i].name);
-    }
+      const file = this.selectedFiles[i];
+      const fileSizeInBytes = file.size;
+      const maxSizeInBytes = 1048576; // 1 MB in bytes
 
-    console.log(this.mobilnost);
+      if (fileSizeInBytes > maxSizeInBytes) {
+        this.errorMessage = 'Dokument je veći od 1MB!';
+        this.fileForm.get('files')?.setValue(null); // Clear the file input value
+        return;
+      }
+
+      this.formData.append('files', file, file.name);
+    }
   }
 
   uploadFiles(): void {

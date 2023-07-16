@@ -42,26 +42,39 @@ export class UploadFilesComponent implements OnInit {
   onFileSelect(event: Event, column: number): void {
     const target = event.target as HTMLInputElement;
     if (target.files !== null) {
-      const files = Array.from(target.files); // Convert FileList to array
+      const file = target.files[0];
+      const fileSizeInBytes = file.size;
+      const maxSizeInBytes = 1048576; // 1 MB in bytes
+
+      if (fileSizeInBytes > maxSizeInBytes) {
+        this.errorMessage = 'Dokument je veći od 1MB!';
+        this.fileNames[column] = ''; // Set an empty string for the file name
+        target.value = '';
+        return;
+      }
+
       if (!Array.isArray(this.selectedFiles[column])) {
-        this.selectedFiles[column] = []; // Initialize as empty array if not already
+        this.selectedFiles[column] = [];
       }
-      this.selectedFiles[column] = [...this.selectedFiles[column], ...files];
+      this.selectedFiles[column].push(file);
+
       if (!Array.isArray(this.formData[column])) {
-        this.formData[column] = []; // Initialize as empty array if not already
+        this.formData[column] = [];
       }
-      this.formData[column] = [...this.formData[column], new FormData()]; // Create a new FormData object for each file
-      this.formData[column][this.formData[column].length - 1].append('files', files[0], files[0].name); // Append the file to the last FormData object
-      this.fileNames[column] = ''; // Update with an empty string
+      const formData = new FormData();
+      formData.append('files', file, file.name);
+      this.formData[column].push(formData);
+
+      this.fileNames[column] = file.name;
     } else {
-      console.log('No file selected!');
+      this.errorMessage = 'Nije odabran niti jedan dokument';
     }
 
     const allFilesSelected = this.selectedFiles.every(files => files.length > 0);
     if (allFilesSelected) {
-      this.fileForm.get('files')!.enable(); // Enable the button
+      this.fileForm.get('files')!.enable();
     } else {
-      this.fileForm.get('files')!.disable(); // Disable the button
+      this.fileForm.get('files')!.disable();
     }
   }
 
@@ -92,7 +105,7 @@ export class UploadFilesComponent implements OnInit {
         this.router.navigate(['/prijava']);
       });
     } else {
-      this.errorMessage = 'Please select file for each row';
+      this.errorMessage = 'Odaberite dokument za svaki red';
     }
   }
 }
