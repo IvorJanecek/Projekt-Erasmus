@@ -74,7 +74,7 @@ public class PrijavaResource {
     public ResponseEntity<PrijavaDTO> createPrijava(@Valid @RequestBody PrijavaDTO prijavaDTO) throws URISyntaxException {
         log.debug("REST request to save Prijava : {}", prijavaDTO);
         if (prijavaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new prijava cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Nova prijava nemoze imati id", ENTITY_NAME, "idexists");
         }
 
         // Get the Natjecaj entity associated with the Prijava entity
@@ -89,7 +89,7 @@ public class PrijavaResource {
 
         // Check if user has already created a Prijava entity for this Natjecaj
         if (prijavaService.hasUserApplied(natjecaj, user)) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestAlertException("Vec ste prijavljeni na ovaj Natjecaj ", ENTITY_NAME, " za odredeni natjecaj");
         }
 
         // Create and save new Prijava entity

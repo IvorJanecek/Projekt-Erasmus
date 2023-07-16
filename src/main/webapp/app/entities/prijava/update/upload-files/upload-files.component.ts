@@ -13,7 +13,7 @@ import { Observable, forkJoin } from 'rxjs';
 })
 export class UploadFilesComponent implements OnInit {
   fileForm!: FormGroup;
-  selectedFiles: File[][] = [];
+  selectedFiles: File[][] = []; // Explicitly define the type as File[][]
   formData: FormData[][] = [];
   natjecaj: INatjecaj | any;
   zahtjevs: IZahtjev[] | null = [];
@@ -35,8 +35,9 @@ export class UploadFilesComponent implements OnInit {
     this.natjecaj = history.state.natjecaj;
     this.zahtjevService.findAllByNatjecajId(this.natjecaj.id).subscribe(result => {
       this.zahtjevs = result.body;
+      this.selectedFiles = this.zahtjevs ? this.zahtjevs.map(() => []) : []; // Initialize the selectedFiles array with an empty array for each row
+      this.checkAllFilesSelected(); // Check if all files are selected and enable/disable the form field
     });
-    this.fileForm.get('files')!.disable();
   }
 
   onFileSelect(event: Event, column: number): void {
@@ -76,6 +77,16 @@ export class UploadFilesComponent implements OnInit {
     } else {
       this.fileForm.get('files')!.disable();
     }
+    this.checkAllFilesSelected();
+  }
+
+  checkAllFilesSelected(): void {
+    const allFilesSelected = this.selectedFiles.length === this.zahtjevs?.length && this.selectedFiles.every(files => files.length > 0);
+    if (allFilesSelected) {
+      this.fileForm.get('files')!.enable();
+    } else {
+      this.fileForm.get('files')!.disable();
+    }
   }
 
   uploadFiles(): void {
@@ -105,6 +116,7 @@ export class UploadFilesComponent implements OnInit {
         this.router.navigate(['/prijava']);
       });
     } else {
+      // Display the error message if any row is missing a selected file
       this.errorMessage = 'Odaberite dokument za svaki red';
     }
   }
