@@ -120,10 +120,13 @@
                 <div *ngIf="file.data">
                   <a (click)="openFile(file.data, file.fileType)">Otvori</a>
 
-                  <u style="padding-left: 10px">{{ file.fileName }}</u>
-                  <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
+                  <u style="padding-left: 10px; padding-right: 20px">{{ file.fileName }}</u>
+                  <ng-container
+                    class="padding-left:110px"
+                    *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'"
+                  >
                     <button
-                      class="padding-left: 10px"
+                      class="padding-left: 50px"
                       *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']"
                       (hidden)="onModalHidden()"
                       (click)="urediFile({ id: file.id })"
@@ -144,7 +147,7 @@
       <!-- Conditionally display the upload button -->
       <tr *ngIf="zahtjevs!.length > (prijava?.uploadFiles)!.length">
         <td colspan="2" style="padding-top: 30px">
-          <button (click)="uploadajFajl({ id: prijava!.id })" class="btn btn-primary">Upload Files</button>
+          <button (click)="uploadajFajl({ id: prijava!.id })" class="btn btn-primary">Unesi Dokumente</button>
         </td>
       </tr>
     </table>
