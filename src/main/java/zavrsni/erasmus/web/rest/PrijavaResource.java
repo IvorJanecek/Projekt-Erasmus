@@ -80,7 +80,7 @@ public class PrijavaResource {
         // Get the Natjecaj entity associated with the Prijava entity
         Natjecaj natjecaj = natjecajRepository
             .findById(prijavaDTO.getNatjecaj().getId())
-            .orElseThrow(() -> new EntityNotFoundException("Natjecaj not found"));
+            .orElseThrow(() -> new EntityNotFoundException("Natjecaj nije pronaden"));
 
         // Get the user creating the Prijava entity
         User user = userRepository
@@ -89,7 +89,7 @@ public class PrijavaResource {
 
         // Check if user has already created a Prijava entity for this Natjecaj
         if (prijavaService.hasUserApplied(natjecaj, user)) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequestAlertException("Prijava na ovaj natječaj več postoji", ENTITY_NAME, "idexists");
         }
 
         // Create and save new Prijava entity
