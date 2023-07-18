@@ -3,9 +3,11 @@
     <div class="col-md-8">
       <h1 data-cy="registerTitle">Registracija</h1>
 
-      <div class="alert alert-success" *ngIf="success"><strong>Registration saved!</strong> Please check your email for confirmation.</div>
+      <div class="alert alert-success" *ngIf="success">
+        <strong>Registracija spremljena </strong> Molimo pogledajte mail da potvrdite registraciju.
+      </div>
 
-      <div class="alert alert-danger" *ngIf="error"><strong>Registration failed!</strong> Please try again later.</div>
+      <div class="alert alert-danger" *ngIf="error"><strong>Registracija nije uspješna</strong> Molimo probajte kasnije.</div>
 
       <div class="alert alert-danger" *ngIf="errorUserExists"><strong>Ime se već koristi</strong> Molimo odaberite neko drugo ime.</div>
 
@@ -27,7 +29,7 @@
             class="form-control"
             id="login"
             name="login"
-            placeholder="Your username"
+            placeholder="Vaše Korisničko ime"
             formControlName="login"
             data-cy="username"
             #login
@@ -55,7 +57,7 @@
             class="form-control"
             id="email"
             name="email"
-            placeholder="Your email"
+            placeholder="Vaš email"
             formControlName="email"
             data-cy="email"
           />
@@ -63,7 +65,7 @@
           <div *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
             <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.required"> Email je potreban. </small>
 
-            <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.invalid"> Email je nevalja. </small>
+            <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.invalid"> Email nije validan. </small>
 
             <small class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.minlength">
               Email mora biti najmanje 5 slova dugačko
@@ -82,7 +84,7 @@
             class="form-control"
             id="password"
             name="password"
-            placeholder="New password"
+            placeholder="Nova lozinka"
             formControlName="password"
             data-cy="firstPassword"
           />
@@ -111,7 +113,7 @@
             class="form-control"
             id="confirmPassword"
             name="confirmPassword"
-            placeholder="Confirm the new password"
+            placeholder="Potvrdi novu lozinku"
             formControlName="confirmPassword"
             data-cy="secondPassword"
           />

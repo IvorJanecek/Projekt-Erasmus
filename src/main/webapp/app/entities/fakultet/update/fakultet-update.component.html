@@ -1,21 +1,16 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-fakultet-heading" data-cy="FakultetCreateUpdateHeading">Create or edit a Fakultet</h2>
+      <h2 id="jhi-fakultet-heading" data-cy="FakultetCreateUpdateHeading">Napravi ili uredi Fakultet</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
         <div class="row mb-3">
-          <label class="form-label" for="field_name">Name</label>
+          <label class="form-label" for="field_name">Ime</label>
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
           <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required"> Ovo polje je potrebno. </small>
           </div>
         </div>
 
@@ -23,7 +18,7 @@
           <label class="form-label" for="field_zemlja">Zemlja</label>
           <input type="text" class="form-control" name="zemlja" id="field_zemlja" data-cy="zemlja" formControlName="zemlja" />
           <div *ngIf="editForm.get('zemlja')!.invalid && (editForm.get('zemlja')!.dirty || editForm.get('zemlja')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('zemlja')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('zemlja')?.errors?.required"> Ovo polje je potrebno. </small>
           </div>
         </div>
 
@@ -31,7 +26,7 @@
           <label class="form-label" for="field_grad">Grad</label>
           <input type="text" class="form-control" name="grad" id="field_grad" data-cy="grad" formControlName="grad" />
           <div *ngIf="editForm.get('grad')!.invalid && (editForm.get('grad')!.dirty || editForm.get('grad')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('grad')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('grad')?.errors?.required"> Ovo polje je potrebno.. </small>
           </div>
         </div>
 
@@ -39,7 +34,7 @@
           <label class="form-label" for="field_adresa">Adresa</label>
           <input type="text" class="form-control" name="adresa" id="field_adresa" data-cy="adresa" formControlName="adresa" />
           <div *ngIf="editForm.get('adresa')!.invalid && (editForm.get('adresa')!.dirty || editForm.get('adresa')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('adresa')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('adresa')?.errors?.required"> Ovo polje je potrebno. </small>
           </div>
         </div>
       </div>

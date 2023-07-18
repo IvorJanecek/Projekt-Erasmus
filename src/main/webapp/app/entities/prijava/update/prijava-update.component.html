@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-prijava-heading" data-cy="PrijavaCreateUpdateHeading">Napravi ili uredi Prijavu</h2>
+      <h2 id="jhi-prijava-heading" data-cy="PrijavaCreateUpdateHeading">Nova Prijava</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -22,7 +22,7 @@
             <button type="button" class="btn btn-secondary" (click)="trajanjeOdDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
           </div>
           <div *ngIf="editForm.get('trajanjeOd')!.invalid && (editForm.get('trajanjeOd')!.dirty || editForm.get('trajanjeOd')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('trajanjeOd')?.errors?.required"> Ovo polje je potrebno </small>
           </div>
         </div>
 
