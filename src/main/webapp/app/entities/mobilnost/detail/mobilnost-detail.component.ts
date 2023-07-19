@@ -25,6 +25,7 @@ export class MobilnostDetailComponent implements OnInit {
   uploadFiles?: IUploadFile[];
   isSaving = false;
   today: dayjs.Dayjs = dayjs();
+  errorMessage = '';
 
   editForm: MobilnostFormGroup = this.mobilnostFormService.createMobilnostFormGroup();
 
@@ -143,6 +144,7 @@ export class MobilnostDetailComponent implements OnInit {
       });
     } else {
       // Display an error message or handle the case when the date is not valid
+      this.errorMessage = 'Datum završetka nije prešao današnji datum';
       console.log('Error: datumDo is not greater than or equal to today');
     }
   }

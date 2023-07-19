@@ -143,6 +143,7 @@ export class PrijavaDetailComponent implements OnInit {
       this.saveMobilnost(prijava);
       this.save();
     });
+    location.reload();
   }
 
   saveMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'trajanjeOd' | 'trajanjeDo' | 'statusPrijave' | 'user'>): void {
@@ -183,6 +184,7 @@ export class PrijavaDetailComponent implements OnInit {
       console.log(prijava.statusPrijave);
       this.save();
     });
+    location.reload();
   }
 
   protected onSaveSuccess(): void {

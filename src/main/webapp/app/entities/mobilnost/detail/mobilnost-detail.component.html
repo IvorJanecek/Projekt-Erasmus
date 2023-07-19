@@ -5,6 +5,10 @@
 
       <hr />
 
+      <div class="alert alert-warning" id="upload-error" *ngIf="this.errorMessage !== ''">
+        <span>{{ this.errorMessage }}</span>
+      </div>
+
       <jhi-alert-error></jhi-alert-error>
 
       <jhi-alert></jhi-alert>
