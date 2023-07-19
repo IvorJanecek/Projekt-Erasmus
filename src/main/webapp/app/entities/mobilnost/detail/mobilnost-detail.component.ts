@@ -163,6 +163,7 @@ export class MobilnostDetailComponent implements OnInit {
       console.log(mobilnost.statusMobilnosti);
       this.save();
     });
+    location.reload();
   }
 
   save(): void {
