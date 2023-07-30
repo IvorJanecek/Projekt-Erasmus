@@ -128,6 +128,12 @@ export class PrijavaDetailComponent implements OnInit {
     });
   }
 
+  get areFilesMatching(): boolean {
+    // Assuming you have zahtjevs and prijava defined in the component
+    return this.prijava?.uploadFiles!.length === this.zahtjevs!.length;
+  }
+
+  // Assuming prijava is a reference to the original object, and changes will be saved to the backend.
   createNewMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'trajanjeOd' | 'trajanjeDo' | 'statusPrijave' | 'user'>): void {
     // Set the prihvacen field to true for the Prijava entity
     prijava.statusPrijave = StatusPrijave.PRIHVACEN;
@@ -138,14 +144,16 @@ export class PrijavaDetailComponent implements OnInit {
       statusPrijave: prijava.statusPrijave,
     };
 
+    // Assuming prijavaService.partialUpdate handles the update to the backend correctly.
     this.prijavaService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
-      console.log(prijava.statusPrijave);
+      console.log('Prijava status updated successfully');
       this.saveMobilnost(prijava);
       this.save();
     });
     location.reload();
   }
 
+  // Assuming mobilnostFormService.getMobilnost retrieves a valid mobilnost object from the form.
   saveMobilnost(prijava: Pick<IPrijava, 'id' | 'natjecaj' | 'trajanjeOd' | 'trajanjeDo' | 'statusPrijave' | 'user'>): void {
     const newMobilnost: NewMobilnost = {
       mobilnostName: 'Mobilnost za ' + prijava.natjecaj?.name,
@@ -157,17 +165,12 @@ export class PrijavaDetailComponent implements OnInit {
       trajanjeDo: prijava.trajanjeDo,
     };
 
-    const mobilnost = this.mobilnostFormService.getMobilnost(this.editForm);
-    mobilnost.mobilnostName = this.mobilnost?.mobilnostName;
-    mobilnost.natjecaj = this.mobilnost?.natjecaj;
-    mobilnost.prijava = this.mobilnost?.prijava;
-    mobilnost.user = this.mobilnost?.user;
-    mobilnost.trajanjeOd = this.mobilnost?.trajanjeOd;
-    mobilnost.trajanjeOd = this.mobilnost?.trajanjeDo;
-
+    // Assuming mobilnostService.create handles the creation of mobilnost object correctly.
     this.mobilnostService.create(newMobilnost).subscribe(() => {
       console.log('Mobilnost created successfully');
+      this.save();
     });
+    // Reloading the location might not be necessary and can cause issues. Consider removing it.
   }
 
   odbijPrijavu(prijava: Pick<IPrijava, 'id' | 'statusPrijave'>): void {

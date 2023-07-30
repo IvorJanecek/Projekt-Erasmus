@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Entity
 @Table(name = "zahtjev")
@@ -24,6 +26,21 @@ public class Zahtjev implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "natjecaj_id")
     private Natjecaj natjecaj;
+
+    @PreRemove
+    private void preventDeleteIfNatjecajHasPrijavas() {
+        if (natjecaj != null && !natjecaj.getPrijavas().isEmpty()) {
+            throw new NatjecajHasPrijavasException("Nije moguce izbrisati zahtjev jer natjecaj ima prijave u sebi.");
+        }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public class NatjecajHasPrijavasException extends RuntimeException {
+
+        public NatjecajHasPrijavasException(String message) {
+            super(message);
+        }
+    }
 
     public Natjecaj getNatjecaj() {
         return natjecaj;

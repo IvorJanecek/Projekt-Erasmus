@@ -86,10 +86,10 @@ export class PrijavaFormService {
       }),
       data: new FormControl(prijavaRawValue.data),
       dataContentType: new FormControl(prijavaRawValue.dataContentType),
-      kategorija: new FormControl(prijavaRawValue.kategorija),
+      kategorija: new FormControl(prijavaRawValue.kategorija, { validators: [Validators.required] }),
       statusPrijave: new FormControl(prijavaRawValue.statusPrijave),
       user: new FormControl(prijavaRawValue.user),
-      fakultet: new FormControl(prijavaRawValue.fakultet),
+      fakultet: new FormControl(prijavaRawValue.fakultet, { validators: [Validators.required] }),
       natjecaj: new FormControl(prijavaRawValue.natjecaj),
     });
   }

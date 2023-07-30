@@ -89,7 +89,7 @@ public class PrijavaResource {
 
         // Check if user has already created a Prijava entity for this Natjecaj
         if (prijavaService.hasUserApplied(natjecaj, user)) {
-            throw new BadRequestAlertException("Prijava na ovaj natječaj več postoji", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Prijava na ovaj natjecaj vec postoji", ENTITY_NAME, "idexists");
         }
 
         // Create and save new Prijava entity

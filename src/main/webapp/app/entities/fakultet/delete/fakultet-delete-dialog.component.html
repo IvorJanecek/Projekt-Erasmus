@@ -1,13 +1,13 @@
 <form *ngIf="fakultet" name="deleteForm" (ngSubmit)="confirmDelete(fakultet.id!)">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="fakultetDeleteDialogHeading">Confirm delete operation</h4>
+    <h4 class="modal-title" data-cy="fakultetDeleteDialogHeading">Potvrdi brisanje fakulteta</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-fakultet-heading">Jeste li sigurni da želite obrisati {{ fakultet.id }}?</p>
+    <p id="jhi-delete-fakultet-heading">Jeste li sigurni da želite obrisati {{ fakultet.name }}?</p>
   </div>
 
   <div class="modal-footer">

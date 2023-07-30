@@ -71,7 +71,7 @@
         <div class="col">
           <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <button
-              *ngIf="prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
+              *ngIf="areFilesMatching && prijava.statusPrijave !== 'PRIHVACEN' && prijava.statusPrijave !== 'ODBIJEN'"
               class="btn btn-primary"
               (click)="
                 createNewMobilnost({
@@ -112,7 +112,7 @@
       <ng-container *ngFor="let zahtjev of zahtjevs; let zahtjevIndex = index">
         <tr>
           <td style="display: flex; padding-top: 30px; justify-content: center">
-            <u>{{ zahtjev.name }}</u>
+            <span>{{ zahtjev.name }}</span>
           </td>
           <ng-container *ngFor="let file of prijava?.uploadFiles; let fileIndex = index">
             <ng-container *ngIf="fileIndex === zahtjevIndex">
@@ -120,7 +120,7 @@
                 <div *ngIf="file.data">
                   <a (click)="openFile(file.data, file.fileType)">Otvori</a>
 
-                  <u style="padding-left: 10px">{{ file.fileName }}</u>
+                  <span style="padding-left: 10px">{{ file.fileName }}</span>
                   <ng-container *ngIf="prijava?.statusPrijave !== 'PRIHVACEN' && prijava?.statusPrijave !== 'ODBIJEN'">
                     <button
                       class="padding-left: 10px"
@@ -144,7 +144,9 @@
       <!-- Conditionally display the upload button -->
       <tr *ngIf="zahtjevs!.length > (prijava?.uploadFiles)!.length">
         <td colspan="2" style="padding-top: 30px">
-          <button (click)="uploadajFajl({ id: prijava!.id })" class="btn btn-primary">Upload Files</button>
+          <button *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_PROFESOR']" (click)="uploadajFajl({ id: prijava!.id })" class="btn btn-primary">
+            Unesi Dokumente
+          </button>
         </td>
       </tr>
     </table>

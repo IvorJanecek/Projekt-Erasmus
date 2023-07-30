@@ -125,6 +125,13 @@ public class PrijavaServiceImpl implements PrijavaService {
     @Override
     public boolean hasUserApplied(Natjecaj natjecaj, User user) {
         Optional<Prijava> prijavaOptional = prijavaRepository.findByNatjecajAndUser(natjecaj, user);
-        return prijavaOptional.isPresent() && prijavaOptional.get().getStatusPrijave() != StatusPrijave.ODBIJEN;
+
+        if (prijavaOptional.isPresent()) {
+            StatusPrijave statusPrijave = prijavaOptional.get().getStatusPrijave();
+            return statusPrijave != StatusPrijave.ODBIJEN;
+        } else {
+            // If the prijava doesn't exist, return false.
+            return false;
+        }
     }
 }

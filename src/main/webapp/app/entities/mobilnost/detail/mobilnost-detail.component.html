@@ -9,8 +9,6 @@
         <span>{{ this.errorMessage }}</span>
       </div>
 
-      <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
@@ -53,15 +51,19 @@
         <div class="col-2">
           <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <button
-              class="btn btn-primary"
+              class="btn"
+              [ngClass]="{
+                'btn-primary': mobilnost?.statusMobilnosti !== 'ZATVORENA',
+                'btn-danger': mobilnost?.statusMobilnosti === 'ZATVORENA'
+              }"
               *ngIf="mobilnost?.statusMobilnosti !== 'ZATVORENA'"
-              class="btn btn-danger"
-              (click)="prihvatiMobilnost({ id: mobilnost!.id })"
+              (click)="prihvatiMobilnost(mobilnost)"
             >
               Zatvori Mobilnost
             </button>
           </div>
         </div>
+
         <div class="col-2">
           <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <button
@@ -126,11 +128,11 @@
           <div class="row-md jh-entity-details" *ngFor="let uploadFilesAdmin of mobilnost!.uploadFilesAdmin">
             <dd style="display: flex; justify-content: space-between">
               <div *ngIf="uploadFilesAdmin.data">
-                <a (click)="openFile(uploadFilesAdmin.data, uploadFilesAdmin.fileType)">Otvori</a>
+                <span (click)="openFile(uploadFilesAdmin.data, uploadFilesAdmin.fileType)">Otvori</span>
                 <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="urediFileAdmin({ id: uploadFilesAdmin.id })">
                   Uredi
                 </button>
-                <u>{{ uploadFilesAdmin.fileName }}</u>
+                <span>{{ uploadFilesAdmin.fileName }}</span>
                 <button *jhiHasAnyAuthority="'ROLE_ADMIN'" (hidden)="onModalHidden()" (click)="deleteFileAdmin(uploadFilesAdmin.id)">
                   Obriši
                 </button>

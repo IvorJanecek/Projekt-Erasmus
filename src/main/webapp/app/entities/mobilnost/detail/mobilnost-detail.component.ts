@@ -126,7 +126,7 @@ export class MobilnostDetailComponent implements OnInit {
     window.history.back();
   }
 
-  prihvatiMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti'>): void {
+  prihvatiMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti' | 'trajanjeOd' | 'trajanjeDo' | 'mobilnostName'>): void {
     const datumDo: dayjs.Dayjs = dayjs(this.mobilnost?.trajanjeDo); // Convert datumDo to Dayjs object
     const isDatumDoValid: boolean = datumDo.isSame(this.today, 'day') || datumDo.isBefore(this.today, 'day');
 
@@ -137,6 +137,9 @@ export class MobilnostDetailComponent implements OnInit {
       const PartialUpdatePrijava = {
         id: mobilnost.id,
         statusMobilnosti: mobilnost.statusMobilnosti,
+        trajanjeOd: mobilnost.trajanjeOd,
+        trajanjeDo: mobilnost.trajanjeDo,
+        mobilnostName: mobilnost.mobilnostName,
       };
 
       this.mobilnostService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
@@ -149,7 +152,7 @@ export class MobilnostDetailComponent implements OnInit {
     }
   }
 
-  neispravnaMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti'>): void {
+  neispravnaMobilnost(mobilnost: Pick<IMobilnost, 'id' | 'statusMobilnosti' | 'trajanjeOd' | 'trajanjeDo' | 'mobilnostName'>): void {
     // set the prihvacen field to true for the Prijava entity
     mobilnost.statusMobilnosti = StatusMobilnosti.NEISPRAVNA;
     console.log(mobilnost.statusMobilnosti);
@@ -157,6 +160,9 @@ export class MobilnostDetailComponent implements OnInit {
     const PartialUpdatePrijava = {
       id: mobilnost.id,
       statusMobilnosti: mobilnost.statusMobilnosti,
+      trajanjeOd: mobilnost.trajanjeOd,
+      trajanjeDo: mobilnost.trajanjeDo,
+      mobilnostName: mobilnost.mobilnostName,
     };
 
     this.mobilnostService.partialUpdate(PartialUpdatePrijava).subscribe(() => {
