@@ -54,6 +54,7 @@ export class MobilnostComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+    location.reload();
   }
 
   byteSize(base64String: string): string {
