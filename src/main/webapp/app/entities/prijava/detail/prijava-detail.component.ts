@@ -150,7 +150,7 @@ export class PrijavaDetailComponent implements OnInit {
       this.saveMobilnost(prijava);
       this.save();
     });
-    location.reload();
+    this.router.navigate(['/mobilnost']);
   }
 
   // Assuming mobilnostFormService.getMobilnost retrieves a valid mobilnost object from the form.
