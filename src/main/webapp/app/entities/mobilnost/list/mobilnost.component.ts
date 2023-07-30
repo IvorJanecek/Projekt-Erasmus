@@ -54,7 +54,6 @@ export class MobilnostComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
-    location.reload();
   }
 
   byteSize(base64String: string): string {
@@ -88,6 +87,15 @@ export class MobilnostComponent implements OnInit {
         this.onResponseSuccess(res);
       },
     });
+  }
+
+  loadbutton(): void {
+    this.loadFromBackendWithRouteInformations().subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onResponseSuccess(res);
+      },
+    });
+    location.reload();
   }
 
   navigateToWithComponentValues(): void {
